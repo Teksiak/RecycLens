@@ -1,8 +1,14 @@
 package com.recyclens.scanner.presentation
 
+import android.graphics.Bitmap
+
 interface ScannerAction {
-    data class ScanImage(
-        val image: ByteArray
+    data object ScanImage: ScannerAction
+    data class OnImageCapture(
+        val image: Bitmap
+    ): ScannerAction
+    data class OnImageCaptureError(
+        val error: String
     ): ScannerAction
     data object NavigateToHistory: ScannerAction
     data object NavigateToSettings: ScannerAction

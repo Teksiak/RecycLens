@@ -1,5 +1,8 @@
 package com.recyclens.scanner.presentation.components
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -7,6 +10,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -24,36 +28,47 @@ import com.recyclens.core.presentation.designsystem.Tertiary
 
 @Composable
 fun PhotoButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isLoading: Boolean = false
 ) {
     Box(
         modifier = Modifier
-            .size(72.dp)
-            .alpha(0.9f)
-            .border(3.dp, Tertiary, shape = CircleShape)
+            .size(64.dp)
+            .border(3.dp, Tertiary.copy(alpha = 0.9f), shape = CircleShape)
             .clip(CircleShape)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(
-                    color = Primary
+                    color = Primary,
                 ),
                 onClick = onClick
             ),
         contentAlignment = Alignment.Center
     ) {
-        Box(
-            modifier = Modifier
-                .size(58.dp)
-                .clip(CircleShape)
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Secondary,
-                            Primary
+        if(isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(54.dp),
+                strokeWidth = 3.dp,
+                color = Tertiary
+            )
+        }
+        else {
+            Box(
+                modifier = Modifier
+                    .size(52.dp)
+                    .clip(CircleShape)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Secondary,
+                                Primary
+                            ),
+                            startY = -50f,
                         ),
+                        alpha = 0.95f
                     )
-                )
-        )
+            )
+        }
     }
 }
 

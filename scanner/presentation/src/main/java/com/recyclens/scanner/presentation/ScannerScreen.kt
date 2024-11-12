@@ -3,12 +3,16 @@ package com.recyclens.scanner.presentation
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.ImageProxy
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.background
@@ -39,6 +43,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.presentation.components.TitleDialog
+import com.recyclens.core.presentation.designsystem.Container
 import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.core.presentation.util.hasPermission
 import com.recyclens.scanner.presentation.components.CameraOverlay
@@ -169,6 +174,27 @@ private fun ScannerScreen(
                 setEnabledUseCases(CameraController.IMAGE_CAPTURE)
             }
         }
+        val imageCaptureCallback = remember {
+            object : ImageCapture.OnImageCapturedCallback() {
+                override fun onCaptureSuccess(image: ImageProxy) {
+                    super.onCaptureSuccess(image)
+                    onAction(
+                        ScannerAction.OnImageCapture(
+                            image = image.toBitmap()
+                        )
+                    )
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    super.onError(exception)
+                    onAction(
+                        ScannerAction.OnImageCaptureError(
+                            error = exception.message ?: ""
+                        )
+                    )
+                }
+            }
+        }
 
         LaunchedEffect(lifecycleState) {
             if(lifecycleState == Lifecycle.State.RESUMED && state.isFlashOn) {
@@ -207,8 +233,13 @@ private fun ScannerScreen(
                             horizontalArrangement = Arrangement.Center,
                         ) {
                             PhotoButton(
+                                isLoading = state.isLoading,
                                 onClick = {
-                                    // TODO
+                                    onAction(ScannerAction.ScanImage)
+                                    cameraController.takePicture(
+                                        ContextCompat.getMainExecutor(context),
+                                        imageCaptureCallback
+                                    )
                                 }
                             )
                         }

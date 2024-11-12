@@ -19,7 +19,22 @@ class ScannerViewModel @Inject constructor(
     fun onAction(action: ScannerAction) {
         when(action) {
             is ScannerAction.ScanImage -> {
-
+                _state.update {
+                    it.copy(isLoading = true)
+                }
+            }
+            is ScannerAction.OnImageCapture -> {
+                _state.update {
+                    it.copy(isLoading = false)
+                }
+            }
+            is ScannerAction.OnImageCaptureError -> {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        isError = true
+                    )
+                }
             }
             is ScannerAction.ToggleFlash -> {
                 _state.update { state ->

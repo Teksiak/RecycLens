@@ -22,9 +22,9 @@ fun CameraOverlay(
                     0f to Dark,
                     0.25f to Dark.copy(alpha = 0f),
                     0.75f to Dark.copy(alpha = 0f),
-                    1f to Dark
+                    1f to Dark,
                 )
             )
-            .alpha(0.4f),
+            .alpha(0.3f),
     )
 }
