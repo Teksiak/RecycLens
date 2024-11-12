@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -6,11 +9,19 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+
 android {
     namespace = "com.recyclens.core.network"
     compileSdk = 35
 
     defaultConfig {
+        val keystoreFile = project.rootProject.file("local.properties")
+        val properties = Properties()
+        properties.load(FileInputStream(keystoreFile))
+
+        val apiKey = properties.getProperty("API_KEY") ?: throw IllegalArgumentException("API_KEY not found in local.properties")
+        buildConfigField("String", "API_KEY", value = apiKey)
+
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -25,6 +36,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+    buildFeatures{
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
