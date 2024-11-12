@@ -12,8 +12,14 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -27,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -36,6 +43,7 @@ import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.core.presentation.util.hasPermission
 import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
+import com.recyclens.scanner.presentation.components.PhotoButton
 
 @Composable
 fun ScannerScreenRoot(
@@ -186,6 +194,25 @@ private fun ScannerScreen(
                     CameraOverlay(
                         paddingValues = paddingValues
                     )
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues)
+                            .padding(bottom = 112.dp),
+                    ) {
+                        Spacer(modifier = Modifier.weight(1f))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            PhotoButton(
+                                onClick = {
+                                    // TODO
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
