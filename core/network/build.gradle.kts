@@ -15,11 +15,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        val keystoreFile = project.rootProject.file("apikeys.properties")
+        val keystoreFile = project.rootProject.file("local.properties")
         val properties = Properties()
         properties.load(FileInputStream(keystoreFile))
 
-        val apiKey = properties.getProperty("API_KEY") ?: ""
+        val apiKey = properties.getProperty("API_KEY") ?: throw IllegalArgumentException("API_KEY not found in local.properties")
         buildConfigField("String", "API_KEY", value = apiKey)
 
         minSdk = 24
