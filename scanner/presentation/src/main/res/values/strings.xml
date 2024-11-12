@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permissions">Uprawnienia</string>
+    <string name="camera_permission_rationale_description">Aby rozpoznać odpady i pomóc Ci w ich prawidłowej segregacji, aplikacja wymaga dostępu do kamery. Dzięki temu możesz zrobić zdjęcie odpadów, a my wskażemy, do którego pojemnika powinny trafić</string>
+    <string name="grant_access">Przyznaj dostęp</string>
+    <string name="settings">Ustawienia</string>
+    <string name="camera_permission_denied_description">"Wygląda na to, że uprawnienia do kamery nie mogą być przyznane w aplikacji. Aby korzystać z funkcji rozpoznawania odpadów, RecycLens potrzebuje do niej dostępu. Możesz włączyć go ręcznie w ustawieniach aplikacji. "</string>
+</resources>

@@ -8,6 +8,6 @@ interface RoboflowApiService {
     suspend fun getPrediction(): Response<PredictionResultDto>
 
     companion object {
-        const val BASE_URL = ""
+        const val BASE_URL = "https://detect.roboflow.com/"
     }
 }
