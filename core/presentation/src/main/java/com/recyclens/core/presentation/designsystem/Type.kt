@@ -1,4 +1,4 @@
-package com.recyclens.ui.theme
+package com.recyclens.core.presentation.designsystem
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

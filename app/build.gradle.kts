@@ -59,7 +59,6 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.presentation)
 
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
