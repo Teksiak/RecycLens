@@ -11,8 +11,8 @@ interface RoboflowApiService {
     @FormUrlEncoded
     @POST("/${MODEL_ID}/${MODEL_VERSION}")
     suspend fun getPrediction(
-        @Field("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Body base64: String
+        @Body base64: String,
+        @Field("api_key") apiKey: String = BuildConfig.API_KEY
     ): Response<PredictionResultDto>
 
     companion object {
