@@ -17,5 +17,4 @@ kotlin {
 dependencies {
 
     implementation(projects.core.domain)
-
 }

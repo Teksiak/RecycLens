@@ -38,7 +38,7 @@ object RetrofitModule {
         okHttpClient: OkHttpClient,
         gson: Gson
     ): Retrofit = Retrofit.Builder()
-        .baseUrl(RoboflowApiService.BASE_URL)
+        .baseUrl("https://detect.roboflow.com/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
