@@ -4,5 +4,5 @@ import com.recyclens.core.domain.util.DataError
 import com.recyclens.core.domain.util.Result
 
 interface ClassificationRepository {
-    suspend fun getPrediction(): Result<ClassificationPrediction, DataError.Remote>
+    suspend fun getPrediction(image: ByteArray): Result<ClassificationPrediction, DataError.Remote>
 }
