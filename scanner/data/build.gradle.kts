@@ -1,13 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
 }
 
 android {
-    namespace = "com.recyclens.scanner.presentation"
+    namespace = "com.recyclens.scanner.data"
     compileSdk = 35
 
     defaultConfig {
@@ -39,17 +38,14 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.bundles.compose)
-    implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.bundles.camerax)
+    implementation(libs.retrofit)
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.compiler)
 
+    implementation(projects.core.network)
     implementation(projects.core.domain)
-    implementation(projects.core.presentation)
     implementation(projects.scanner.domain)
 
     testImplementation(libs.junit)

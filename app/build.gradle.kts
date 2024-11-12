@@ -45,7 +45,6 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.androidx.navigation.compose)
@@ -58,6 +57,10 @@ dependencies {
     implementation(projects.core.network)
     implementation(projects.core.data)
     implementation(projects.core.presentation)
+
+    implementation(projects.scanner.data)
+    implementation(projects.scanner.domain)
+    implementation(projects.scanner.presentation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
