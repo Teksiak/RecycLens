@@ -1,11 +1,18 @@
 package com.recyclens.scanner.presentation
 
+import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.recyclens.core.domain.util.Result
 import com.recyclens.scanner.domain.ClassificationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,8 +31,31 @@ class ScannerViewModel @Inject constructor(
                 }
             }
             is ScannerAction.OnImageCapture -> {
-                _state.update {
-                    it.copy(isLoading = false)
+                viewModelScope.launch(Dispatchers.IO) {
+                    val imageByteArray = withContext(Dispatchers.Default) {
+                        val stream = ByteArrayOutputStream()
+                        action.image.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+                        stream.toByteArray()
+                    }
+                    when(val result = classificationRepository.getPrediction(imageByteArray)) {
+                        is Result.Success -> {
+                            _state.update {
+                                it.copy(
+                                    isLoading = false,
+                                    isError = false,
+                                    classificationPrediction = result.data
+                                )
+                            }
+                        }
+                        is Result.Error -> {
+                            _state.update {
+                                it.copy(
+                                    isLoading = false,
+                                    isError = true
+                                )
+                            }
+                        }
+                    }
                 }
             }
             is ScannerAction.OnImageCaptureError -> {

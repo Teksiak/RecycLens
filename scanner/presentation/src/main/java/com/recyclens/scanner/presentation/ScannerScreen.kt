@@ -228,6 +228,13 @@ private fun ScannerScreen(
                             .padding(bottom = 112.dp),
                     ) {
                         Spacer(modifier = Modifier.weight(1f))
+                        state.classificationPrediction?.let {
+                            Text(
+                                text = "${it.wasteClass.name} + ${it.confidence}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color.White
+                            )
+                        }
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center,

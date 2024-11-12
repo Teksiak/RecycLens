@@ -13,6 +13,8 @@ import com.recyclens.scanner.data.mapper.toClassificationPrediction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class RoboflowClassificationRepository @Inject constructor(
@@ -22,11 +24,12 @@ class RoboflowClassificationRepository @Inject constructor(
     override suspend fun getPrediction(image: ByteArray): Result<ClassificationPrediction, DataError.Remote> {
         return when (val result = safeApiCall {
             withContext(Dispatchers.IO) {
-                val base64 = async(Dispatchers.Default) {
+                val imageBase64 = withContext(Dispatchers.Default) {
                     Base64.encodeToString(image, Base64.DEFAULT)
                 }
+                val imageRequestBody = imageBase64.toRequestBody("application/x-www-form-urlencoded".toMediaType())
                 apiService.getPrediction(
-                    base64 = base64.await()
+                    image = imageRequestBody
                 )
             }
         }) {
