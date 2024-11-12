@@ -4,9 +4,12 @@ import androidx.compose.ui.graphics.Color
 
 val Primary = Color(0xFF31511E)
 val Secondary = Color(0xFF859F3D)
-val Tetriary = Color(0xFFF6FCDF)
+val Tertiary = Color(0xFFF6FCDF)
 val Dark = Color(0xFF1A1A19)
 val White = Color(0xFFFFFFFF)
+val Outline = Color(0xFFDDDDDD)
+val Label = Color(0xFFA9A9A9)
+val Container = Color(0xFFEEEEEE)
 
 val PaperDark = Color(0xFF003C90)
 val PaperMain = Color(0xFF0F52BA)

@@ -14,14 +14,8 @@ val Roboto = FontFamily(
 val Nunito = FontFamily(
     Font(R.font.nunito_var)
 )
-// Set of Material typography styles to start with
+
 val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = Nunito,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-    ),
     titleLarge = TextStyle(
         fontFamily = Roboto,
         fontSize = 30.sp,
@@ -38,6 +32,12 @@ val Typography = Typography(
         fontFamily = Roboto,
         fontSize = 20.sp,
         lineHeight = 25.sp,
+        color = Dark
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = Nunito,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
         color = Dark
     ),
     bodyMedium = TextStyle(
