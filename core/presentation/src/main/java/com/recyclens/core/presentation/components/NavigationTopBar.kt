@@ -10,6 +10,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,7 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.recyclens.core.presentation.R
 import com.recyclens.core.presentation.designsystem.Back
+import com.recyclens.core.presentation.designsystem.Dark
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
+import com.recyclens.core.presentation.designsystem.White
 
 @Composable
 fun NavigationTopBar(
@@ -27,11 +31,10 @@ fun NavigationTopBar(
     onNavigateBack: () -> Unit
 ) {
     TopAppBar(
-        modifier = Modifier
-            .padding(horizontal = 12.dp),
+        modifier = Modifier.fillMaxWidth(),
         title = {
             Text(
-                modifier = Modifier.fillMaxWidth().padding(end = 60.dp),
+                modifier = Modifier.padding(end = 48.dp).fillMaxWidth(),
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center
@@ -47,7 +50,12 @@ fun NavigationTopBar(
                     contentDescription = stringResource(id = R.string.back)
                 )
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = White,
+            titleContentColor = Dark,
+            navigationIconContentColor = Dark
+        )
     )
 }
 
