@@ -14,6 +14,9 @@ val Trash: ImageVector
 val Help: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.pomoc)
+val Menu: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.menu)
 val LogoFirst: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.logo_first_theme)

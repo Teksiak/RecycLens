@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.net.Uri
 import android.provider.Settings
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -48,7 +46,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.rotationMatrix
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -57,7 +54,9 @@ import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.CheckImage
 import com.recyclens.core.presentation.designsystem.Flash
 import com.recyclens.core.presentation.designsystem.FlashOn
+import com.recyclens.core.presentation.designsystem.Help
 import com.recyclens.core.presentation.designsystem.History
+import com.recyclens.core.presentation.designsystem.Menu
 import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.core.presentation.designsystem.White
 import com.recyclens.core.presentation.util.hasPermission
@@ -65,7 +64,7 @@ import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
-import com.recyclens.scanner.presentation.util.toInformation
+import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
 
 @Composable
@@ -82,7 +81,7 @@ fun ScannerScreenRoot(
         state = state.value,
         onAction = { action ->
             when(action) {
-                is ScannerAction.LearnMore -> onNavigateToInformation(action.wasteClass.toInformation())
+                is ScannerAction.NavigateToInformation -> onNavigateToInformation(action.question)
                 is ScannerAction.NavigateToSettings -> onNavigateToSettings()
                 is ScannerAction.NavigateToAboutUs -> onNavigateToAboutUs()
                 is ScannerAction.NavigateToHistory -> onNavigateToHistory()
@@ -244,7 +243,7 @@ private fun ScannerScreen(
                     onAction(ScannerAction.DismissPredictionDialog)
                 },
                 onLearnMore = {
-                    onAction(ScannerAction.LearnMore(prediction.wasteClass))
+                    onAction(ScannerAction.NavigateToInformation(prediction.wasteClass.toQuestion()))
                 }
             )
         }
@@ -277,6 +276,38 @@ private fun ScannerScreen(
                             .padding(bottom = 72.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(top = 16.dp),
+                        ) {
+                            IconButton(
+                                onClick = {
+                                    // TODO: Open drawer
+                                }
+                            ) {
+                                Icon(
+                                    modifier = Modifier.size(32.dp),
+                                    imageVector = Menu,
+                                    contentDescription = stringResource(id = R.string.open_drawer),
+                                    tint = White
+                                )
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
+                            IconButton(
+                                onClick = {
+                                    onAction(ScannerAction.NavigateToInformation(null))
+                                }
+                            ) {
+                                Icon(
+                                    modifier = Modifier.size(32.dp),
+                                    imageVector = Help,
+                                    contentDescription = stringResource(id = R.string.informations),
+                                    tint = White
+                                )
+                            }
+                        }
                         Spacer(modifier = Modifier.weight(1f))
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(36.dp),
@@ -284,10 +315,11 @@ private fun ScannerScreen(
                         ) {
                             IconButton(
                                 onClick = {
-                                    // TODO: Display dailog about unfinished feature
+                                    // TODO: Display dialog about unfinished feature
                                 }
                             ) {
                                 Icon(
+                                    modifier = Modifier.size(32.dp),
                                     imageVector = CheckImage,
                                     contentDescription = stringResource(id = R.string.image_check),
                                     tint = White
@@ -309,6 +341,7 @@ private fun ScannerScreen(
                                 }
                             ) {
                                 Icon(
+                                    modifier = Modifier.size(32.dp),
                                     imageVector = History,
                                     contentDescription = stringResource(id = R.string.history),
                                     tint = White
