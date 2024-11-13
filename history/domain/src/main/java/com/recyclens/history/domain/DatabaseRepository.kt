@@ -1,4 +1,5 @@
 package com.recyclens.history.domain
 
-class MyClass {
+@Dao
+interface DatabaseRepository {
 }
