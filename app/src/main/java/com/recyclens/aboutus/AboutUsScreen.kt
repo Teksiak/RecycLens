@@ -65,7 +65,7 @@ fun AboutUsScreen() {
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
                 .padding(vertical = 16.dp)
-                .padding(bottom = 24.dp),
+                .padding(bottom = 16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -89,7 +89,12 @@ fun AboutUsScreen() {
             Spacer(modifier = Modifier.size(4.dp))
             Text(
                 text = stringResource(id = R.string.app_name),
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(Secondary, Primary),
+                        startY = -25f
+                    )
+                ),
             )
 
             // First paragraph
@@ -124,7 +129,6 @@ fun AboutUsScreen() {
                 text = stringResource(id = R.string.adress),
                 style = MaterialTheme.typography.bodyMedium,
             )
-            Spacer(modifier = Modifier.size(16.dp))
         }
     }
 }
