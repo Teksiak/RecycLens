@@ -7,11 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
 import com.recyclens.scanner.presentation.ScannerScreenRoot
 import com.recyclens.scanner.presentation.ScannerViewModel
@@ -23,13 +25,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
+
             RecycLensTheme {
-                ScannerScreenRoot(
-                    viewModel = hiltViewModel<ScannerViewModel>(),
-                    onNavigateToSettings = { /*TODO*/ },
-                    onNavigateToAboutUs = { /*TODO*/ },
-                    onNavigateToHistory = { /*TODO*/ },
-                )
+                Surface {
+                    NavigationRoot(
+                        navController = navController
+                    )
+                }
             }
         }
     }

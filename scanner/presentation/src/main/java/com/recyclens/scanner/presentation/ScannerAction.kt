@@ -1,6 +1,7 @@
 package com.recyclens.scanner.presentation
 
 import android.graphics.Bitmap
+import com.recyclens.core.domain.WasteClass
 
 interface ScannerAction {
     data object ScanImage: ScannerAction
@@ -11,6 +12,9 @@ interface ScannerAction {
         val error: String
     ): ScannerAction
     data object DismissPredictionDialog: ScannerAction
+    data class LearnMore(
+        val wasteClass: WasteClass
+    ): ScannerAction
     data object NavigateToHistory: ScannerAction
     data object NavigateToSettings: ScannerAction
     data object NavigateToAboutUs: ScannerAction

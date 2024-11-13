@@ -47,6 +47,7 @@ import androidx.core.graphics.rotationMatrix
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.core.presentation.util.hasPermission
@@ -54,14 +55,16 @@ import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
+import com.recyclens.scanner.presentation.util.toInformation
 import com.recyclens.scanner.presentation.util.toPredictionUi
 
 @Composable
 fun ScannerScreenRoot(
     viewModel: ScannerViewModel,
-    onNavigateToSettings: () -> Unit, // TODO: Add Information param
+    onNavigateToInformation: (Question?) -> Unit,
     onNavigateToAboutUs: () -> Unit,
     onNavigateToHistory: () -> Unit,
+    onNavigateToSettings: () -> Unit,
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
 
@@ -69,6 +72,7 @@ fun ScannerScreenRoot(
         state = state.value,
         onAction = { action ->
             when(action) {
+                is ScannerAction.LearnMore -> onNavigateToInformation(action.wasteClass.toInformation())
                 is ScannerAction.NavigateToSettings -> onNavigateToSettings()
                 is ScannerAction.NavigateToAboutUs -> onNavigateToAboutUs()
                 is ScannerAction.NavigateToHistory -> onNavigateToHistory()
@@ -230,7 +234,7 @@ private fun ScannerScreen(
                     onAction(ScannerAction.DismissPredictionDialog)
                 },
                 onLearnMore = {
-                    // TODO: Add Learn More action
+                    onAction(ScannerAction.LearnMore(prediction.wasteClass))
                 }
             )
         }
