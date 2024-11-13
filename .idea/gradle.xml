@@ -16,6 +16,10 @@
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/core/presentation" />
+            <option value="$PROJECT_DIR$/history" />
+            <option value="$PROJECT_DIR$/history/data" />
+            <option value="$PROJECT_DIR$/history/database" />
+            <option value="$PROJECT_DIR$/history/domain" />
             <option value="$PROJECT_DIR$/scanner" />
             <option value="$PROJECT_DIR$/scanner/data" />
             <option value="$PROJECT_DIR$/scanner/domain" />

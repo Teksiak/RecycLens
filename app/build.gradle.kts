@@ -61,6 +61,10 @@ dependencies {
     implementation(projects.scanner.domain)
     implementation(projects.scanner.presentation)
 
+    implementation(projects.history.domain)
+    implementation(projects.history.database)
+    implementation(projects.history.data)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
