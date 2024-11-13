@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="11">
+      <module name="RecycLens.app" target="21" />
+      <module name="RecycLens.core.data" target="21" />
+      <module name="RecycLens.core.network" target="21" />
+      <module name="RecycLens.core.presentation" target="21" />
+      <module name="RecycLens.history.data" target="21" />
+      <module name="RecycLens.history.database" target="21" />
+      <module name="RecycLens.scanner.data" target="21" />
+      <module name="RecycLens.scanner.presentation" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>
