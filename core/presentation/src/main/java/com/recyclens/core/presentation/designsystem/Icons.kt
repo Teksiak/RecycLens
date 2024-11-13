@@ -26,6 +26,9 @@ val Error: ImageVector
 val Flash: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.flash)
+val FlashOn: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.flash_on)
 val Close: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.close)

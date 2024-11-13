@@ -23,4 +23,6 @@
     <string name="learn_more">Dowiedz się więcej</string>
     <string name="image_check">Zatwierdzanie zdjęć</string>
     <string name="history">Historia</string>
+    <string name="flash_on">Włącz lampę błyskową</string>
+    <string name="flash_off">Wyłącz lampę błyskową</string>
 </resources>

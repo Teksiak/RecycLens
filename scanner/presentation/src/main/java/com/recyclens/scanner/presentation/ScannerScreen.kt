@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,6 +55,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.CheckImage
+import com.recyclens.core.presentation.designsystem.Flash
+import com.recyclens.core.presentation.designsystem.FlashOn
 import com.recyclens.core.presentation.designsystem.History
 import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.core.presentation.designsystem.White
@@ -271,12 +274,12 @@ private fun ScannerScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(paddingValues)
-                            .padding(bottom = 112.dp),
+                            .padding(bottom = 72.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Spacer(modifier = Modifier.weight(1f))
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
+                            horizontalArrangement = Arrangement.spacedBy(36.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             IconButton(
@@ -290,7 +293,6 @@ private fun ScannerScreen(
                                     tint = White
                                 )
                             }
-                            Spacer(modifier = Modifier.width(36.dp))
                             PhotoButton(
                                 isLoading = state.isLoading,
                                 onClick = {
@@ -301,7 +303,6 @@ private fun ScannerScreen(
                                     )
                                 }
                             )
-                            Spacer(modifier = Modifier.width(36.dp))
                             IconButton(
                                 onClick = {
                                     onAction(ScannerAction.NavigateToHistory)
@@ -313,6 +314,19 @@ private fun ScannerScreen(
                                     tint = White
                                 )
                             }
+                        }
+                        Spacer(modifier = Modifier.size(16.dp))
+                        IconButton(
+                            onClick = {
+                                cameraController.enableTorch(!state.isFlashOn)
+                                onAction(ScannerAction.ToggleFlash)
+                            }
+                        ) {
+                            Icon(
+                                imageVector = if(state.isFlashOn) FlashOn else Flash,
+                                contentDescription = if(state.isFlashOn) stringResource(id = R.string.flash_off) else stringResource(id = R.string.flash_on),
+                                tint = White
+                            )
                         }
                     }
                 }
