@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RecycLens</string>
+    <string name="expand_question">Pokaż odpowiedź</string>
+    <string name="collapse_question">Ukryj odpowiedź</string>
+    <string name="what_is_recyclens_title">Czym jest RecycLens?</string>
+    <string name="what_is_recyclens_answer">RecycLens to rozwiązanie, ułatwiające i usprawniające codzienną segregację śmieci. Przy pomocy sztucznej inteligencji aplikacja analizuje zdjęcie odpadu wykonane przez użytkownika i wskazuje pojemnik, do którego należy go wyrzucić.</string>
 </resources>
