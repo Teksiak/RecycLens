@@ -58,6 +58,11 @@ class ScannerViewModel @Inject constructor(
                     }
                 }
             }
+            is ScannerAction.DismissPredictionDialog -> {
+                _state.update {
+                    it.copy(classificationPrediction = null)
+                }
+            }
             is ScannerAction.OnImageCaptureError -> {
                 _state.update {
                     it.copy(

@@ -3,13 +3,11 @@ package com.recyclens.scanner.presentation
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
@@ -43,12 +41,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.presentation.components.TitleDialog
-import com.recyclens.core.presentation.designsystem.Container
 import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.core.presentation.util.hasPermission
 import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
 import com.recyclens.scanner.presentation.components.PhotoButton
+import com.recyclens.scanner.presentation.components.PredictionDialog
+import com.recyclens.scanner.presentation.util.toPredictionUi
 
 @Composable
 fun ScannerScreenRoot(
@@ -200,6 +199,16 @@ private fun ScannerScreen(
             if(lifecycleState == Lifecycle.State.RESUMED && state.isFlashOn) {
                 cameraController.enableTorch(true)
             }
+        }
+
+        state.classificationPrediction?.let { prediction ->
+            PredictionDialog(
+                predictionDetails = prediction.toPredictionUi(),
+                onDismiss = {
+                    onAction(ScannerAction.DismissPredictionDialog)
+                },
+                onLearnMore = { }
+            )
         }
 
         ModalNavigationDrawer(

@@ -29,6 +29,9 @@ val Flash: ImageVector
 val Close: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.close)
+val Remove: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.remove)
 val History: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.history)

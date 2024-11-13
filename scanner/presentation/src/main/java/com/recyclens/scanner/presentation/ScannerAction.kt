@@ -10,6 +10,7 @@ interface ScannerAction {
     data class OnImageCaptureError(
         val error: String
     ): ScannerAction
+    data object DismissPredictionDialog: ScannerAction
     data object NavigateToHistory: ScannerAction
     data object NavigateToSettings: ScannerAction
     data object NavigateToAboutUs: ScannerAction
