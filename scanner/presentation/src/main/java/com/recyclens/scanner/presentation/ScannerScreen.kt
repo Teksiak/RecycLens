@@ -3,6 +3,8 @@ package com.recyclens.scanner.presentation
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.net.Uri
 import android.provider.Settings
 import androidx.activity.ComponentActivity
@@ -30,13 +32,18 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.rotationMatrix
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -173,13 +180,27 @@ private fun ScannerScreen(
                 setEnabledUseCases(CameraController.IMAGE_CAPTURE)
             }
         }
+        var previewBitmap = remember { mutableStateOf<ImageBitmap?>(null) }
         val imageCaptureCallback = remember {
             object : ImageCapture.OnImageCapturedCallback() {
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
+                    val matrix = Matrix().apply {
+                        postRotate(image.imageInfo.rotationDegrees.toFloat())
+                    }
+                    val imageBitmap = Bitmap.createBitmap(
+                        image.toBitmap(),
+                        0,
+                        0,
+                        image.width,
+                        image.height,
+                        matrix,
+                        true
+                    )
+                    previewBitmap.value = imageBitmap.asImageBitmap()
                     onAction(
                         ScannerAction.OnImageCapture(
-                            image = image.toBitmap()
+                            image = imageBitmap
                         )
                     )
                 }
@@ -205,9 +226,12 @@ private fun ScannerScreen(
             PredictionDialog(
                 predictionDetails = prediction.toPredictionUi(),
                 onDismiss = {
+                    previewBitmap.value = null
                     onAction(ScannerAction.DismissPredictionDialog)
                 },
-                onLearnMore = { }
+                onLearnMore = {
+                    // TODO: Add Learn More action
+                }
             )
         }
 
@@ -220,10 +244,12 @@ private fun ScannerScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black)
+                        .background(Color.Black),
+                    contentAlignment = Alignment.Center
                 ) {
                     CameraPreview(
-                        cameraController = cameraController
+                        cameraController = cameraController,
+                        previewImage = previewBitmap.value
                     )
 
                     CameraOverlay(
