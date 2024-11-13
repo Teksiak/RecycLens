@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.net.Uri
 import android.provider.Settings
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,6 +25,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -49,7 +53,10 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.TitleDialog
+import com.recyclens.core.presentation.designsystem.CheckImage
+import com.recyclens.core.presentation.designsystem.History
 import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.White
 import com.recyclens.core.presentation.util.hasPermission
 import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
@@ -184,7 +191,7 @@ private fun ScannerScreen(
                 setEnabledUseCases(CameraController.IMAGE_CAPTURE)
             }
         }
-        var previewBitmap = remember { mutableStateOf<ImageBitmap?>(null) }
+        val previewBitmap = remember { mutableStateOf<ImageBitmap?>(null) }
         val imageCaptureCallback = remember {
             object : ImageCapture.OnImageCapturedCallback() {
                 override fun onCaptureSuccess(image: ImageProxy) {
@@ -267,17 +274,23 @@ private fun ScannerScreen(
                             .padding(bottom = 112.dp),
                     ) {
                         Spacer(modifier = Modifier.weight(1f))
-                        state.classificationPrediction?.let {
-                            Text(
-                                text = "${it.wasteClass.name} + ${it.confidence}",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color.White
-                            )
-                        }
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
+                            IconButton(
+                                onClick = {
+                                    // TODO: Display dailog about unfinished feature
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = CheckImage,
+                                    contentDescription = stringResource(id = R.string.image_check),
+                                    tint = White
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(36.dp))
                             PhotoButton(
                                 isLoading = state.isLoading,
                                 onClick = {
@@ -288,6 +301,18 @@ private fun ScannerScreen(
                                     )
                                 }
                             )
+                            Spacer(modifier = Modifier.width(36.dp))
+                            IconButton(
+                                onClick = {
+                                    onAction(ScannerAction.NavigateToHistory)
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = History,
+                                    contentDescription = stringResource(id = R.string.history),
+                                    tint = White
+                                )
+                            }
                         }
                     }
                 }

@@ -1,17 +1,14 @@
 package com.recyclens.scanner.data
 
 import android.util.Base64
-import android.util.Log
-import androidx.camera.core.ImageProxy
 import com.recyclens.core.domain.util.DataError
-import com.recyclens.scanner.domain.ClassificationPrediction
-import com.recyclens.scanner.domain.ClassificationRepository
 import com.recyclens.core.domain.util.Result
 import com.recyclens.core.network.RoboflowApiService
 import com.recyclens.core.network.util.safeApiCall
 import com.recyclens.scanner.data.mapper.toClassificationPrediction
+import com.recyclens.scanner.domain.ClassificationPrediction
+import com.recyclens.scanner.domain.ClassificationRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -35,7 +32,6 @@ class RoboflowClassificationRepository @Inject constructor(
         }) {
             is Result.Error -> result
             is Result.Success -> {
-                Log.d("RoboflowClassificationRepository", "getPrediction: ${result.data}")
                 val predictionDto = result.data
                 if(predictionDto.predictions.isEmpty()) {
                     return Result.Error(DataError.Remote.UNKNOWN_ERROR)

@@ -21,4 +21,6 @@
     <string name="our_model_confidence">Nasz model ocenia poprawność tej sugestii na</string>
     <string name="is_suggestion_wrong">Czy ta sugestia jest niepoprawna?</string>
     <string name="learn_more">Dowiedz się więcej</string>
+    <string name="image_check">Zatwierdzanie zdjęć</string>
+    <string name="history">Historia</string>
 </resources>
