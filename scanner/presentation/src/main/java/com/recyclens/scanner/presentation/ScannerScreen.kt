@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,11 +33,13 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,20 +55,26 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.CheckImage
+import com.recyclens.core.presentation.designsystem.CircleInfoIcon
 import com.recyclens.core.presentation.designsystem.Flash
 import com.recyclens.core.presentation.designsystem.FlashOn
-import com.recyclens.core.presentation.designsystem.Help
+import com.recyclens.core.presentation.designsystem.TrashInfo
 import com.recyclens.core.presentation.designsystem.History
+import com.recyclens.core.presentation.designsystem.LanguageIcon
 import com.recyclens.core.presentation.designsystem.Menu
 import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.SettingsIcon
 import com.recyclens.core.presentation.designsystem.White
 import com.recyclens.core.presentation.util.hasPermission
 import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
+import com.recyclens.scanner.presentation.components.Drawer
+import com.recyclens.scanner.presentation.components.DrawerItem
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
 import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
+import kotlinx.coroutines.launch
 
 @Composable
 fun ScannerScreenRoot(
@@ -248,9 +257,45 @@ private fun ScannerScreen(
             )
         }
 
+        val drawerState = rememberDrawerState(DrawerValue.Closed)
+        val coroutineScope = rememberCoroutineScope()
+
         ModalNavigationDrawer(
+            drawerState = drawerState,
             drawerContent = {
-                // TODO: Add Drawer content
+                Drawer {
+                    DrawerItem(
+                        icon = LanguageIcon,
+                        title = stringResource(id = R.string.language),
+                        subtitle = "Polski", //TODO: Get from settings
+                        onClick = {
+                            coroutineScope.launch {
+                                drawerState.close()
+                            }
+                            //TODO: Display dialog
+                        }
+                    )
+                    DrawerItem(
+                        icon = SettingsIcon,
+                        title = stringResource(id = R.string.settings),
+                        onClick = {
+                            coroutineScope.launch {
+                                drawerState.close()
+                            }
+                            onAction(ScannerAction.NavigateToSettings)
+                        }
+                    )
+                    DrawerItem(
+                        icon = CircleInfoIcon,
+                        title = stringResource(id = R.string.about_us),
+                        onClick = {
+                            coroutineScope.launch {
+                                drawerState.close()
+                            }
+                            onAction(ScannerAction.NavigateToAboutUs)
+                        }
+                    )
+                }
             }
         ) {
             Scaffold { paddingValues ->
@@ -280,15 +325,17 @@ private fun ScannerScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
-                                .padding(top = 16.dp),
+                                .padding(top = 24.dp),
                         ) {
                             IconButton(
                                 onClick = {
-                                    // TODO: Open drawer
+                                    coroutineScope.launch {
+                                        drawerState.open()
+                                    }
                                 }
                             ) {
                                 Icon(
-                                    modifier = Modifier.size(32.dp),
+                                    modifier = Modifier.size(24.dp),
                                     imageVector = Menu,
                                     contentDescription = stringResource(id = R.string.open_drawer),
                                     tint = White
@@ -301,8 +348,8 @@ private fun ScannerScreen(
                                 }
                             ) {
                                 Icon(
-                                    modifier = Modifier.size(32.dp),
-                                    imageVector = Help,
+                                    modifier = Modifier.size(24.dp),
+                                    imageVector = TrashInfo,
                                     contentDescription = stringResource(id = R.string.informations),
                                     tint = White
                                 )
