@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permissions">Uprawnienia</string>
+    <string name="camera_permission_rationale_description">Aby rozpoznać odpady i pomóc Ci w ich prawidłowej segregacji, aplikacja wymaga dostępu do kamery. Dzięki temu możesz zrobić zdjęcie odpadów, a my wskażemy, do którego pojemnika powinny trafić</string>
+    <string name="grant_access">Przyznaj dostęp</string>
+    <string name="settings">Ustawienia</string>
+    <string name="camera_permission_denied_description">"Wygląda na to, że uprawnienia do kamery nie mogą być przyznane w aplikacji. Aby korzystać z funkcji rozpoznawania odpadów, RecycLens potrzebuje do niej dostępu. Możesz włączyć go ręcznie w ustawieniach aplikacji. "</string>
+    <string name="paper_title">kosza na papier</string>
+    <string name="paper_description">W tym pojemniku powinny znajdować się odpady papierowe jak gazety, kartony, zeszyty, kartki i papierowe torby.</string>
+    <string name="plastic_title">kosza na plastik</string>
+    <string name="plastic_description">W tym pojemniku powinny znajdować się wszystkie opakowania plastikowe lub metalowe, takie jak butelki, puszki, kubki po jogurtach, czyste opakowania po jedzeniu oraz folie.</string>
+    <string name="mixed_title">kosza na zmieszane</string>
+    <string name="mixed_description">W tym pojemniku powinny znajdować się odpady, które nie poddaje się recyklingowi. Są nimi takie rzeczy jak: resztki mięsa, olej po smażeniu, paragony, niedopałki papierosów, rozbite naczynia szklane i porcelanowe oraz ręczniki oraz chusteczki papierowe.</string>
+    <string name="electronics_title">kosza na elektronikę</string>
+    <string name="electronics_description">W tym pojemniku powinny znajdować się małe urządzenia elektroniczne, takie jak baterie, ładowarki, telefony, piloty, słuchawki i drobne sprzęty domowe.</string>
+    <string name="glass_title">kosza na szkło</string>
+    <string name="glass_description">W tym pojemniku powinny znajdować się szklane odpady jak butelki, słoiki, flakoniki i szklane opakowania (bez tłuczonego szkła, luster, ceramiki oraz szkła hartowanego).</string>
+    <string name="bio_title">kosza na bioodpady</string>
+    <string name="bio_description"><![CDATA[W tym pojemniku powinny znajdować się  odpady biodegradowalne, takie jak: warzywa, owoce, skorupki jaj, fusy po kawie i herbacie, kwiaty i rośliny doniczkowe oraz resztki jedzenia (bez mięsa, kości i tłuszczów).]]></string>
+    <string name="throw_out">Wyrzuć ten odpad do</string>
+    <string name="our_model_confidence">Nasz model ocenia poprawność tej sugestii na</string>
+    <string name="is_suggestion_wrong">Czy ta sugestia jest niepoprawna?</string>
+    <string name="learn_more">Dowiedz się więcej</string>
+    <string name="image_check">Zatwierdzanie zdjęć</string>
+    <string name="history">Historia</string>
+</resources>

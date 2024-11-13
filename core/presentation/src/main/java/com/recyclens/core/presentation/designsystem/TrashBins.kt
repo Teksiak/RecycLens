@@ -20,6 +20,6 @@ val GlassBin: ImageVector
 val MixedBin: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.mixed_bin)
-val ElectronicBin: ImageVector
+val ElectronicsBin: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.electronic_bin)
