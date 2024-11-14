@@ -36,4 +36,5 @@
     <string name="error_dialog_description">Nie udało się rozpoznać tego zdjęcia. Upewnij się, że przedmiot jest dobrze widoczny i spróbuj ponownie.</string>
     <string name="try_again">Spróbuj ponownie</string>
     <string name="error_rationale">Jeśli problem się powtarza, spróbuj zrobić zdjęcie w lepszym oświetleniu na jednolitym tle lub sprawdź połączenie z internetem.</string>
+    <string name="take_a_photo">Zrób zdjęcie odpadu do wyrzucenia</string>
 </resources>

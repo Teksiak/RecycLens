@@ -39,20 +39,24 @@ class ScannerViewModel @Inject constructor(
                     }
                     when(val result = classificationRepository.getPrediction(imageByteArray)) {
                         is Result.Success -> {
-                            _state.update {
-                                it.copy(
-                                    isLoading = false,
-                                    isError = false,
-                                    classificationPrediction = result.data
-                                )
+                            withContext(Dispatchers.Main) {
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        isError = false,
+                                        classificationPrediction = result.data
+                                    )
+                                }
                             }
                         }
                         is Result.Error -> {
-                            _state.update {
-                                it.copy(
-                                    isLoading = false,
-                                    isError = true
-                                )
+                            withContext(Dispatchers.Main) {
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        isError = true
+                                    )
+                                }
                             }
                         }
                     }

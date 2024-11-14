@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,11 +43,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -56,6 +59,7 @@ import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.CheckImage
 import com.recyclens.core.presentation.designsystem.CircleInfoIcon
+import com.recyclens.core.presentation.designsystem.Dark
 import com.recyclens.core.presentation.designsystem.Flash
 import com.recyclens.core.presentation.designsystem.FlashOn
 import com.recyclens.core.presentation.designsystem.TrashInfo
@@ -76,6 +80,7 @@ import com.recyclens.scanner.presentation.components.PredictionDialog
 import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -96,7 +101,7 @@ fun ScannerScreenRoot(
             viewModel.onAction(action)
             when(action) {
                 is ScannerAction.NavigateToInformation -> {
-                    coroutineScope.launch(Dispatchers.Unconfined) {
+                    coroutineScope.launch(Dispatchers.Main) {
                         if(state.value.classificationPrediction != null) {
                             delay(100)
                         }
@@ -376,6 +381,18 @@ private fun ScannerScreen(
                             }
                         }
                         Spacer(modifier = Modifier.weight(1f))
+                        Text(
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(Color.Black.copy(alpha = 0.7f))
+                                .padding(vertical = 4.dp, horizontal = 12.dp),
+                            text = stringResource(id = R.string.take_a_photo),
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                fontWeight = FontWeight.ExtraBold
+                            ),
+                            color = White
+                        )
+                        Spacer(modifier = Modifier.size(24.dp))
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(36.dp),
                             verticalAlignment = Alignment.CenterVertically
