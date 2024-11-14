@@ -1,5 +1,8 @@
 package com.recyclens.core.presentation
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 enum class Question {
     WHAT_IS_RECYCLENS,
     HOW_THE_APP_WORKS,

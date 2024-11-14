@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.recyclens.aboutus.AboutUsScreenRoot
 import com.recyclens.core.presentation.NavigationRoute
 import com.recyclens.information.InformationScreenRoot
+import com.recyclens.information.InformationViewModel
 import com.recyclens.scanner.presentation.ScannerScreenRoot
 import com.recyclens.scanner.presentation.ScannerViewModel
 
@@ -42,7 +43,12 @@ fun NavigationRoot(
             )
         }
         composable<NavigationRoute.InformationRoute> {
-            InformationScreenRoot()
+            InformationScreenRoot(
+                viewModel = hiltViewModel<InformationViewModel>(),
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
+            )
         }
         composable<NavigationRoute.AboutUsRoute> {
             AboutUsScreenRoot()
