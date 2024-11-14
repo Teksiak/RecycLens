@@ -33,17 +33,23 @@ import com.recyclens.core.presentation.designsystem.RecycLensTheme
 import com.recyclens.core.presentation.designsystem.Secondary
 
 @Composable
-fun AboutUsScreenRoot() {
-    AboutUsScreen()
+fun AboutUsScreenRoot(
+    onNavigateBack: () -> Unit
+) {
+    AboutUsScreen(
+        onNavigateBack = onNavigateBack
+    )
 }
 
 @Composable
-fun AboutUsScreen() {
+private fun AboutUsScreen(
+    onNavigateBack: () -> Unit
+) {
     Scaffold(
         topBar = {
             NavigationTopBar(
                 title = stringResource(id = R.string.about_us),
-                onNavigateBack = { }
+                onNavigateBack = onNavigateBack
             )
         }
     ) { paddingValues ->
@@ -52,8 +58,7 @@ fun AboutUsScreen() {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .padding(vertical = 16.dp)
-                .padding(bottom = 16.dp),
+                .padding(16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -84,7 +89,6 @@ fun AboutUsScreen() {
                     )
                 ),
             )
-
             Text(
                 text = stringResource(id = R.string.watchword),
                 style = MaterialTheme.typography.bodyMedium,
@@ -104,7 +108,7 @@ fun AboutUsScreen() {
             Spacer(modifier = Modifier.size(16.dp))
             Text(
                 text = stringResource(id = R.string.contact_email),
-                style = MaterialTheme.typography.bodyMedium.copy(
+                style = MaterialTheme.typography.bodyLarge.copy(
                     textDecoration = TextDecoration.Underline
                 ),
                 color = Primary,
@@ -112,7 +116,7 @@ fun AboutUsScreen() {
             Spacer(modifier = Modifier.size(16.dp))
             Text(
                 text = stringResource(id = R.string.adress),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
     }
@@ -122,6 +126,8 @@ fun AboutUsScreen() {
 @Composable
 private fun InformationScreenPreview() {
     RecycLensTheme {
-        AboutUsScreen()
+        AboutUsScreen(
+            onNavigateBack = {}
+        )
     }
 }

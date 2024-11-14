@@ -61,7 +61,11 @@ fun NavigationRoot(
              )
         }
         composable<NavigationRoute.AboutUsRoute> {
-            AboutUsScreenRoot()
+            AboutUsScreenRoot(
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }
