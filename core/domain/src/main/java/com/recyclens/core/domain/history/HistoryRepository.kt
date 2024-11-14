@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface HistoryRepository {
 
-    fun getWasteHistory(): Flow<List<ClassifiedWastesByDate>>
+    fun getWasteHistory(): Flow<List<HistoryWaste>>
 
-    suspend fun addClassifiedWaste(classifiedWaste: ClassifiedWaste)
+    suspend fun addClassifiedWaste(historyWaste: HistoryWaste)
 
-    suspend fun removeClassifiedWaste(classifiedWaste: ClassifiedWaste)
+    suspend fun removeClassifiedWaste(historyWaste: HistoryWaste)
 }

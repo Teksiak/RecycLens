@@ -1,14 +1,14 @@
 package com.recyclens.scanner.presentation
 
-import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.recyclens.core.domain.history.ClassifiedWaste
+import com.recyclens.core.domain.history.HistoryWaste
 import com.recyclens.core.domain.history.HistoryRepository
 import com.recyclens.core.domain.settings.SettingsRepository
 import com.recyclens.core.domain.util.Result
 import com.recyclens.scanner.domain.ClassificationRepository
 import com.recyclens.scanner.presentation.util.compressImageToTargetSize
+import com.recyclens.scanner.presentation.util.resize
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,12 +50,14 @@ class ScannerViewModel @Inject constructor(
             is ScannerAction.OnImageCapture -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val imageByteArray = withContext(Dispatchers.Default) {
-                        action.image.compressImageToTargetSize(2048)
+                        action.image
+                            .resize(1024, 1024)
+                            .compressImageToTargetSize(1024)
                     }
                     when(val result = classificationRepository.getPrediction(imageByteArray)) {
                         is Result.Success -> {
                             historyRepository.addClassifiedWaste(
-                                classifiedWaste = ClassifiedWaste(
+                                historyWaste = HistoryWaste(
                                     image = imageByteArray,
                                     wasteClass = result.data.wasteClass,
                                 )

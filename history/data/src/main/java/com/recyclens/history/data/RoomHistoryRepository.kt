@@ -1,11 +1,10 @@
 package com.recyclens.history.data
 
-import com.recyclens.core.domain.history.ClassifiedWaste
-import com.recyclens.core.domain.history.ClassifiedWastesByDate
+import com.recyclens.core.domain.history.HistoryWaste
 import com.recyclens.core.domain.history.HistoryRepository
 import com.recyclens.core.domain.settings.SettingsRepository
 import com.recyclens.history.database.HistoryDao
-import com.recyclens.history.database.toClassifiedWaste
+import com.recyclens.history.database.toHistoryWaste
 import com.recyclens.history.database.toHistoryEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -39,24 +38,20 @@ class RoomHistoryRepository(
         }
     }
 
-    override fun getWasteHistory(): Flow<List<ClassifiedWastesByDate>> {
+    override fun getWasteHistory(): Flow<List<HistoryWaste>> {
         return historyDao.getHistory()
-            .map { history ->
-                history.groupBy { it.date.toLocalDate() }
-                    .map { (date, classifiedWastes) ->
-                        ClassifiedWastesByDate(
-                            date = date,
-                            classifiedWastes = classifiedWastes.map { it.toClassifiedWaste() }
-                        )
-                    }
+            .map { historyList ->
+                historyList.map { historyEntity ->
+                    historyEntity.toHistoryWaste()
+                }
             }
     }
 
-    override suspend fun addClassifiedWaste(classifiedWaste: ClassifiedWaste) {
-        historyDao.addToHistory(classifiedWaste.toHistoryEntity(), historySize.value)
+    override suspend fun addClassifiedWaste(historyWaste: HistoryWaste) {
+        historyDao.addToHistory(historyWaste.toHistoryEntity(), historySize.value)
     }
 
-    override suspend fun removeClassifiedWaste(classifiedWaste: ClassifiedWaste) {
-        historyDao.deleteHistoryById(classifiedWaste.id)
+    override suspend fun removeClassifiedWaste(historyWaste: HistoryWaste) {
+        historyDao.deleteHistoryById(historyWaste.id)
     }
 }

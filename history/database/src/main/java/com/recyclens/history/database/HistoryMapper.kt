@@ -1,9 +1,9 @@
 package com.recyclens.history.database
 
-import com.recyclens.core.domain.history.ClassifiedWaste
+import com.recyclens.core.domain.history.HistoryWaste
 
-fun HistoryEntity.toClassifiedWaste(): ClassifiedWaste {
-    return ClassifiedWaste(
+fun HistoryEntity.toHistoryWaste(): HistoryWaste {
+    return HistoryWaste(
         id = id,
         wasteClass = wasteClass,
         image = image,
@@ -11,7 +11,7 @@ fun HistoryEntity.toClassifiedWaste(): ClassifiedWaste {
     )
 }
 
-fun ClassifiedWaste.toHistoryEntity(): HistoryEntity {
+fun HistoryWaste.toHistoryEntity(): HistoryEntity {
     return HistoryEntity(
         id = id,
         wasteClass = wasteClass,

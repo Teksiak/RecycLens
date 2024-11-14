@@ -1,17 +1,17 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
-    alias(libs.plugins.room)
 }
 
 android {
-    namespace = "com.recyclens.history.database"
+    namespace = "com.recyclens.history.presentation"
     compileSdk = 35
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -30,9 +30,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    room {
-        schemaDirectory("$projectDir/schemas")
-    }
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -42,13 +39,11 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose)
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.compiler)
-
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
 
     implementation(projects.core.domain)
     implementation(projects.core.presentation)

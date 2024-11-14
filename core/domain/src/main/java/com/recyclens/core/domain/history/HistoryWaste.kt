@@ -3,7 +3,7 @@ package com.recyclens.core.domain.history
 import com.recyclens.core.domain.WasteClass
 import java.time.LocalDateTime
 
-data class ClassifiedWaste(
+data class HistoryWaste(
     val id: Int = 0,
     val wasteClass: WasteClass,
     val image: ByteArray,
@@ -13,7 +13,7 @@ data class ClassifiedWaste(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as ClassifiedWaste
+        other as HistoryWaste
 
         if (date != other.date) return false
         if (wasteClass != other.wasteClass) return false

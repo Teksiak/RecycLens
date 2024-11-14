@@ -64,9 +64,9 @@ dependencies {
     implementation(projects.scanner.domain)
     implementation(projects.scanner.presentation)
 
-    implementation(projects.history.domain)
     implementation(projects.history.database)
     implementation(projects.history.data)
+    implementation(projects.history.presentation)
 
     implementation(projects.settings.data)
     implementation(projects.settings.presentation)
