@@ -11,9 +11,21 @@ val Star: ImageVector
 val Trash: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.trash)
-val Help: ImageVector
+val TrashInfo: ImageVector
     @Composable
-    get() = ImageVector.vectorResource(id = R.drawable.pomoc)
+    get() = ImageVector.vectorResource(id = R.drawable.info_trash)
+val SettingsIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.settings)
+val LanguageIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.language)
+val CircleInfoIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.info_circle)
+val Menu: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.menu)
 val LogoFirst: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.logo_first_theme)
@@ -26,6 +38,9 @@ val Error: ImageVector
 val Flash: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.flash)
+val FlashOn: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.flash_on)
 val Close: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.close)

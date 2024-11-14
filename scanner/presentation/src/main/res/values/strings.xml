@@ -23,4 +23,12 @@
     <string name="learn_more">Dowiedz się więcej</string>
     <string name="image_check">Zatwierdzanie zdjęć</string>
     <string name="history">Historia</string>
+    <string name="flash_on">Włącz lampę błyskową</string>
+    <string name="flash_off">Wyłącz lampę błyskową</string>
+    <string name="open_drawer">Otwórz menu</string>
+    <string name="informations">Informacje</string>
+    <string name="app_name">RecycLens</string>
+    <string name="slogan">Recykling - szybki i prosty</string>
+    <string name="language">Język</string>
+    <string name="about_us">O nas</string>
 </resources>

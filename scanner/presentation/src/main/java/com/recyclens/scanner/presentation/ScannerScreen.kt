@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.net.Uri
 import android.provider.Settings
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,7 +24,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,11 +33,13 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,23 +49,32 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.rotationMatrix
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.CheckImage
+import com.recyclens.core.presentation.designsystem.CircleInfoIcon
+import com.recyclens.core.presentation.designsystem.Flash
+import com.recyclens.core.presentation.designsystem.FlashOn
+import com.recyclens.core.presentation.designsystem.TrashInfo
 import com.recyclens.core.presentation.designsystem.History
+import com.recyclens.core.presentation.designsystem.LanguageIcon
+import com.recyclens.core.presentation.designsystem.Menu
 import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.SettingsIcon
 import com.recyclens.core.presentation.designsystem.White
 import com.recyclens.core.presentation.util.hasPermission
 import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
+import com.recyclens.scanner.presentation.components.Drawer
+import com.recyclens.scanner.presentation.components.DrawerItem
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
-import com.recyclens.scanner.presentation.util.toInformation
+import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
+import kotlinx.coroutines.launch
 
 @Composable
 fun ScannerScreenRoot(
@@ -79,7 +90,7 @@ fun ScannerScreenRoot(
         state = state.value,
         onAction = { action ->
             when(action) {
-                is ScannerAction.LearnMore -> onNavigateToInformation(action.wasteClass.toInformation())
+                is ScannerAction.NavigateToInformation -> onNavigateToInformation(action.question)
                 is ScannerAction.NavigateToSettings -> onNavigateToSettings()
                 is ScannerAction.NavigateToAboutUs -> onNavigateToAboutUs()
                 is ScannerAction.NavigateToHistory -> onNavigateToHistory()
@@ -241,14 +252,50 @@ private fun ScannerScreen(
                     onAction(ScannerAction.DismissPredictionDialog)
                 },
                 onLearnMore = {
-                    onAction(ScannerAction.LearnMore(prediction.wasteClass))
+                    onAction(ScannerAction.NavigateToInformation(prediction.wasteClass.toQuestion()))
                 }
             )
         }
 
+        val drawerState = rememberDrawerState(DrawerValue.Closed)
+        val coroutineScope = rememberCoroutineScope()
+
         ModalNavigationDrawer(
+            drawerState = drawerState,
             drawerContent = {
-                // TODO: Add Drawer content
+                Drawer {
+                    DrawerItem(
+                        icon = LanguageIcon,
+                        title = stringResource(id = R.string.language),
+                        subtitle = "Polski", //TODO: Get from settings
+                        onClick = {
+                            coroutineScope.launch {
+                                drawerState.close()
+                            }
+                            //TODO: Display dialog
+                        }
+                    )
+                    DrawerItem(
+                        icon = SettingsIcon,
+                        title = stringResource(id = R.string.settings),
+                        onClick = {
+                            coroutineScope.launch {
+                                drawerState.close()
+                            }
+                            onAction(ScannerAction.NavigateToSettings)
+                        }
+                    )
+                    DrawerItem(
+                        icon = CircleInfoIcon,
+                        title = stringResource(id = R.string.about_us),
+                        onClick = {
+                            coroutineScope.launch {
+                                drawerState.close()
+                            }
+                            onAction(ScannerAction.NavigateToAboutUs)
+                        }
+                    )
+                }
             }
         ) {
             Scaffold { paddingValues ->
@@ -271,26 +318,60 @@ private fun ScannerScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(paddingValues)
-                            .padding(bottom = 112.dp),
+                            .padding(bottom = 72.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(top = 24.dp),
+                        ) {
+                            IconButton(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        drawerState.open()
+                                    }
+                                }
+                            ) {
+                                Icon(
+                                    modifier = Modifier.size(24.dp),
+                                    imageVector = Menu,
+                                    contentDescription = stringResource(id = R.string.open_drawer),
+                                    tint = White
+                                )
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
+                            IconButton(
+                                onClick = {
+                                    onAction(ScannerAction.NavigateToInformation(null))
+                                }
+                            ) {
+                                Icon(
+                                    modifier = Modifier.size(24.dp),
+                                    imageVector = TrashInfo,
+                                    contentDescription = stringResource(id = R.string.informations),
+                                    tint = White
+                                )
+                            }
+                        }
                         Spacer(modifier = Modifier.weight(1f))
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
+                            horizontalArrangement = Arrangement.spacedBy(36.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             IconButton(
                                 onClick = {
-                                    // TODO: Display dailog about unfinished feature
+                                    // TODO: Display dialog about unfinished feature
                                 }
                             ) {
                                 Icon(
+                                    modifier = Modifier.size(32.dp),
                                     imageVector = CheckImage,
                                     contentDescription = stringResource(id = R.string.image_check),
                                     tint = White
                                 )
                             }
-                            Spacer(modifier = Modifier.width(36.dp))
                             PhotoButton(
                                 isLoading = state.isLoading,
                                 onClick = {
@@ -301,18 +382,31 @@ private fun ScannerScreen(
                                     )
                                 }
                             )
-                            Spacer(modifier = Modifier.width(36.dp))
                             IconButton(
                                 onClick = {
                                     onAction(ScannerAction.NavigateToHistory)
                                 }
                             ) {
                                 Icon(
+                                    modifier = Modifier.size(32.dp),
                                     imageVector = History,
                                     contentDescription = stringResource(id = R.string.history),
                                     tint = White
                                 )
                             }
+                        }
+                        Spacer(modifier = Modifier.size(16.dp))
+                        IconButton(
+                            onClick = {
+                                cameraController.enableTorch(!state.isFlashOn)
+                                onAction(ScannerAction.ToggleFlash)
+                            }
+                        ) {
+                            Icon(
+                                imageVector = if(state.isFlashOn) FlashOn else Flash,
+                                contentDescription = if(state.isFlashOn) stringResource(id = R.string.flash_off) else stringResource(id = R.string.flash_on),
+                                tint = White
+                            )
                         }
                     }
                 }
