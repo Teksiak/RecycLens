@@ -92,17 +92,17 @@ fun ScannerScreenRoot(
     onNavigateToHistory: () -> Unit,
     onNavigateToSettings: () -> Unit,
 ) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
 
     ScannerScreen(
-        state = state.value,
+        state = state,
         onAction = { action ->
             viewModel.onAction(action)
             when(action) {
                 is ScannerAction.NavigateToInformation -> {
                     coroutineScope.launch(Dispatchers.Main) {
-                        if(state.value.classificationPrediction != null) {
+                        if(state.classificationPrediction != null) {
                             delay(100)
                         }
                         onNavigateToInformation(action.question)

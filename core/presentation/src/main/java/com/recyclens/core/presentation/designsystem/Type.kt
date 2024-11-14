@@ -39,20 +39,20 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         color = Dark,
-        fontWeight = FontWeight.W800
+        fontWeight = FontWeight.ExtraBold
     ),
     bodyMedium = TextStyle(
         fontFamily = Nunito,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         color = Dark,
-        fontWeight = FontWeight.W800
+        fontWeight = FontWeight.ExtraBold
     ),
     bodySmall = TextStyle(
         fontFamily = Nunito,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         color = Dark,
-        fontWeight = FontWeight.W800
+        fontWeight = FontWeight.ExtraBold
     ),
 )

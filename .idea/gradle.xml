@@ -26,6 +26,7 @@
             <option value="$PROJECT_DIR$/scanner/presentation" />
             <option value="$PROJECT_DIR$/settings" />
             <option value="$PROJECT_DIR$/settings/data" />
+            <option value="$PROJECT_DIR$/settings/presentation" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

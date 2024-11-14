@@ -134,7 +134,7 @@ fun TitleDialog(
 
 @Preview
 @Composable
-fun TitleDialogPreview() {
+private fun TitleDialogPreview() {
     RecycLensTheme {
         TitleDialog(
             title = "Title",
