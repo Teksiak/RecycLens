@@ -6,4 +6,41 @@
     <string name="what_is_recyclens_answer">RecycLens to rozwiązanie, ułatwiające i usprawniające codzienną segregację śmieci. Przy pomocy sztucznej inteligencji aplikacja analizuje zdjęcie odpadu wykonane przez użytkownika i wskazuje pojemnik, do którego należy go wyrzucić.</string>
     <string name="about_us">O nas</string>
     <string name="informations">Informacje</string>
+    <string name="watchword">Recykling - szybki i prosty</string>
+    <string name="about_us_description">Pamiętaj, że każdy drobny krok w stronę świadomego recyklingu to ważny wkład w ochronę środowiska i przyszłość naszej planety!</string>
+    <string name="contact_question">Masz pytania, sugestie lub napotkałeś problemy z aplikacją? Skontaktuj się z nami:</string>
+    <string name="contact_email">support@recyclens.com</string>
+    <string name="adress">Jeden dom i siedem ulic, Pitulice, Polska</string>
+
+
+
+
+    <string name="how_the_app_works_title">Jak działa aplikacja?</string>
+    <string name="how_the_app_works_answer">1. Zrób zdjęcie przedmiotu, który chcesz wyrzucić.\n2. Dzięki Roboflow i modelowi MobileNet V2 Classification, sztuczna inteligencja w RecycLens rozpozna odpad i wskaże odpowiedni pojemnik.\n3. Otrzymasz krótką informację o tym, co można wrzucać do danego pojemnika i czego unikać, aby proces recyklingu był jak najskuteczniejszy.
+</string>
+
+    <string name="why_use_recyclens_title">Dlaczego warto korzystać z RecycLens?</string>
+    <string name="why_use_recyclens_answer">•&#160;&#160;Oszczędność czasu: Dzięki szybkiej analizie obrazu szybko dowiesz się, gdzie powinien trafić każdy odpad.\n\n•&#160;&#160;Wsparcie ekologiczne: Pomożesz w zachowaniu porządku i zmniejszeniu ilości odpadów na wysypiskach.\n\n•&#160;&#160;Edukacja ekologiczna: Nauczysz się, co wrzucać do poszczególnych pojemników i jak efektywnie segregować odpady.\n\n•&#160;&#160;Precyzja: Nasz model MobileNet V2 Classification posiada precyzję ponad 96% w określeniu w jakim koszu powinien wylądować odpad.
+    </string>
+    <string name="what_is_recycling_title">Czym jest segregacja śmieci?</string>
+    <string name="what_is_recycling_answer">Segregacja odpadów to proces, w którym odpady są dzielone na poszczególne kategorie, takie jak: szkło, papier, plastik, metal, bioodpady. Dzięki temu możliwe jest ich ponowne wykorzystanie, co przyczynia się do ochrony środowiska i zmniejszenia ilości odpadów na wysypiskach.</string>
+    <string name="why_recycle_title">Dlaczego segregacja jest istotna?</string>
+    <string name="why_recycle_answer">Segregacja jest istotna, ponieważ pomaga chronić środowisko oraz oszczędzać zasoby naturalne. Dzięki segregacji możliwe jest oddzielanie odpadów, które nadają się do ponownego przetworzenia, od tych, które wymagają specjalistycznej utylizacji. W ten sposób zmniejszamy ilość śmieci trafiających na wysypiska, co pomaga ograniczyć zanieczyszczenie gleby, wody i powietrza.</string>>
+
+
+    <string name="paper_bin_title">Co należy wyrzucać do niebieskiego pojemnika (papier)?</string>
+    <string name="paper_bin_answer">W tym pojemniku powinny znajdować się odpady papierowe jak gazety, kartony, zeszyty, kartki i papierowe torby. Unikaj wrzucania tłustych lub zabrudzonych resztek papieru, np. ręczników papierowych z jedzeniem. Pamiętaj, aby usunąć wszelkie zszywki i elementy z plastiku.</string>
+    <string name="plastic_bin_title">Co należy wyrzucać do żółtego pojemnika (plastik)?</string>
+    <string name="plastic_bin_answer">W tym pojemniku powinny znajdować się wszystkie opakowania plastikowe, takie jak butelki, kubki po jogurtach, opakowania po jedzeniu oraz folie. Upewnij się, że przed wrzuceniem są czyste i opróżnione. Pamiętaj, że ten kosz jest też na opakowania metalowe, jak puszki i aluminiowe pokrywki.</string>
+    <string name="glass_bin_title">Co należy wyrzucać do zielonego pojemnika (szkło)?</string>
+    <string name="glass_bin_answer">W tym pojemniku powinny znajdować się szklane odpady jak butelki, słoiki, flakoniki i szklane opakowania. Nie wrzucaj tłuczonego szkła, ceramiki, luster ani szkła hartowanego, które trzeba zutylizować osobno, wyrzucając je do kosza na odpady zmieszane. Pamiętaj, żeby opróżnić pojemniki przed wyrzuceniem.</string>
+    <string name="mixed_bin_title">Co należy wyrzucać do czarnego pojemnika (zmieszane)?</string>
+    <string name="mixed_bin_answer">W tym pojemniku powinny znajdować się odpady, które nie poddaje się recyklingowi. Są nimi takie rzeczy jak: resztki mięsa, olej po smażeniu, paragony, niedopałki papierosów, rozbite naczynia szklane i porcelanowe oraz ręczniki oraz chusteczki papierowe. Staraj się unikać wrzucania tutaj odpadów, które mogą zostać poddane procesowi ponownego wykorzystania surowców.</string>
+    <string name="bio_bin_title">Co należy wyrzucać do brązowego pojemnika (bioodpady)?</string>
+    <string name="bio_bin_answer">W tym pojemniku powinny znajdować się  odpady biodegradowalne, takie jak: warzywa, owoce, skorupki jaj, fusy po kawie i herbacie, kwiaty i rośliny doniczkowe oraz resztki jedzenia. Unikaj wrzucania tutaj mięsa, nabiału, tłuszczów oraz produktów z drewna lub materiałów syntetycznych. Bioodpady nadają się na kompost, wspomagając naturalne procesy w glebie.</string>
+    <string name="electronics_bin_title">Co należy wyrzucać do czerwonego pojemnika (elektronika)?</string>
+    <string name="electronics_bin_answer">W tym pojemniku powinny znajdować się małe urządzenia elektroniczne, takie jak baterie, ładowarki, telefony, piloty, słuchawki i drobne sprzęty domowe. Nie wkładaj dużych urządzeń AGD – muszą być utylizowane w specjalnych punktach. Pamiętaj, że niewłaściwe usuwanie elektroniki może szkodzić środowisku.</string>
+    <string name="application">Aplikacja</string>
+    <string name="recycling">Segregacja odpadów</string>
+    <string name="bins">Pojemniki na odpady</string>
 </resources>

@@ -62,3 +62,6 @@ val ChevronDown: ImageVector
 val Back: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.back)
+val Recycle: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.recycle)
