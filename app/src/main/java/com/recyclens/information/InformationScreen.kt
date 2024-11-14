@@ -9,6 +9,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,7 +23,11 @@ import com.recyclens.core.presentation.designsystem.RecycLensTheme
 import com.recyclens.core.presentation.designsystem.Recycle
 import com.recyclens.core.presentation.designsystem.Star
 import com.recyclens.core.presentation.designsystem.Trash
+import com.recyclens.core.presentation.util.ObserveAsEvents
 import com.recyclens.information.components.QuestionsSection
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 
 @Composable
 fun InformationScreenRoot(
@@ -32,6 +38,7 @@ fun InformationScreenRoot(
 
     InformationScreen(
         state = state,
+        events = viewModel.events,
         onAction = {
             when(it) {
                 is InformationAction.NavigateBack -> onNavigateBack()
@@ -45,8 +52,25 @@ fun InformationScreenRoot(
 @Composable
 fun InformationScreen(
     state: InformationState,
+    events: Flow<InformationEvent>,
     onAction: (InformationAction) -> Unit
 ) {
+    val questionCoordinates = remember { mutableMapOf<Question, Int>() }
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
+
+    ObserveAsEvents(flow = events) { event ->
+        when(event) {
+            is InformationEvent.ExpandQuestion -> {
+                onAction(InformationAction.ToggleExpanded(event.question))
+                coroutineScope.launch {
+                    val y = questionCoordinates[event.question] ?: 0
+                    scrollState.scrollTo(y.coerceAtMost(scrollState.maxValue))
+                }
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             NavigationTopBar(
@@ -61,7 +85,7 @@ fun InformationScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
@@ -76,6 +100,9 @@ fun InformationScreen(
                 currentExpandedQuestion = state.expandedQuestion,
                 toggleExpanded = {
                     onAction(InformationAction.ToggleExpanded(it))
+                },
+                onQuestionGloballyPositioned = { question, y ->
+                    questionCoordinates[question] = y
                 }
             )
             QuestionsSection(
@@ -88,6 +115,9 @@ fun InformationScreen(
                 currentExpandedQuestion = state.expandedQuestion,
                 toggleExpanded = {
                     onAction(InformationAction.ToggleExpanded(it))
+                },
+                onQuestionGloballyPositioned = { question, y ->
+                    questionCoordinates[question] = y
                 }
             )
             QuestionsSection(
@@ -104,6 +134,9 @@ fun InformationScreen(
                 currentExpandedQuestion = state.expandedQuestion,
                 toggleExpanded = {
                     onAction(InformationAction.ToggleExpanded(it))
+                },
+                onQuestionGloballyPositioned = { question, y ->
+                    questionCoordinates[question] = y
                 }
             )
         }
@@ -116,6 +149,7 @@ private fun InformationScreenPreview() {
     RecycLensTheme {
         InformationScreen(
             state = InformationState(),
+            events = flowOf(),
             onAction = {}
         )
     }

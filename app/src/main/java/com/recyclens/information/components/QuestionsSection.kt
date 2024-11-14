@@ -26,6 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,6 +52,7 @@ fun QuestionsSection(
     icon: ImageVector? = null,
     questions: List<Question>,
     currentExpandedQuestion: Question?,
+    onQuestionGloballyPositioned: (Question, Int) -> Unit = { _, _ ->},
     toggleExpanded: (Question) -> Unit
 ) {
     Column(
@@ -86,6 +89,10 @@ fun QuestionsSection(
         ) {
             questions.forEachIndexed { index, question ->
                 ExpandableQuestion(
+                    modifier = Modifier.onGloballyPositioned { coordinates ->
+                        val y = coordinates.positionInRoot().y.toInt()
+                        onQuestionGloballyPositioned(question, y)
+                    },
                     question = question.toQuestionUi(),
                     isExpanded = currentExpandedQuestion == question,
                     toggleExpanded = {
