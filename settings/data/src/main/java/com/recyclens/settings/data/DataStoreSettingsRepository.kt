@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -15,6 +17,8 @@ import com.recyclens.core.domain.util.EmptyResult
 import com.recyclens.core.domain.util.Result
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DataStoreSettingsRepository @Inject constructor(
@@ -33,19 +37,45 @@ class DataStoreSettingsRepository @Inject constructor(
         // tu jest typ flowa Language a w datastore można trzymać proste typy, więc
         // mapuj tego string który jest w datastore na enuma Language.valueOf(tu string z datastore)
         // analogicznie w setLanguage zapisujesz Language.name
-        get() = TODO("Not yet implemented")
+        get() = applicationContext.settingsDataStore.data
+            .catch {
+                if(it is Exception) {
+                    emit(emptyPreferences())
+                } else {
+                    throw it
+                }
+            }
+            .map { preferences ->
+                preferences[LANGUAGE_KEY]?.let { Language.valueOf(it) } ?: Language.POLISH
+            }
 
 
     override val historySize: Flow<Int>
-        get() = TODO("Not yet implemented")
+        get() = applicationContext.settingsDataStore.data.catch {
+            if(it is Exception) {
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }.map { preferences ->
+            preferences[HISTORY_SIZE_KEY] ?: 10
+        }
 
     override suspend fun setLanguage(language: Language): EmptyResult<DataError.Local> {
         // Przed zapisaniem sprawdź czy isAvailable jest true jeżeli nie to nie zapisuj ale nie rzucaj errora
-        TODO("Not yet implemented")
+        return safeSettingsChange {
+            applicationContext.settingsDataStore.edit { preferences ->
+                preferences[LANGUAGE_KEY] = language.name
+            }
+        }
     }
 
     override suspend fun setHistorySize(size: Int): EmptyResult<DataError.Local> {
-        TODO("Not yet implemented")
+        return safeSettingsChange {
+            applicationContext.settingsDataStore.edit { preferences ->
+                preferences[HISTORY_SIZE_KEY] = size
+            }
+        }
     }
 
     private suspend fun safeSettingsChange(action: suspend () -> Unit): EmptyResult<DataError.Local> {
