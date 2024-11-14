@@ -225,6 +225,7 @@ private fun ScannerScreen(
                             image = imageBitmap
                         )
                     )
+                    image.close()
                 }
 
                 override fun onError(exception: ImageCaptureException) {
