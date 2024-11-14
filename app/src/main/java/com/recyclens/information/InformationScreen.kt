@@ -1,5 +1,6 @@
 package com.recyclens.information
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,8 +13,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.recyclens.R
+import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.NavigationTopBar
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
+import com.recyclens.core.presentation.designsystem.Recycle
+import com.recyclens.core.presentation.designsystem.Star
+import com.recyclens.core.presentation.designsystem.Trash
+import com.recyclens.information.components.QuestionsSection
 
 @Composable
 fun InformationScreenRoot() {
@@ -35,10 +41,44 @@ fun InformationScreen() {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .padding(vertical = 16.dp)
-                .padding(bottom = 24.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-
+            QuestionsSection(
+                title = stringResource(id = R.string.application),
+                icon = Star,
+                questions = listOf(
+                    Question.WHAT_IS_RECYCLENS,
+                    Question.HOW_THE_APP_WORKS,
+                    Question.WHY_USE_RECYCLENS,
+                ),
+                currentExpandedQuestion = null,
+                toggleExpanded = { }
+            )
+            QuestionsSection(
+                title = stringResource(id = R.string.recycling),
+                icon = Recycle,
+                questions = listOf(
+                    Question.WHAT_IS_RECYCLING,
+                    Question.WHY_RECYCLE,
+                ),
+                currentExpandedQuestion = null,
+                toggleExpanded = { }
+            )
+            QuestionsSection(
+                title = stringResource(id = R.string.bins),
+                icon = Trash,
+                questions = listOf(
+                    Question.PAPER_BIN,
+                    Question.PLASTIC_BIN,
+                    Question.MIXED_BIN,
+                    Question.BIO_BIN,
+                    Question.GLASS_BIN,
+                    Question.ELECTRONICS_BIN,
+                ),
+                currentExpandedQuestion = null,
+                toggleExpanded = { }
+            )
         }
     }
 }
