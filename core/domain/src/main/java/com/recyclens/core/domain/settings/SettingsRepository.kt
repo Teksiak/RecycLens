@@ -12,7 +12,7 @@ interface SettingsRepository {
     suspend fun setHistorySize(size: Int): EmptyResult<DataError.Local>
 
     companion object {
-        const val DATASTORE_NAME = "settings"
+        const val DATASTORE_NAME = "recyclens_settings"
         const val LANGUAGE_NAME = "language"
         const val HISTORY_SIZE = "history_size"
 
