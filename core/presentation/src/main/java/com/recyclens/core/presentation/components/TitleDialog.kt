@@ -1,6 +1,5 @@
 package com.recyclens.core.presentation.components
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,7 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -30,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -48,6 +48,7 @@ fun TitleDialog(
     isDismissible: Boolean = true,
     dismissButtonColor: Color = Label,
     onDismiss: () -> Unit = {},
+    contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp, vertical = 16.dp),
     content: @Composable ColumnScope.() -> Unit,
     buttons: (@Composable RowScope.() -> Unit)? = null,
 ) {
@@ -63,7 +64,7 @@ fun TitleDialog(
                 .clip(RoundedCornerShape(16.dp))
                 .background(White)
                 .padding(
-                    bottom = if(buttons != null) 4.dp else 16.dp,
+                    bottom = if(buttons != null) 4.dp else contentPadding.calculateBottomPadding(),
                 ),
             contentAlignment = Alignment.TopEnd
         ) {
@@ -99,18 +100,16 @@ fun TitleDialog(
                 HorizontalDivider(
                     color = Outline
                 )
-                Spacer(modifier = Modifier.size(12.dp))
+                Spacer(modifier = Modifier.size(contentPadding.calculateTopPadding()))
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                        ),
+                        .padding(horizontal = contentPadding.calculateStartPadding(LayoutDirection.Ltr)),
                 ) {
                     content()
                 }
                 buttons?.let {
-                    Spacer(modifier = Modifier.size(12.dp))
+                    Spacer(modifier = Modifier.size(contentPadding.calculateBottomPadding()))
                     HorizontalDivider(
                         color = Outline
                     )

@@ -3,12 +3,15 @@ package com.recyclens.scanner.presentation
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.recyclens.core.domain.settings.SettingsRepository
 import com.recyclens.core.domain.util.Result
 import com.recyclens.scanner.domain.ClassificationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,11 +20,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScannerViewModel @Inject constructor(
-    private val classificationRepository: ClassificationRepository
+    private val classificationRepository: ClassificationRepository,
+    private val settingsRepository: SettingsRepository
 ): ViewModel() {
 
     private val _state = MutableStateFlow(ScannerState())
     val state = _state.asStateFlow()
+
+    init {
+        settingsRepository.language
+            .onEach { language ->
+                _state.update {
+                    it.copy(currentLanguage = language)
+                }
+            }
+            .launchIn(viewModelScope)
+    }
 
     fun onAction(action: ScannerAction) {
         when(action) {
@@ -83,6 +97,21 @@ class ScannerViewModel @Inject constructor(
             is ScannerAction.DismissErrorDialog -> {
                 _state.update {
                     it.copy(isError = false)
+                }
+            }
+            is ScannerAction.ShowLanguageDialog -> {
+                _state.update {
+                    it.copy(showLanguageDialog = true)
+                }
+            }
+            is ScannerAction.SetLanguage -> {
+                viewModelScope.launch {
+                    settingsRepository.setLanguage(action.language)
+                }
+            }
+            is ScannerAction.HideLanguageDialog -> {
+                _state.update {
+                    it.copy(showLanguageDialog = false)
                 }
             }
             is ScannerAction.ToggleFlash -> {

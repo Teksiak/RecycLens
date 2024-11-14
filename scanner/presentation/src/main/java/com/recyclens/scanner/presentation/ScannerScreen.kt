@@ -59,7 +59,6 @@ import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.CheckImage
 import com.recyclens.core.presentation.designsystem.CircleInfoIcon
-import com.recyclens.core.presentation.designsystem.Dark
 import com.recyclens.core.presentation.designsystem.Flash
 import com.recyclens.core.presentation.designsystem.FlashOn
 import com.recyclens.core.presentation.designsystem.TrashInfo
@@ -69,18 +68,19 @@ import com.recyclens.core.presentation.designsystem.Menu
 import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.core.presentation.designsystem.SettingsIcon
 import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.util.getName
 import com.recyclens.core.presentation.util.hasPermission
 import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
 import com.recyclens.scanner.presentation.components.Drawer
 import com.recyclens.scanner.presentation.components.DrawerItem
 import com.recyclens.scanner.presentation.components.ErrorDialog
+import com.recyclens.scanner.presentation.components.LanguageDialog
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
 import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -282,6 +282,18 @@ private fun ScannerScreen(
             )
         }
 
+        if(state.showLanguageDialog) {
+            LanguageDialog(
+                selectedLanguage = state.currentLanguage,
+                onLanguageSelected = { language ->
+                    onAction(ScannerAction.SetLanguage(language))
+                },
+                onDismiss = {
+                    onAction(ScannerAction.HideLanguageDialog)
+                }
+            )
+        }
+
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val coroutineScope = rememberCoroutineScope()
 
@@ -292,12 +304,9 @@ private fun ScannerScreen(
                     DrawerItem(
                         icon = LanguageIcon,
                         title = stringResource(id = R.string.language),
-                        subtitle = "Polski", //TODO: Get from settings
+                        subtitle = state.currentLanguage.getName(),
                         onClick = {
-                            coroutineScope.launch {
-                                drawerState.close()
-                            }
-                            //TODO: Display dialog
+                            onAction(ScannerAction.ShowLanguageDialog)
                         }
                     )
                     DrawerItem(

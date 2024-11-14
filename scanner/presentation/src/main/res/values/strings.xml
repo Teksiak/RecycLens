@@ -37,4 +37,6 @@
     <string name="try_again">Spróbuj ponownie</string>
     <string name="error_rationale">Jeśli problem się powtarza, spróbuj zrobić zdjęcie w lepszym oświetleniu na jednolitym tle lub sprawdź połączenie z internetem.</string>
     <string name="take_a_photo">Zrób zdjęcie odpadu do wyrzucenia</string>
+    <string name="choose_language">Wybierz język</string>
+    <string name="under_development">Under development</string>
 </resources>

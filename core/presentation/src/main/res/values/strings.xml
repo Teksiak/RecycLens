@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="back">Powrót</string>
+    <string name="polish">Polski</string>
+    <string name="english">English</string>
 </resources>
