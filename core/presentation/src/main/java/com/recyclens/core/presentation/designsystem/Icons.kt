@@ -32,7 +32,7 @@ val LogoFirst: ImageVector
 val LogoSecond: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.logo_second_theme)
-val Error: ImageVector
+val TrashError: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.error)
 val Flash: ImageVector

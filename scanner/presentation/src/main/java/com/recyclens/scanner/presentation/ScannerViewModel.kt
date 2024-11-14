@@ -76,6 +76,11 @@ class ScannerViewModel @Inject constructor(
                     )
                 }
             }
+            is ScannerAction.DismissErrorDialog -> {
+                _state.update {
+                    it.copy(isError = false)
+                }
+            }
             is ScannerAction.ToggleFlash -> {
                 _state.update { state ->
                     state.copy(isFlashOn = !state.isFlashOn)

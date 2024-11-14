@@ -70,6 +70,7 @@ import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
 import com.recyclens.scanner.presentation.components.Drawer
 import com.recyclens.scanner.presentation.components.DrawerItem
+import com.recyclens.scanner.presentation.components.ErrorDialog
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
 import com.recyclens.scanner.presentation.util.toQuestion
@@ -264,6 +265,14 @@ private fun ScannerScreen(
                 },
                 onLearnMore = {
                     onAction(ScannerAction.NavigateToInformation(prediction.wasteClass.toQuestion()))
+                }
+            )
+        }
+
+        if(state.isError) {
+            ErrorDialog(
+                onDismiss = {
+                    onAction(ScannerAction.DismissErrorDialog)
                 }
             )
         }
