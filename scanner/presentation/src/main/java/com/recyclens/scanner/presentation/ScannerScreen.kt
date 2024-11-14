@@ -74,6 +74,8 @@ import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
 import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -85,18 +87,26 @@ fun ScannerScreenRoot(
     onNavigateToSettings: () -> Unit,
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
+    val coroutineScope = rememberCoroutineScope()
 
     ScannerScreen(
         state = state.value,
         onAction = { action ->
+            viewModel.onAction(action)
             when(action) {
-                is ScannerAction.NavigateToInformation -> onNavigateToInformation(action.question)
+                is ScannerAction.NavigateToInformation -> {
+                    coroutineScope.launch(Dispatchers.Unconfined) {
+                        if(state.value.classificationPrediction != null) {
+                            delay(100)
+                        }
+                        onNavigateToInformation(action.question)
+                    }
+                }
                 is ScannerAction.NavigateToSettings -> onNavigateToSettings()
                 is ScannerAction.NavigateToAboutUs -> onNavigateToAboutUs()
                 is ScannerAction.NavigateToHistory -> onNavigateToHistory()
                 else -> Unit
             }
-            viewModel.onAction(action)
         },
     )
 }

@@ -63,6 +63,11 @@ class ScannerViewModel @Inject constructor(
                     it.copy(classificationPrediction = null)
                 }
             }
+            is ScannerAction.NavigateToInformation -> {
+                _state.update {
+                    it.copy(classificationPrediction = null)
+                }
+            }
             is ScannerAction.OnImageCaptureError -> {
                 _state.update {
                     it.copy(

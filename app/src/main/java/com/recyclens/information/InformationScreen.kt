@@ -25,6 +25,7 @@ import com.recyclens.core.presentation.designsystem.Star
 import com.recyclens.core.presentation.designsystem.Trash
 import com.recyclens.core.presentation.util.ObserveAsEvents
 import com.recyclens.information.components.QuestionsSection
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -40,11 +41,11 @@ fun InformationScreenRoot(
         state = state,
         events = viewModel.events,
         onAction = {
+            viewModel.onAction(it)
             when(it) {
                 is InformationAction.NavigateBack -> onNavigateBack()
                 else -> Unit
             }
-            viewModel.onAction(it)
         }
     )
 }
@@ -64,8 +65,9 @@ fun InformationScreen(
             is InformationEvent.ExpandQuestion -> {
                 onAction(InformationAction.ToggleExpanded(event.question))
                 coroutineScope.launch {
+                    delay(300)
                     val y = questionCoordinates[event.question] ?: 0
-                    scrollState.scrollTo(y.coerceAtMost(scrollState.maxValue))
+                    scrollState.animateScrollTo(y.coerceAtMost(scrollState.maxValue))
                 }
             }
         }
