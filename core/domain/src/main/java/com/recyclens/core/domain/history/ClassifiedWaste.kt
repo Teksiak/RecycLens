@@ -7,7 +7,7 @@ data class ClassifiedWaste(
     val id: Int = 0,
     val wasteClass: WasteClass,
     val image: ByteArray,
-    val date: LocalDateTime,
+    val date: LocalDateTime = LocalDateTime.now(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

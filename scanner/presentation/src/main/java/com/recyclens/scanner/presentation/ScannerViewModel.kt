@@ -3,9 +3,12 @@ package com.recyclens.scanner.presentation
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.recyclens.core.domain.history.ClassifiedWaste
+import com.recyclens.core.domain.history.HistoryRepository
 import com.recyclens.core.domain.settings.SettingsRepository
 import com.recyclens.core.domain.util.Result
 import com.recyclens.scanner.domain.ClassificationRepository
+import com.recyclens.scanner.presentation.util.compressImageToTargetSize
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ScannerViewModel @Inject constructor(
     private val classificationRepository: ClassificationRepository,
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val historyRepository: HistoryRepository
 ): ViewModel() {
 
     private val _state = MutableStateFlow(ScannerState())
@@ -47,12 +51,16 @@ class ScannerViewModel @Inject constructor(
             is ScannerAction.OnImageCapture -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val imageByteArray = withContext(Dispatchers.Default) {
-                        val stream = ByteArrayOutputStream()
-                        action.image.compress(Bitmap.CompressFormat.JPEG, 50, stream)
-                        stream.toByteArray()
+                        action.image.compressImageToTargetSize(2048)
                     }
                     when(val result = classificationRepository.getPrediction(imageByteArray)) {
                         is Result.Success -> {
+                            historyRepository.addClassifiedWaste(
+                                classifiedWaste = ClassifiedWaste(
+                                    image = imageByteArray,
+                                    wasteClass = result.data.wasteClass,
+                                )
+                            )
                             withContext(Dispatchers.Main) {
                                 _state.update {
                                     it.copy(
