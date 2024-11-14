@@ -12,6 +12,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.recyclens.core.domain.settings.Language
 import com.recyclens.core.domain.settings.SettingsRepository
 import com.recyclens.core.domain.settings.SettingsRepository.Companion.DATASTORE_NAME
+import com.recyclens.core.domain.settings.SettingsRepository.Companion.DEFAULT_HISTORY_SIZE
+import com.recyclens.core.domain.settings.SettingsRepository.Companion.DEFAULT_LANGUAGE
 import com.recyclens.core.domain.util.DataError
 import com.recyclens.core.domain.util.EmptyResult
 import com.recyclens.core.domain.util.Result
@@ -29,14 +31,7 @@ class DataStoreSettingsRepository @Inject constructor(
         name = DATASTORE_NAME
     )
 
-    // ZRÓB TAK JAK W NUTRILIGHT NAZWY PLIKÓW TE SAME
-    // DODAJ JESZCZE IKONĘ APKI TAKĄ JAK W ABOUT US
-    // JAK SKOŃCZYSZ TO ZACZNIJ ROBIĆ OPIS TEGO PROJEKTU
-
     override val language: Flow<Language>
-        // tu jest typ flowa Language a w datastore można trzymać proste typy, więc
-        // mapuj tego string który jest w datastore na enuma Language.valueOf(tu string z datastore)
-        // analogicznie w setLanguage zapisujesz Language.name
         get() = applicationContext.settingsDataStore.data
             .catch {
                 if(it is Exception) {
@@ -46,7 +41,7 @@ class DataStoreSettingsRepository @Inject constructor(
                 }
             }
             .map { preferences ->
-                preferences[LANGUAGE_KEY]?.let { Language.valueOf(it) } ?: Language.POLISH
+                preferences[LANGUAGE_KEY]?.let { Language.valueOf(it) } ?: DEFAULT_LANGUAGE
             }
 
 
@@ -58,12 +53,12 @@ class DataStoreSettingsRepository @Inject constructor(
                 throw it
             }
         }.map { preferences ->
-            preferences[HISTORY_SIZE_KEY] ?: 10
+            preferences[HISTORY_SIZE_KEY] ?: DEFAULT_HISTORY_SIZE
         }
 
     override suspend fun setLanguage(language: Language): EmptyResult<DataError.Local> {
-        // Przed zapisaniem sprawdź czy isAvailable jest true jeżeli nie to nie zapisuj ale nie rzucaj errora
         return safeSettingsChange {
+            if(!language.isAvailable) return@safeSettingsChange
             applicationContext.settingsDataStore.edit { preferences ->
                 preferences[LANGUAGE_KEY] = language.name
             }
