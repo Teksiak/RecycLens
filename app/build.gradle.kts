@@ -65,6 +65,8 @@ dependencies {
     implementation(projects.history.database)
     implementation(projects.history.data)
 
+    implementation(projects.settings.data)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

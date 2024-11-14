@@ -24,6 +24,8 @@
             <option value="$PROJECT_DIR$/scanner/data" />
             <option value="$PROJECT_DIR$/scanner/domain" />
             <option value="$PROJECT_DIR$/scanner/presentation" />
+            <option value="$PROJECT_DIR$/settings" />
+            <option value="$PROJECT_DIR$/settings/data" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
