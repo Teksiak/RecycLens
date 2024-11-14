@@ -33,6 +33,7 @@ import com.recyclens.core.presentation.designsystem.Outline
 import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
 import com.recyclens.core.presentation.designsystem.Secondary
+import com.recyclens.core.presentation.designsystem.White
 import com.recyclens.scanner.presentation.R
 
 @Composable
@@ -40,7 +41,8 @@ fun Drawer(
     items: @Composable () -> Unit = {}
 ) {
     ModalDrawerSheet(
-        modifier = Modifier.width(300.dp)
+        modifier = Modifier.width(300.dp),
+        drawerContainerColor = White
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
