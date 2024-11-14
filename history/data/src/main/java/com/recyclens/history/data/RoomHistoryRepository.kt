@@ -47,11 +47,11 @@ class RoomHistoryRepository(
             }
     }
 
-    override suspend fun addClassifiedWaste(historyWaste: HistoryWaste) {
+    override suspend fun addHistoryWaste(historyWaste: HistoryWaste) {
         historyDao.addToHistory(historyWaste.toHistoryEntity(), historySize.value)
     }
 
-    override suspend fun removeClassifiedWaste(historyWaste: HistoryWaste) {
+    override suspend fun removeHistoryWaste(historyWaste: HistoryWaste) {
         historyDao.deleteHistoryById(historyWaste.id)
     }
 }

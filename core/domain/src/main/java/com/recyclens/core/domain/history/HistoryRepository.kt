@@ -6,7 +6,7 @@ interface HistoryRepository {
 
     fun getWasteHistory(): Flow<List<HistoryWaste>>
 
-    suspend fun addClassifiedWaste(historyWaste: HistoryWaste)
+    suspend fun addHistoryWaste(historyWaste: HistoryWaste)
 
-    suspend fun removeClassifiedWaste(historyWaste: HistoryWaste)
+    suspend fun removeHistoryWaste(historyWaste: HistoryWaste)
 }

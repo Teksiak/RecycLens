@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.recyclens.aboutus.AboutUsScreenRoot
 import com.recyclens.core.presentation.NavigationRoute
+import com.recyclens.history.presentation.HistoryScreenRoot
+import com.recyclens.history.presentation.HistoryViewModel
 import com.recyclens.information.InformationScreenRoot
 import com.recyclens.information.InformationViewModel
 import com.recyclens.scanner.presentation.ScannerScreenRoot
@@ -42,6 +44,17 @@ fun NavigationRoot(
                 onNavigateToHistory = {
                     navController.navigate(NavigationRoute.HistoryRoute)
                 },
+            )
+        }
+        composable<NavigationRoute.HistoryRoute> {
+            HistoryScreenRoot(
+                viewModel = hiltViewModel<HistoryViewModel>(),
+                onNavigateToSettings = {
+                    navController.navigate(NavigationRoute.SettingsRoute)
+                },
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
             )
         }
         composable<NavigationRoute.InformationRoute> {

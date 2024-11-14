@@ -56,7 +56,7 @@ class ScannerViewModel @Inject constructor(
                     }
                     when(val result = classificationRepository.getPrediction(imageByteArray)) {
                         is Result.Success -> {
-                            historyRepository.addClassifiedWaste(
+                            historyRepository.addHistoryWaste(
                                 historyWaste = HistoryWaste(
                                     image = imageByteArray,
                                     wasteClass = result.data.wasteClass,

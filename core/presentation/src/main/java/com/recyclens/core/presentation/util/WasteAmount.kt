@@ -1,8 +1,8 @@
-package com.recyclens.settings.presentation.util
+package com.recyclens.core.presentation.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.recyclens.settings.presentation.R
+import com.recyclens.core.presentation.R
 
 @Composable
 fun Int.toWasteAmount(): String {

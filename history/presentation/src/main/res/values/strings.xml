@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history">Historia</string>
+    <string name="expand_history">Rozwiń historię</string>
+    <string name="collapse_history">Zwiń historię</string>
+</resources>

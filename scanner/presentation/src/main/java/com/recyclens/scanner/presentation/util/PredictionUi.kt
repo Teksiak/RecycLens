@@ -8,26 +8,35 @@ import androidx.compose.ui.res.stringResource
 import com.recyclens.core.domain.WasteClass
 import com.recyclens.core.presentation.designsystem.BioBin
 import com.recyclens.core.presentation.designsystem.BioDark
+import com.recyclens.core.presentation.designsystem.BioGradient
 import com.recyclens.core.presentation.designsystem.BioMain
 import com.recyclens.core.presentation.designsystem.ElectronicsBin
 import com.recyclens.core.presentation.designsystem.ElectronicsDark
+import com.recyclens.core.presentation.designsystem.ElectronicsGradient
 import com.recyclens.core.presentation.designsystem.ElectronicsMain
 import com.recyclens.core.presentation.designsystem.GlassBin
 import com.recyclens.core.presentation.designsystem.GlassDark
+import com.recyclens.core.presentation.designsystem.GlassGradient
 import com.recyclens.core.presentation.designsystem.GlassMain
 import com.recyclens.core.presentation.designsystem.MixedBin
 import com.recyclens.core.presentation.designsystem.MixedDark
+import com.recyclens.core.presentation.designsystem.MixedGradient
 import com.recyclens.core.presentation.designsystem.MixedMain
 import com.recyclens.core.presentation.designsystem.PaperBin
 import com.recyclens.core.presentation.designsystem.PaperDark
+import com.recyclens.core.presentation.designsystem.PaperGradient
 import com.recyclens.core.presentation.designsystem.PaperMain
 import com.recyclens.core.presentation.designsystem.PlasticBin
 import com.recyclens.core.presentation.designsystem.PlasticDark
+import com.recyclens.core.presentation.designsystem.PlasticGradient
 import com.recyclens.core.presentation.designsystem.PlasticMain
+import com.recyclens.core.presentation.util.getGradient
+import com.recyclens.core.presentation.util.getMainColor
+import com.recyclens.core.presentation.util.getTrashBin
 import com.recyclens.scanner.domain.ClassificationPrediction
 import com.recyclens.scanner.presentation.R
 
-data class PredictionDetailsUi(
+data class PredictionUi(
     val trashBin: ImageVector,
     val wasteClassMainColor: Color,
     val wasteClassGradient: Brush,
@@ -37,35 +46,7 @@ data class PredictionDetailsUi(
 )
 
 @Composable
-fun ClassificationPrediction.toPredictionUi(): PredictionDetailsUi {
-    val (trashBin, wasteClassGradient) = when(this.wasteClass) {
-        WasteClass.PLASTIC -> PlasticBin to Brush.verticalGradient(
-            colors = listOf(PlasticMain, PlasticDark),
-        )
-        WasteClass.GLASS -> GlassBin to Brush.verticalGradient(
-            colors = listOf(GlassMain, GlassDark),
-        )
-        WasteClass.BIO -> BioBin to Brush.verticalGradient(
-            colors = listOf(BioMain, BioDark),
-        )
-        WasteClass.MIXED -> MixedBin to Brush.verticalGradient(
-            colors = listOf(MixedMain, MixedDark),
-        )
-        WasteClass.ELECTRONICS -> ElectronicsBin to Brush.verticalGradient(
-            colors = listOf(ElectronicsMain, ElectronicsDark),
-        )
-        WasteClass.PAPER -> PaperBin to Brush.verticalGradient(
-            colors = listOf(PaperMain, PaperDark),
-        )
-    }
-    val wasteClassMainColor = when(this.wasteClass) {
-        WasteClass.PLASTIC -> PlasticMain
-        WasteClass.GLASS -> GlassMain
-        WasteClass.BIO -> BioMain
-        WasteClass.MIXED -> MixedMain
-        WasteClass.ELECTRONICS -> ElectronicsMain
-        WasteClass.PAPER -> PaperMain
-    }
+fun ClassificationPrediction.toPredictionUi(): PredictionUi {
     val (trashBinName, dialogDescription) = when(this.wasteClass) {
         WasteClass.PLASTIC -> stringResource(id = R.string.plastic_title) to stringResource(id = R.string.plastic_description)
         WasteClass.GLASS -> stringResource(id = R.string.glass_title) to stringResource(id = R.string.glass_description)
@@ -75,10 +56,10 @@ fun ClassificationPrediction.toPredictionUi(): PredictionDetailsUi {
         WasteClass.PAPER -> stringResource(id = R.string.paper_title) to stringResource(id = R.string.paper_description)
     }
 
-    return PredictionDetailsUi(
-        trashBin = trashBin,
-        wasteClassMainColor = wasteClassMainColor,
-        wasteClassGradient = wasteClassGradient,
+    return PredictionUi(
+        trashBin = wasteClass.getTrashBin(),
+        wasteClassMainColor = wasteClass.getMainColor(),
+        wasteClassGradient = wasteClass.getGradient(),
         trashBinName = trashBinName,
         dialogDescription = dialogDescription,
         confidence = "${(this.confidence * 1000).toInt() / 10f}%"

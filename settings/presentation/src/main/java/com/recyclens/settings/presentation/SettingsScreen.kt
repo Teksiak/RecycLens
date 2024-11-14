@@ -12,13 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,7 +32,7 @@ import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.Outline
 import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.settings.presentation.components.VerticalPicker
-import com.recyclens.settings.presentation.util.toWasteAmount
+import com.recyclens.core.presentation.util.toWasteAmount
 
 @Composable
 fun SettingsScreenRoot(

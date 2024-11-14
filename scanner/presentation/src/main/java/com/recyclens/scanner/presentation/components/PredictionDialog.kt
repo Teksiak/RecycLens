@@ -46,12 +46,12 @@ import com.recyclens.core.presentation.designsystem.RecycLensTheme
 import com.recyclens.core.presentation.designsystem.White
 import com.recyclens.scanner.domain.ClassificationPrediction
 import com.recyclens.scanner.presentation.R
-import com.recyclens.scanner.presentation.util.PredictionDetailsUi
+import com.recyclens.scanner.presentation.util.PredictionUi
 import com.recyclens.scanner.presentation.util.toPredictionUi
 
 @Composable
 fun PredictionDialog(
-    predictionDetails: PredictionDetailsUi,
+    predictionDetails: PredictionUi,
     onDismiss: () -> Unit = {},
     onLearnMore: () -> Unit = {},
     onWrongSuggestion: () -> Unit = {}
