@@ -15,6 +15,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -369,38 +370,42 @@ private fun ScannerScreen(
                             .padding(bottom = 72.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 24.dp),
+                        AnimatedVisibility(
+                            visible = !state.isLoading && state.classificationPrediction == null
                         ) {
-                            IconButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        drawerState.open()
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 24.dp),
+                            ) {
+                                IconButton(
+                                    onClick = {
+                                        coroutineScope.launch {
+                                            drawerState.open()
+                                        }
                                     }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(24.dp),
+                                        imageVector = MenuIcon,
+                                        contentDescription = stringResource(id = R.string.open_drawer),
+                                        tint = OutlineColor
+                                    )
                                 }
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(24.dp),
-                                    imageVector = MenuIcon,
-                                    contentDescription = stringResource(id = R.string.open_drawer),
-                                    tint = OutlineColor
-                                )
-                            }
-                            Spacer(modifier = Modifier.weight(1f))
-                            IconButton(
-                                onClick = {
-                                    onAction(ScannerAction.NavigateToInformation(null))
+                                Spacer(modifier = Modifier.weight(1f))
+                                IconButton(
+                                    onClick = {
+                                        onAction(ScannerAction.NavigateToInformation(null))
+                                    }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(24.dp),
+                                        imageVector = TrashInfoIcon,
+                                        contentDescription = stringResource(id = R.string.informations),
+                                        tint = WhiteColor
+                                    )
                                 }
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(24.dp),
-                                    imageVector = TrashInfoIcon,
-                                    contentDescription = stringResource(id = R.string.informations),
-                                    tint = WhiteColor
-                                )
                             }
                         }
                         Spacer(modifier = Modifier.weight(1f))
@@ -420,17 +425,21 @@ private fun ScannerScreen(
                             horizontalArrangement = Arrangement.spacedBy(36.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            IconButton(
-                                onClick = {
-                                    onAction(ScannerAction.ShowUnfinishedFeatureDialog)
-                                }
+                            AnimatedVisibility(
+                                visible = !state.isLoading && state.classificationPrediction == null
                             ) {
-                                Icon(
-                                    modifier = Modifier.size(32.dp),
-                                    imageVector = CheckImageIcon,
-                                    contentDescription = stringResource(id = R.string.image_classification),
-                                    tint = LabelColor
-                                )
+                                IconButton(
+                                    onClick = {
+                                        onAction(ScannerAction.ShowUnfinishedFeatureDialog)
+                                    }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(32.dp),
+                                        imageVector = CheckImageIcon,
+                                        contentDescription = stringResource(id = R.string.image_classification),
+                                        tint = LabelColor
+                                    )
+                                }
                             }
                             PhotoButton(
                                 isLoading = state.isLoading,
@@ -442,31 +451,39 @@ private fun ScannerScreen(
                                     )
                                 }
                             )
-                            IconButton(
-                                onClick = {
-                                    onAction(ScannerAction.NavigateToHistory)
-                                }
+                            AnimatedVisibility(
+                                visible = !state.isLoading && state.classificationPrediction == null
                             ) {
-                                Icon(
-                                    modifier = Modifier.size(32.dp),
-                                    imageVector = HistoryIcon,
-                                    contentDescription = stringResource(id = R.string.history),
-                                    tint = WhiteColor
-                                )
+                                IconButton(
+                                    onClick = {
+                                        onAction(ScannerAction.NavigateToHistory)
+                                    }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(32.dp),
+                                        imageVector = HistoryIcon,
+                                        contentDescription = stringResource(id = R.string.history),
+                                        tint = WhiteColor
+                                    )
+                                }
                             }
                         }
                         Spacer(modifier = Modifier.size(16.dp))
-                        IconButton(
-                            onClick = {
-                                cameraController.enableTorch(!state.isFlashOn)
-                                onAction(ScannerAction.ToggleFlash)
-                            }
+                        AnimatedVisibility(
+                            visible = !state.isLoading && state.classificationPrediction == null
                         ) {
-                            Icon(
-                                imageVector = if(state.isFlashOn) FlashOnIcon else FlashIcon,
-                                contentDescription = if(state.isFlashOn) stringResource(id = R.string.flash_off) else stringResource(id = R.string.flash_on),
-                                tint = WhiteColor
-                            )
+                            IconButton(
+                                onClick = {
+                                    cameraController.enableTorch(!state.isFlashOn)
+                                    onAction(ScannerAction.ToggleFlash)
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = if(state.isFlashOn) FlashOnIcon else FlashIcon,
+                                    contentDescription = if(state.isFlashOn) stringResource(id = R.string.flash_off) else stringResource(id = R.string.flash_on),
+                                    tint = WhiteColor
+                                )
+                            }
                         }
                     }
                 }

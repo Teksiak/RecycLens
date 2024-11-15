@@ -39,6 +39,7 @@ fun PhotoButton(
                 indication = ripple(
                     color = PrimaryColor,
                 ),
+                enabled = !isLoading,
                 onClick = onClick
             ),
         contentAlignment = Alignment.Center
