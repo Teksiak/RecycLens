@@ -57,6 +57,7 @@ fun HistorySection(
     modifier: Modifier = Modifier,
     currentLanguage: Language = SettingsRepository.DEFAULT_LANGUAGE
 ) {
+    val localDensity = LocalDensity.current
     val chevronRotate by animateFloatAsState(
         targetValue = if (isExpanded) 180f else 0f,
         animationSpec = tween(300),
@@ -105,11 +106,15 @@ fun HistorySection(
         ) {
             val maxItemsInEachRow = 3
             val rowWidth = remember { mutableIntStateOf(0) }
-            val spacingInPx = with(LocalDensity.current) { 16.dp.toPx() }
+            val spacingInPx = remember {
+                with(localDensity) { 16.dp.toPx() }
+            }
             val itemSize = remember(rowWidth.intValue) {
                 (rowWidth.intValue - spacingInPx * (maxItemsInEachRow - 1)) / maxItemsInEachRow
             }
-            val itemSizeInDp = with(LocalDensity.current) { itemSize.toDp() }
+            val itemSizeInDp = remember(itemSize) {
+                with(localDensity) { itemSize.toDp() }
+            }
             ContextualFlowRow(
                 itemCount = wasteHistory.size,
                 modifier = Modifier

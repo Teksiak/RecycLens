@@ -81,6 +81,7 @@ import com.recyclens.scanner.presentation.components.ErrorDialog
 import com.recyclens.scanner.presentation.components.LanguageDialog
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
+import com.recyclens.scanner.presentation.components.RecognisingAnimation
 import com.recyclens.scanner.presentation.components.UnfinishedFeatureDialog
 import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
@@ -362,6 +363,14 @@ private fun ScannerScreen(
                     CameraOverlay(
                         paddingValues = paddingValues
                     )
+
+                    if(previewBitmap.value != null) {
+                        RecognisingAnimation(
+                            amount = 15,
+                            minSize = 12.dp,
+                            maxSize = 28.dp
+                        )
+                    }
 
                     Column(
                         modifier = Modifier
