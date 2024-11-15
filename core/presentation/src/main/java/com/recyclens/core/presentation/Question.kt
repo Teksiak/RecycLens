@@ -1,7 +1,9 @@
 package com.recyclens.core.presentation
 
+import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 
+@Keep
 @Serializable
 enum class Question {
     WHAT_IS_RECYCLENS,

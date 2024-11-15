@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package com.recyclens.scanner.presentation
 
 import androidx.lifecycle.ViewModel
@@ -11,6 +13,7 @@ import com.recyclens.scanner.presentation.util.compressImageToTargetSize
 import com.recyclens.scanner.presentation.util.resize
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -48,7 +51,7 @@ class ScannerViewModel @Inject constructor(
                 }
             }
             is ScannerAction.OnImageCapture -> {
-                viewModelScope.launch(Dispatchers.IO) {
+                viewModelScope.launch(Dispatchers.IO.limitedParallelism(1)) {
                     val imageByteArray = withContext(Dispatchers.Default) {
                         action.image
                             .resize(640, 640)
