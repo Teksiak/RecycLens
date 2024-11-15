@@ -10,6 +10,8 @@ RecycLens jest innowacyjną aplikacją stworzoną do pomagania użytkownikowi w 
 
 ## Widoki aplikacji
 
+![iPhone16Pro](https://github.com/user-attachments/assets/09fdaf5a-0551-4a13-96d3-8f109ac62fa9)
+![iPhone16](https://github.com/user-attachments/assets/4655cb34-6fcb-4097-aa81-270e65884434)
 
 
 ## Recycling-Classification-ajsxm
