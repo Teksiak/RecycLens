@@ -72,7 +72,7 @@ fun TitleDialog(
                 IconButton(
                     modifier = Modifier
                         .size(24.dp)
-                        .offset(x = (-12).dp, y = 12.dp),
+                        .offset(x = (-12).dp, y = 11.dp),
                     onClick = onDismiss
                 ) {
                     Icon(

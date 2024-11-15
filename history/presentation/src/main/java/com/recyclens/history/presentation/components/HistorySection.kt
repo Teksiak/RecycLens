@@ -11,13 +11,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ContextualFlowRow
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +23,6 @@ import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,6 +50,7 @@ fun HistorySection(
     wasteHistory: List<HistoryWaste>,
     isExpanded: Boolean,
     toggleExpanded: () -> Unit,
+    onRemove: (HistoryWaste) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val chevronRotate by animateFloatAsState(
@@ -121,11 +118,16 @@ fun HistorySection(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) { index ->
-                HistoryItem(
-                    modifier = Modifier.width(itemSizeInDp),
-                    wasteUi = wasteHistory[index].toHistoryWasteUi(),
-                    onRemove = { /*TODO*/ }
-                )
+                wasteHistory.getOrNull(index)?.let { waste ->
+                    HistoryItem(
+                        modifier = Modifier
+                            .width(itemSizeInDp),
+                        wasteUi = waste.toHistoryWasteUi(),
+                        onRemove = {
+                            onRemove(waste)
+                        }
+                    )
+                }
             }
         }
     }

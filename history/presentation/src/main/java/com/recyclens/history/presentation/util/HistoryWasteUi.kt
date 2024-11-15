@@ -8,8 +8,8 @@ import com.recyclens.core.presentation.util.getGradient
 import com.recyclens.core.presentation.util.getName
 
 data class HistoryWasteUi(
-    val classificationGradient: Brush,
-    val classificationName: String,
+    val wasteClassGradient: Brush,
+    val wasteClassName: String,
     val image: Bitmap,
     val time: String,
 )
@@ -17,8 +17,8 @@ data class HistoryWasteUi(
 @Composable
 fun HistoryWaste.toHistoryWasteUi(): HistoryWasteUi {
     return HistoryWasteUi(
-        classificationGradient = this.wasteClass.getGradient(),
-        classificationName = this.wasteClass.getName(),
+        wasteClassGradient = this.wasteClass.getGradient(),
+        wasteClassName = this.wasteClass.getName(),
         image = this.image.toBitmap(),
         time = "${this.date.hour}:${if(this.date.minute < 10) "0" else ""}${this.date.minute}",
     )

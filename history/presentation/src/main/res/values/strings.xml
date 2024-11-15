@@ -3,4 +3,8 @@
     <string name="history">Historia</string>
     <string name="expand_history">Rozwiń historię</string>
     <string name="collapse_history">Zwiń historię</string>
+    <string name="remove">Usuń</string>
+    <string name="remove_from_history">Usuń z historii</string>
+    <string name="remove_from_history_message">Czy na pewno chcesz usunąć ten odpad z historii?</string>
+    <string name="cancel">Anuluj</string>
 </resources>

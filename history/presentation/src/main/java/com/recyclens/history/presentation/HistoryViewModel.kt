@@ -28,7 +28,9 @@ class HistoryViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         history = historyByDate,
-                        expandedDates = listOf(historyByDate.keys.first()),
+                        expandedDates = if(!it.loadedHistory) {
+                            listOf(historyByDate.keys.first())
+                        } else it.expandedDates,
                         loadedHistory = true
                     )
                 }
@@ -60,7 +62,11 @@ class HistoryViewModel @Inject constructor(
                 viewModelScope.launch {
                     _state.value.historyWasteToRemove?.let { wasteToRemove ->
                         historyRepository.removeHistoryWaste(wasteToRemove)
-
+                        _state.update {
+                            it.copy(
+                                historyWasteToRemove = null
+                            )
+                        }
                     }
                 }
             }
