@@ -19,10 +19,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.recyclens.core.presentation.R
-import com.recyclens.core.presentation.designsystem.Back
-import com.recyclens.core.presentation.designsystem.Dark
+import com.recyclens.core.presentation.designsystem.BackIcon
+import com.recyclens.core.presentation.designsystem.DarkColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.WhiteColor
 
 @Composable
 fun NavigationTopBar(
@@ -45,15 +45,15 @@ fun NavigationTopBar(
                 modifier = Modifier.minimumInteractiveComponentSize()
             ) {
                 Icon(
-                    imageVector = Back,
+                    imageVector = BackIcon,
                     contentDescription = stringResource(id = R.string.back)
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = White,
-            titleContentColor = Dark,
-            navigationIconContentColor = Dark
+            containerColor = WhiteColor,
+            titleContentColor = DarkColor,
+            navigationIconContentColor = DarkColor
         )
     )
 }

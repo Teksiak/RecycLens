@@ -8,9 +8,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.recyclens.aboutus.AboutUsScreenRoot
 import com.recyclens.core.presentation.NavigationRoute
+import com.recyclens.history.presentation.HistoryScreenRoot
+import com.recyclens.history.presentation.HistoryViewModel
 import com.recyclens.information.InformationScreenRoot
+import com.recyclens.information.InformationViewModel
 import com.recyclens.scanner.presentation.ScannerScreenRoot
 import com.recyclens.scanner.presentation.ScannerViewModel
+import com.recyclens.settings.presentation.SettingsScreenRoot
+import com.recyclens.settings.presentation.SettingsViewModel
 
 @Composable
 fun NavigationRoot(
@@ -34,18 +39,46 @@ fun NavigationRoot(
                     navController.navigate(NavigationRoute.InformationRoute(question = it))
                 },
                 onNavigateToSettings = {
-                    navController.navigate(NavigationRoute.SettingsRoute(setting = null))
+                    navController.navigate(NavigationRoute.SettingsRoute)
                 },
                 onNavigateToHistory = {
                     navController.navigate(NavigationRoute.HistoryRoute)
                 },
             )
         }
+        composable<NavigationRoute.HistoryRoute> {
+            HistoryScreenRoot(
+                viewModel = hiltViewModel<HistoryViewModel>(),
+                onNavigateToSettings = {
+                    navController.navigate(NavigationRoute.SettingsRoute)
+                },
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
+            )
+        }
         composable<NavigationRoute.InformationRoute> {
-            InformationScreenRoot()
+            InformationScreenRoot(
+                viewModel = hiltViewModel<InformationViewModel>(),
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
+            )
+        }
+        composable<NavigationRoute.SettingsRoute> {
+             SettingsScreenRoot(
+                 viewModel = hiltViewModel<SettingsViewModel>(viewModelStoreOwner),
+                 onNavigateBack = {
+                     navController.navigateUp()
+                 }
+             )
         }
         composable<NavigationRoute.AboutUsRoute> {
-            AboutUsScreenRoot()
+            AboutUsScreenRoot(
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

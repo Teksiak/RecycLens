@@ -1,5 +1,8 @@
 package com.recyclens.aboutus
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,11 +18,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -28,22 +33,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.recyclens.R
 import com.recyclens.core.presentation.components.NavigationTopBar
-import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.PrimaryColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.Secondary
+import com.recyclens.core.presentation.designsystem.SecondaryColor
 
 @Composable
-fun AboutUsScreenRoot() {
-    AboutUsScreen()
+fun AboutUsScreenRoot(
+    onNavigateBack: () -> Unit
+) {
+    AboutUsScreen(
+        onNavigateBack = onNavigateBack
+    )
 }
 
 @Composable
-fun AboutUsScreen() {
+private fun AboutUsScreen(
+    onNavigateBack: () -> Unit
+) {
+    val context = LocalContext.current
+    val wojtekEmail = stringResource(id = R.string.wojtek_email)
+    val tomekEmail = stringResource(id = R.string.tomek_email)
+    val emailTitle = stringResource(id = R.string.recyclens)
+
     Scaffold(
         topBar = {
             NavigationTopBar(
                 title = stringResource(id = R.string.about_us),
-                onNavigateBack = { }
+                onNavigateBack = onNavigateBack
             )
         }
     ) { paddingValues ->
@@ -52,8 +68,7 @@ fun AboutUsScreen() {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .padding(vertical = 16.dp)
-                .padding(bottom = 16.dp),
+                .padding(16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -62,7 +77,7 @@ fun AboutUsScreen() {
                     .size(100.dp)
                     .clip(RoundedCornerShape(30.dp))
                     .background(brush = Brush.verticalGradient(
-                        colors = listOf(Secondary, Primary),
+                        colors = listOf(SecondaryColor, PrimaryColor),
                         startY = -50f,
                     )),
                 contentAlignment = Alignment.Center
@@ -79,12 +94,11 @@ fun AboutUsScreen() {
                 text = stringResource(id = R.string.app_name),
                 style = MaterialTheme.typography.titleLarge.copy(
                     brush = Brush.verticalGradient(
-                        colors = listOf(Secondary, Primary),
+                        colors = listOf(SecondaryColor, PrimaryColor),
                         startY = -25f
                     )
                 ),
             )
-
             Text(
                 text = stringResource(id = R.string.watchword),
                 style = MaterialTheme.typography.bodyMedium,
@@ -102,19 +116,53 @@ fun AboutUsScreen() {
                 textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = stringResource(id = R.string.contact_email),
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    textDecoration = TextDecoration.Underline
-                ),
-                color = Primary,
-            )
-            Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = stringResource(id = R.string.adress),
-                style = MaterialTheme.typography.bodyMedium,
-            )
+            TextButton(
+                onClick = {
+                    context.sendMail(
+                        receiver = wojtekEmail,
+                        subject = emailTitle,
+                    )
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = wojtekEmail,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        textDecoration = TextDecoration.Underline
+                    ),
+                    color = PrimaryColor,
+                )
+            }
+            TextButton(
+                onClick = {
+                    context.sendMail(
+                        receiver = tomekEmail,
+                        subject = emailTitle,
+                    )
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = tomekEmail,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        textDecoration = TextDecoration.Underline
+                    ),
+                    color = PrimaryColor,
+                )
+            }
         }
+    }
+}
+
+private fun Context.sendMail(receiver: String, subject: String) {
+    try {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "vnd.android.cursor.item/email"
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(receiver))
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        startActivity(intent)
+    } catch (e: Error) {
+        // TODO: Handle this
     }
 }
 
@@ -122,6 +170,8 @@ fun AboutUsScreen() {
 @Composable
 private fun InformationScreenPreview() {
     RecycLensTheme {
-        AboutUsScreen()
+        AboutUsScreen(
+            onNavigateBack = {}
+        )
     }
 }

@@ -8,13 +8,17 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.provider.Settings
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +29,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,11 +48,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -54,26 +63,35 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.TitleDialog
-import com.recyclens.core.presentation.designsystem.CheckImage
+import com.recyclens.core.presentation.designsystem.CheckImageIcon
 import com.recyclens.core.presentation.designsystem.CircleInfoIcon
-import com.recyclens.core.presentation.designsystem.Flash
-import com.recyclens.core.presentation.designsystem.FlashOn
-import com.recyclens.core.presentation.designsystem.TrashInfo
-import com.recyclens.core.presentation.designsystem.History
+import com.recyclens.core.presentation.designsystem.FlashIcon
+import com.recyclens.core.presentation.designsystem.FlashOnIcon
+import com.recyclens.core.presentation.designsystem.TrashInfoIcon
+import com.recyclens.core.presentation.designsystem.HistoryIcon
+import com.recyclens.core.presentation.designsystem.LabelColor
 import com.recyclens.core.presentation.designsystem.LanguageIcon
-import com.recyclens.core.presentation.designsystem.Menu
-import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.MenuIcon
+import com.recyclens.core.presentation.designsystem.OutlineColor
+import com.recyclens.core.presentation.designsystem.PrimaryColor
 import com.recyclens.core.presentation.designsystem.SettingsIcon
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.WhiteColor
+import com.recyclens.core.presentation.util.getName
 import com.recyclens.core.presentation.util.hasPermission
 import com.recyclens.scanner.presentation.components.CameraOverlay
 import com.recyclens.scanner.presentation.components.CameraPreview
 import com.recyclens.scanner.presentation.components.Drawer
 import com.recyclens.scanner.presentation.components.DrawerItem
+import com.recyclens.scanner.presentation.components.ErrorDialog
+import com.recyclens.scanner.presentation.components.LanguageDialog
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
+import com.recyclens.scanner.presentation.components.AnalysingAnimation
+import com.recyclens.scanner.presentation.components.UnfinishedFeatureDialog
 import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -84,19 +102,40 @@ fun ScannerScreenRoot(
     onNavigateToHistory: () -> Unit,
     onNavigateToSettings: () -> Unit,
 ) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val coroutineScope = rememberCoroutineScope()
+
+    DisposableEffect(Unit) {
+        (context as ComponentActivity).enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(0),
+        )
+
+        onDispose {
+            context.enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.light(0, 0),
+            )
+        }
+    }
 
     ScannerScreen(
-        state = state.value,
+        state = state,
         onAction = { action ->
+            viewModel.onAction(action)
             when(action) {
-                is ScannerAction.NavigateToInformation -> onNavigateToInformation(action.question)
+                is ScannerAction.NavigateToInformation -> {
+                    coroutineScope.launch(Dispatchers.Main) {
+                        if(state.classificationPrediction != null) {
+                            delay(100)
+                        }
+                        onNavigateToInformation(action.question)
+                    }
+                }
                 is ScannerAction.NavigateToSettings -> onNavigateToSettings()
                 is ScannerAction.NavigateToAboutUs -> onNavigateToAboutUs()
                 is ScannerAction.NavigateToHistory -> onNavigateToHistory()
                 else -> Unit
             }
-            viewModel.onAction(action)
         },
     )
 }
@@ -164,7 +203,7 @@ private fun ScannerScreen(
                         Text(
                             text = stringResource(id = R.string.grant_access),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = Primary
+                            color = PrimaryColor
                         )
                     }
                 }
@@ -188,7 +227,7 @@ private fun ScannerScreen(
                         Text(
                             text = stringResource(id = R.string.settings),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = Primary
+                            color = PrimaryColor
                         )
                     }
                 }
@@ -225,6 +264,7 @@ private fun ScannerScreen(
                             image = imageBitmap
                         )
                     )
+                    image.close()
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -257,6 +297,37 @@ private fun ScannerScreen(
             )
         }
 
+        if(state.isError) {
+            ErrorDialog(
+                onDismiss = {
+                    onAction(ScannerAction.DismissErrorDialog)
+                }
+            )
+        }
+
+        if(state.showLanguageDialog) {
+            LanguageDialog(
+                selectedLanguage = state.currentLanguage,
+                onLanguageSelected = { language ->
+                    onAction(ScannerAction.SetLanguage(language))
+                },
+                onDismiss = {
+                    onAction(ScannerAction.HideLanguageDialog)
+                }
+            )
+        }
+
+        if(state.showUnfinishedFeatureDialog) {
+            UnfinishedFeatureDialog(
+                onDismiss = {
+                    onAction(ScannerAction.DismissUnfinishedFeatureDialog)
+                },
+                onLearnMore = {
+                    onAction(ScannerAction.NavigateToInformation(Question.HOW_THE_APP_WORKS))
+                }
+            )
+        }
+
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val coroutineScope = rememberCoroutineScope()
 
@@ -267,12 +338,9 @@ private fun ScannerScreen(
                     DrawerItem(
                         icon = LanguageIcon,
                         title = stringResource(id = R.string.language),
-                        subtitle = "Polski", //TODO: Get from settings
+                        subtitle = state.currentLanguage.getName(),
                         onClick = {
-                            coroutineScope.launch {
-                                drawerState.close()
-                            }
-                            //TODO: Display dialog
+                            onAction(ScannerAction.ShowLanguageDialog)
                         }
                     )
                     DrawerItem(
@@ -314,6 +382,14 @@ private fun ScannerScreen(
                         paddingValues = paddingValues
                     )
 
+                    if(previewBitmap.value != null) {
+                        AnalysingAnimation(
+                            amount = 15,
+                            minSize = 12.dp,
+                            maxSize = 28.dp
+                        )
+                    }
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -321,56 +397,79 @@ private fun ScannerScreen(
                             .padding(bottom = 72.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 24.dp),
+                        AnimatedVisibility(
+                            visible = !state.isLoading && state.classificationPrediction == null
                         ) {
-                            IconButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        drawerState.open()
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 24.dp),
+                            ) {
+                                IconButton(
+                                    onClick = {
+                                        coroutineScope.launch {
+                                            drawerState.open()
+                                        }
                                     }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(24.dp),
+                                        imageVector = MenuIcon,
+                                        contentDescription = stringResource(id = R.string.open_drawer),
+                                        tint = OutlineColor
+                                    )
                                 }
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(24.dp),
-                                    imageVector = Menu,
-                                    contentDescription = stringResource(id = R.string.open_drawer),
-                                    tint = White
-                                )
-                            }
-                            Spacer(modifier = Modifier.weight(1f))
-                            IconButton(
-                                onClick = {
-                                    onAction(ScannerAction.NavigateToInformation(null))
+                                Spacer(modifier = Modifier.weight(1f))
+                                IconButton(
+                                    onClick = {
+                                        onAction(ScannerAction.NavigateToInformation(null))
+                                    }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(24.dp),
+                                        imageVector = TrashInfoIcon,
+                                        contentDescription = stringResource(id = R.string.informations),
+                                        tint = WhiteColor
+                                    )
                                 }
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(24.dp),
-                                    imageVector = TrashInfo,
-                                    contentDescription = stringResource(id = R.string.informations),
-                                    tint = White
-                                )
                             }
                         }
                         Spacer(modifier = Modifier.weight(1f))
+                        Text(
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(Color.Black.copy(alpha = 0.7f))
+                                .padding(vertical = 4.dp, horizontal = 12.dp),
+                            text = if(previewBitmap.value == null) {
+                                stringResource(id = R.string.take_a_photo)
+                            } else stringResource(id = R.string.analysing_photo),
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                fontWeight = FontWeight.ExtraBold
+                            ),
+                            textAlign = TextAlign.Center,
+                            color = WhiteColor
+                        )
+                        Spacer(modifier = Modifier.size(24.dp))
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(36.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            IconButton(
-                                onClick = {
-                                    // TODO: Display dialog about unfinished feature
-                                }
+                            AnimatedVisibility(
+                                visible = !state.isLoading && state.classificationPrediction == null
                             ) {
-                                Icon(
-                                    modifier = Modifier.size(32.dp),
-                                    imageVector = CheckImage,
-                                    contentDescription = stringResource(id = R.string.image_check),
-                                    tint = White
-                                )
+                                IconButton(
+                                    onClick = {
+                                        onAction(ScannerAction.ShowUnfinishedFeatureDialog)
+                                    }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(32.dp),
+                                        imageVector = CheckImageIcon,
+                                        contentDescription = stringResource(id = R.string.image_classification),
+                                        tint = LabelColor
+                                    )
+                                }
                             }
                             PhotoButton(
                                 isLoading = state.isLoading,
@@ -382,31 +481,39 @@ private fun ScannerScreen(
                                     )
                                 }
                             )
-                            IconButton(
-                                onClick = {
-                                    onAction(ScannerAction.NavigateToHistory)
-                                }
+                            AnimatedVisibility(
+                                visible = !state.isLoading && state.classificationPrediction == null
                             ) {
-                                Icon(
-                                    modifier = Modifier.size(32.dp),
-                                    imageVector = History,
-                                    contentDescription = stringResource(id = R.string.history),
-                                    tint = White
-                                )
+                                IconButton(
+                                    onClick = {
+                                        onAction(ScannerAction.NavigateToHistory)
+                                    }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(32.dp),
+                                        imageVector = HistoryIcon,
+                                        contentDescription = stringResource(id = R.string.history),
+                                        tint = WhiteColor
+                                    )
+                                }
                             }
                         }
                         Spacer(modifier = Modifier.size(16.dp))
-                        IconButton(
-                            onClick = {
-                                cameraController.enableTorch(!state.isFlashOn)
-                                onAction(ScannerAction.ToggleFlash)
-                            }
+                        AnimatedVisibility(
+                            visible = !state.isLoading && state.classificationPrediction == null
                         ) {
-                            Icon(
-                                imageVector = if(state.isFlashOn) FlashOn else Flash,
-                                contentDescription = if(state.isFlashOn) stringResource(id = R.string.flash_off) else stringResource(id = R.string.flash_on),
-                                tint = White
-                            )
+                            IconButton(
+                                onClick = {
+                                    cameraController.enableTorch(!state.isFlashOn)
+                                    onAction(ScannerAction.ToggleFlash)
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = if(state.isFlashOn) FlashOnIcon else FlashIcon,
+                                    contentDescription = if(state.isFlashOn) stringResource(id = R.string.flash_off) else stringResource(id = R.string.flash_on),
+                                    tint = WhiteColor
+                                )
+                            }
                         }
                     }
                 }

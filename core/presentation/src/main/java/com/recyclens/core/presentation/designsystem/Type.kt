@@ -20,39 +20,39 @@ val Typography = Typography(
         fontFamily = Roboto,
         fontSize = 30.sp,
         lineHeight = 38.sp,
-        color = Dark
+        color = DarkColor
     ),
     titleMedium = TextStyle(
         fontFamily = Roboto,
         fontSize = 24.sp,
         lineHeight = 30.sp,
-        color = Dark
+        color = DarkColor
     ),
     titleSmall = TextStyle(
         fontFamily = Roboto,
         fontSize = 20.sp,
         lineHeight = 25.sp,
-        color = Dark
+        color = DarkColor
     ),
     bodyLarge = TextStyle(
         fontFamily = Nunito,
         fontSize = 16.sp,
         lineHeight = 24.sp,
-        color = Dark,
-        fontWeight = FontWeight.W800
+        color = DarkColor,
+        fontWeight = FontWeight.ExtraBold
     ),
     bodyMedium = TextStyle(
         fontFamily = Nunito,
         fontSize = 14.sp,
         lineHeight = 20.sp,
-        color = Dark,
-        fontWeight = FontWeight.W800
+        color = DarkColor,
+        fontWeight = FontWeight.ExtraBold
     ),
     bodySmall = TextStyle(
         fontFamily = Nunito,
         fontSize = 12.sp,
         lineHeight = 16.sp,
-        color = Dark,
-        fontWeight = FontWeight.W800
+        color = DarkColor,
+        fontWeight = FontWeight.ExtraBold
     ),
 )

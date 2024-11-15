@@ -1,27 +1,44 @@
 package com.recyclens.scanner.presentation
 
-import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.recyclens.core.domain.history.HistoryWaste
+import com.recyclens.core.domain.history.HistoryRepository
+import com.recyclens.core.domain.settings.SettingsRepository
 import com.recyclens.core.domain.util.Result
 import com.recyclens.scanner.domain.ClassificationRepository
+import com.recyclens.scanner.presentation.util.compressImageToTargetSize
+import com.recyclens.scanner.presentation.util.resize
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
 class ScannerViewModel @Inject constructor(
-    private val classificationRepository: ClassificationRepository
+    private val classificationRepository: ClassificationRepository,
+    private val settingsRepository: SettingsRepository,
+    private val historyRepository: HistoryRepository
 ): ViewModel() {
 
     private val _state = MutableStateFlow(ScannerState())
     val state = _state.asStateFlow()
+
+    init {
+        settingsRepository.language
+            .onEach { language ->
+                _state.update {
+                    it.copy(currentLanguage = language)
+                }
+            }
+            .launchIn(viewModelScope)
+    }
 
     fun onAction(action: ScannerAction) {
         when(action) {
@@ -33,26 +50,36 @@ class ScannerViewModel @Inject constructor(
             is ScannerAction.OnImageCapture -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val imageByteArray = withContext(Dispatchers.Default) {
-                        val stream = ByteArrayOutputStream()
-                        action.image.compress(Bitmap.CompressFormat.JPEG, 50, stream)
-                        stream.toByteArray()
+                        action.image
+                            .resize(640, 640)
+                            .compressImageToTargetSize(512)
                     }
                     when(val result = classificationRepository.getPrediction(imageByteArray)) {
                         is Result.Success -> {
-                            _state.update {
-                                it.copy(
-                                    isLoading = false,
-                                    isError = false,
-                                    classificationPrediction = result.data
+                            historyRepository.addHistoryWaste(
+                                historyWaste = HistoryWaste(
+                                    image = imageByteArray,
+                                    wasteClass = result.data.wasteClass,
                                 )
+                            )
+                            withContext(Dispatchers.Main) {
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        isError = false,
+                                        classificationPrediction = result.data
+                                    )
+                                }
                             }
                         }
                         is Result.Error -> {
-                            _state.update {
-                                it.copy(
-                                    isLoading = false,
-                                    isError = true
-                                )
+                            withContext(Dispatchers.Main) {
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        isError = true
+                                    )
+                                }
                             }
                         }
                     }
@@ -63,12 +90,50 @@ class ScannerViewModel @Inject constructor(
                     it.copy(classificationPrediction = null)
                 }
             }
+            is ScannerAction.NavigateToInformation -> {
+                _state.update {
+                    it.copy(
+                        classificationPrediction = null,
+                        showUnfinishedFeatureDialog = false
+                    )
+                }
+            }
             is ScannerAction.OnImageCaptureError -> {
                 _state.update {
                     it.copy(
                         isLoading = false,
                         isError = true
                     )
+                }
+            }
+            is ScannerAction.DismissErrorDialog -> {
+                _state.update {
+                    it.copy(isError = false)
+                }
+            }
+            is ScannerAction.ShowLanguageDialog -> {
+                _state.update {
+                    it.copy(showLanguageDialog = true)
+                }
+            }
+            is ScannerAction.SetLanguage -> {
+                viewModelScope.launch {
+                    settingsRepository.setLanguage(action.language)
+                }
+            }
+            is ScannerAction.HideLanguageDialog -> {
+                _state.update {
+                    it.copy(showLanguageDialog = false)
+                }
+            }
+            is ScannerAction.ShowUnfinishedFeatureDialog -> {
+                _state.update {
+                    it.copy(showUnfinishedFeatureDialog = true)
+                }
+            }
+            is ScannerAction.DismissUnfinishedFeatureDialog -> {
+                _state.update {
+                    it.copy(showUnfinishedFeatureDialog = false)
                 }
             }
             is ScannerAction.ToggleFlash -> {

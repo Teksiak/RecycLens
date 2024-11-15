@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,12 +26,13 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.recyclens.core.presentation.designsystem.Label
-import com.recyclens.core.presentation.designsystem.LogoFirst
-import com.recyclens.core.presentation.designsystem.Outline
-import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.LabelColor
+import com.recyclens.core.presentation.designsystem.LogoLightIcon
+import com.recyclens.core.presentation.designsystem.OutlineColor
+import com.recyclens.core.presentation.designsystem.PrimaryColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.Secondary
+import com.recyclens.core.presentation.designsystem.SecondaryColor
+import com.recyclens.core.presentation.designsystem.WhiteColor
 import com.recyclens.scanner.presentation.R
 
 @Composable
@@ -40,7 +40,8 @@ fun Drawer(
     items: @Composable () -> Unit = {}
 ) {
     ModalDrawerSheet(
-        modifier = Modifier.width(300.dp)
+        modifier = Modifier.width(300.dp),
+        drawerContainerColor = WhiteColor
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -53,7 +54,7 @@ fun Drawer(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Icon(
-                    imageVector = LogoFirst,
+                    imageVector = LogoLightIcon,
                     contentDescription = null,
                     modifier = Modifier.size(72.dp),
                     tint = Color.Unspecified
@@ -66,7 +67,7 @@ fun Drawer(
                         text = stringResource(id = R.string.app_name),
                         style = MaterialTheme.typography.titleLarge.copy(
                             brush = Brush.verticalGradient(
-                                colors = listOf(Secondary, Primary),
+                                colors = listOf(SecondaryColor, PrimaryColor),
                                 startY = -25f
                             )
                         )
@@ -77,7 +78,7 @@ fun Drawer(
                     )
                 }
             }
-            HorizontalDivider(color = Outline)
+            HorizontalDivider(color = OutlineColor)
             items()
         }
     }
@@ -104,7 +105,7 @@ fun DrawerItem(
             imageVector = icon,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
-            tint = Label
+            tint = LabelColor
         )
         Column(
             modifier = Modifier.weight(1f),
@@ -118,7 +119,7 @@ fun DrawerItem(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.bodySmall,
-                    color = Secondary
+                    color = SecondaryColor
                 )
             }
         }

@@ -31,4 +31,16 @@
     <string name="slogan">Recykling - szybki i prosty</string>
     <string name="language">Język</string>
     <string name="about_us">O nas</string>
+    <string name="whoops">Ups!</string>
+    <string name="something_went_wrong">Coś poszło nie tak</string>
+    <string name="error_dialog_description">Nie udało się rozpoznać tego zdjęcia. Upewnij się, że przedmiot jest dobrze widoczny i spróbuj ponownie.</string>
+    <string name="try_again">Spróbuj ponownie</string>
+    <string name="error_rationale">Jeśli problem się powtarza, spróbuj zrobić zdjęcie w lepszym oświetleniu na jednolitym tle lub sprawdź połączenie z internetem.</string>
+    <string name="take_a_photo">Zrób zdjęcie odpadu do wyrzucenia</string>
+    <string name="choose_language">Wybierz język</string>
+    <string name="under_development">Under development</string>
+    <string name="image_classification">Klasyfikacja zdjęć</string>
+    <string name="feature_under_development">jest w trakcie rozwoju</string>
+    <string name="feature_under_development_description">Razem z zespołem prężnie pracujemy nad rozwinięciem tej funkcji. Umożliwi ona użytkownikom wkład własny w rozwój modelu klasyfikacji odpadów.</string>
+    <string name="analysing_photo">Analizuję zdjęcie odpadu</string>
 </resources>

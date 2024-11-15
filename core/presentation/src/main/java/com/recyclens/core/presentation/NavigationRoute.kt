@@ -8,7 +8,7 @@ interface NavigationRoute {
     @Serializable
     data object HistoryRoute: NavigationRoute
     @Serializable
-    data class SettingsRoute(val setting: Setting?): NavigationRoute
+    data object SettingsRoute: NavigationRoute
     @Serializable
     data class InformationRoute(val question: Question?): NavigationRoute
     @Serializable

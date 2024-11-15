@@ -46,15 +46,16 @@ class DataStoreSettingsRepository @Inject constructor(
 
 
     override val historySize: Flow<Int>
-        get() = applicationContext.settingsDataStore.data.catch {
-            if(it is Exception) {
-                emit(emptyPreferences())
-            } else {
-                throw it
+        get() = applicationContext.settingsDataStore.data
+            .catch {
+                if(it is Exception) {
+                    emit(emptyPreferences())
+                } else {
+                    throw it
+                }
+            }.map { preferences ->
+                preferences[HISTORY_SIZE_KEY] ?: DEFAULT_HISTORY_SIZE
             }
-        }.map { preferences ->
-            preferences[HISTORY_SIZE_KEY] ?: DEFAULT_HISTORY_SIZE
-        }
 
     override suspend fun setLanguage(language: Language): EmptyResult<DataError.Local> {
         return safeSettingsChange {

@@ -2,7 +2,6 @@ package com.recyclens.scanner.presentation.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -42,18 +40,18 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
 import com.recyclens.core.domain.WasteClass
-import com.recyclens.core.presentation.designsystem.Close
-import com.recyclens.core.presentation.designsystem.Label
+import com.recyclens.core.presentation.designsystem.CloseIcon
+import com.recyclens.core.presentation.designsystem.LabelColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.WhiteColor
 import com.recyclens.scanner.domain.ClassificationPrediction
 import com.recyclens.scanner.presentation.R
-import com.recyclens.scanner.presentation.util.PredictionDetailsUi
+import com.recyclens.scanner.presentation.util.PredictionUi
 import com.recyclens.scanner.presentation.util.toPredictionUi
 
 @Composable
 fun PredictionDialog(
-    predictionDetails: PredictionDetailsUi,
+    predictionDetails: PredictionUi,
     onDismiss: () -> Unit = {},
     onLearnMore: () -> Unit = {},
     onWrongSuggestion: () -> Unit = {}
@@ -88,7 +86,7 @@ fun PredictionDialog(
                 modifier = Modifier
                     .offset(y = (-80).dp)
                     .clip(RoundedCornerShape(24.dp))
-                    .background(White),
+                    .background(WhiteColor),
                 contentAlignment = Alignment.TopEnd
             ) {
                 IconButton(
@@ -110,7 +108,7 @@ fun PredictionDialog(
                                     )
                                 }
                             },
-                        imageVector = Close,
+                        imageVector = CloseIcon,
                         contentDescription = stringResource(id = android.R.string.cancel),
                     )
                 }
@@ -175,7 +173,7 @@ fun PredictionDialog(
                         text = stringResource(id = R.string.our_model_confidence) + " " + predictionDetails.confidence,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodySmall,
-                        color = Label
+                        color = LabelColor
                     )
                     Text(
                         text = buildAnnotatedString {
@@ -192,7 +190,7 @@ fun PredictionDialog(
                                 ) {
                                     withStyle(
                                         style = SpanStyle(
-                                            color = Label,
+                                            color = LabelColor,
                                             textDecoration = TextDecoration.Underline
                                         )
                                     ) {

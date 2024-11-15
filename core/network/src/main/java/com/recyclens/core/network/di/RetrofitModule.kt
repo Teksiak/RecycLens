@@ -19,11 +19,11 @@ import javax.inject.Singleton
 object RetrofitModule {
     @Provides
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(
-            HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }
-        )
+//        .addInterceptor(
+//            HttpLoggingInterceptor().apply {
+//                level = HttpLoggingInterceptor.Level.BODY
+//            }
+//        )
         .build()
 
     @Provides

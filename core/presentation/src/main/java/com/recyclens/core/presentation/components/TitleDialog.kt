@@ -1,6 +1,5 @@
 package com.recyclens.core.presentation.components
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,7 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -30,24 +29,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.recyclens.core.presentation.designsystem.Close
-import com.recyclens.core.presentation.designsystem.Dark
-import com.recyclens.core.presentation.designsystem.Label
-import com.recyclens.core.presentation.designsystem.Outline
+import com.recyclens.core.presentation.designsystem.CloseIcon
+import com.recyclens.core.presentation.designsystem.DarkColor
+import com.recyclens.core.presentation.designsystem.LabelColor
+import com.recyclens.core.presentation.designsystem.OutlineColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.WhiteColor
 
 @Composable
 fun TitleDialog(
     modifier: Modifier = Modifier,
     title: String,
-    titleColor: Color = Dark,
+    titleColor: Color = DarkColor,
     isDismissible: Boolean = true,
-    dismissButtonColor: Color = Label,
+    dismissButtonColor: Color = LabelColor,
     onDismiss: () -> Unit = {},
+    contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp, vertical = 16.dp),
     content: @Composable ColumnScope.() -> Unit,
     buttons: (@Composable RowScope.() -> Unit)? = null,
 ) {
@@ -61,9 +62,9 @@ fun TitleDialog(
         Box(
             modifier = modifier
                 .clip(RoundedCornerShape(16.dp))
-                .background(White)
+                .background(WhiteColor)
                 .padding(
-                    bottom = if(buttons != null) 4.dp else 16.dp,
+                    bottom = if(buttons != null) 4.dp else contentPadding.calculateBottomPadding(),
                 ),
             contentAlignment = Alignment.TopEnd
         ) {
@@ -71,12 +72,12 @@ fun TitleDialog(
                 IconButton(
                     modifier = Modifier
                         .size(24.dp)
-                        .offset(x = (-12).dp, y = 12.dp),
+                        .offset(x = (-12).dp, y = 11.dp),
                     onClick = onDismiss
                 ) {
                     Icon(
                         modifier = Modifier.size(24.dp),
-                        imageVector = Close,
+                        imageVector = CloseIcon,
                         contentDescription = stringResource(id = android.R.string.cancel),
                         tint = dismissButtonColor
                     )
@@ -97,22 +98,20 @@ fun TitleDialog(
                         )
                 )
                 HorizontalDivider(
-                    color = Outline
+                    color = OutlineColor
                 )
-                Spacer(modifier = Modifier.size(12.dp))
+                Spacer(modifier = Modifier.size(contentPadding.calculateTopPadding()))
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                        ),
+                        .padding(horizontal = contentPadding.calculateStartPadding(LayoutDirection.Ltr)),
                 ) {
                     content()
                 }
                 buttons?.let {
-                    Spacer(modifier = Modifier.size(12.dp))
+                    Spacer(modifier = Modifier.size(contentPadding.calculateBottomPadding()))
                     HorizontalDivider(
-                        color = Outline
+                        color = OutlineColor
                     )
                     Spacer(modifier = Modifier.size(4.dp))
                     Row(
@@ -134,7 +133,7 @@ fun TitleDialog(
 
 @Preview
 @Composable
-fun TitleDialogPreview() {
+private fun TitleDialogPreview() {
     RecycLensTheme {
         TitleDialog(
             title = "Title",

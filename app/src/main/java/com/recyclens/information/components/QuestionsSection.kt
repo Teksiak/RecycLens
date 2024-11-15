@@ -7,6 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,11 +20,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,13 +35,13 @@ import androidx.compose.ui.unit.dp
 import com.recyclens.R
 import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.designsystem.ChevronDown
-import com.recyclens.core.presentation.designsystem.Container
-import com.recyclens.core.presentation.designsystem.Dark
-import com.recyclens.core.presentation.designsystem.Label
-import com.recyclens.core.presentation.designsystem.Outline
+import com.recyclens.core.presentation.designsystem.ContainerColor
+import com.recyclens.core.presentation.designsystem.DarkColor
+import com.recyclens.core.presentation.designsystem.LabelColor
+import com.recyclens.core.presentation.designsystem.OutlineColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.Star
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.StarIcon
+import com.recyclens.core.presentation.designsystem.WhiteColor
 import com.recyclens.information.util.QuestionUi
 import com.recyclens.information.util.toQuestionUi
 
@@ -48,6 +52,7 @@ fun QuestionsSection(
     icon: ImageVector? = null,
     questions: List<Question>,
     currentExpandedQuestion: Question?,
+    onQuestionGloballyPositioned: (Question, Int) -> Unit = { _, _ ->},
     toggleExpanded: (Question) -> Unit
 ) {
     Column(
@@ -62,14 +67,14 @@ fun QuestionsSection(
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = Label,
+                    tint = LabelColor,
                     modifier = Modifier.padding(end = 8.dp)
                 )
             }
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleSmall,
-                color = Dark
+                color = DarkColor
             )
         }
         Column(
@@ -77,13 +82,17 @@ fun QuestionsSection(
                 .fillMaxWidth()
                 .border(
                     width = 1.dp,
-                    color = Outline,
+                    color = OutlineColor,
                     shape = RoundedCornerShape(8.dp)
                 )
                 .clip(RoundedCornerShape(8.dp)),
         ) {
             questions.forEachIndexed { index, question ->
                 ExpandableQuestion(
+                    modifier = Modifier.onGloballyPositioned { coordinates ->
+                        val y = coordinates.positionInRoot().y.toInt()
+                        onQuestionGloballyPositioned(question, y)
+                    },
                     question = question.toQuestionUi(),
                     isExpanded = currentExpandedQuestion == question,
                     toggleExpanded = {
@@ -93,7 +102,7 @@ fun QuestionsSection(
                 if (index < questions.size - 1) {
                     HorizontalDivider(
                         modifier = Modifier.fillMaxWidth(),
-                        color = Outline,
+                        color = OutlineColor,
                         thickness = 1.dp
                     )
                 }
@@ -115,12 +124,12 @@ fun ExpandableQuestion(
         label = ""
     )
     val chevronColor by animateColorAsState(
-        targetValue = if (isExpanded) Dark else Label,
+        targetValue = if (isExpanded) DarkColor else LabelColor,
         animationSpec = tween(300),
         label = ""
     )
     val backgroundColor by animateColorAsState(
-        targetValue = if (isExpanded) White else Container,
+        targetValue = if (isExpanded) WhiteColor else ContainerColor,
         animationSpec = tween(300),
         label = ""
     )
@@ -130,7 +139,9 @@ fun ExpandableQuestion(
             .background(backgroundColor)
             .padding(12.dp)
             .clickable(
-                role = Role.Button
+                role = Role.Button,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
             ) {
                 toggleExpanded()
             },
@@ -161,7 +172,7 @@ fun ExpandableQuestion(
                 modifier = Modifier.padding(top = 12.dp),
                 text = question.answer,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Label
+                color = LabelColor
             )
         }
     }
@@ -173,7 +184,7 @@ private fun QuestionsSectionPreview() {
     RecycLensTheme {
         QuestionsSection(
             title = "Aplikacja",
-            icon = Star,
+            icon = StarIcon,
             questions = listOf(
                 Question.WHAT_IS_RECYCLENS,
                 Question.HOW_THE_APP_WORKS
