@@ -8,7 +8,9 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.provider.Settings
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -38,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -99,8 +102,21 @@ fun ScannerScreenRoot(
     onNavigateToHistory: () -> Unit,
     onNavigateToSettings: () -> Unit,
 ) {
+    val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
+
+    DisposableEffect(Unit) {
+        (context as ComponentActivity).enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(0),
+        )
+
+        onDispose {
+            context.enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.light(0, 0),
+            )
+        }
+    }
 
     ScannerScreen(
         state = state,
