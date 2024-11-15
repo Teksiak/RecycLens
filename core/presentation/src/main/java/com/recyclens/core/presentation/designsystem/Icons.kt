@@ -5,13 +5,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.recyclens.core.presentation.R
 
-val Star: ImageVector
+val StarIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.star)
-val Trash: ImageVector
+val TrashIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.trash)
-val TrashInfo: ImageVector
+val TrashInfoIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.info_trash)
 val SettingsIcon: ImageVector
@@ -23,45 +23,42 @@ val LanguageIcon: ImageVector
 val CircleInfoIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.info_circle)
-val Menu: ImageVector
+val MenuIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.menu)
-val LogoFirst: ImageVector
+val LogoLightIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.logo_first_theme)
-val LogoSecond: ImageVector
+val LogoDarkIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.logo_second_theme)
-val TrashError: ImageVector
+val TrashErrorIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.error)
-val Flash: ImageVector
+val FlashIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.flash)
-val FlashOn: ImageVector
+val FlashOnIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.flash_on)
-val Close: ImageVector
+val CloseIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.close)
-val Remove: ImageVector
+val RemoveIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.remove)
-val History: ImageVector
+val HistoryIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.history)
-val CheckImage: ImageVector
+val CheckImageIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.check_image)
-val ChevronUp: ImageVector
-    @Composable
-    get() = ImageVector.vectorResource(id = R.drawable.chevron_up)
 val ChevronDown: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.chevron_down)
-val Back: ImageVector
+val BackIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.back)
-val Recycle: ImageVector
+val RecycleIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.recycle)

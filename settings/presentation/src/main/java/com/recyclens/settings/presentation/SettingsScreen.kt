@@ -29,8 +29,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.domain.settings.SettingsRepository
 import com.recyclens.core.presentation.components.NavigationTopBar
 import com.recyclens.core.presentation.components.TitleDialog
-import com.recyclens.core.presentation.designsystem.Outline
-import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.OutlineColor
+import com.recyclens.core.presentation.designsystem.PrimaryColor
 import com.recyclens.settings.presentation.components.VerticalPicker
 import com.recyclens.core.presentation.util.toWasteAmount
 
@@ -120,7 +120,7 @@ private fun SettingsScreen(
                         )
                         .border(
                             width = 1.dp,
-                            color = Outline,
+                            color = OutlineColor,
                             shape = RoundedCornerShape(20.dp)
                         )
                         .padding(horizontal = 16.dp),
@@ -129,7 +129,7 @@ private fun SettingsScreen(
                     Text(
                         text = state.historySize.toWasteAmount(),
                         style = MaterialTheme.typography.bodyLarge,
-                        color = Primary
+                        color = PrimaryColor
                     )
                 }
             }

@@ -21,9 +21,9 @@ import com.recyclens.R
 import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.NavigationTopBar
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.Recycle
-import com.recyclens.core.presentation.designsystem.Star
-import com.recyclens.core.presentation.designsystem.Trash
+import com.recyclens.core.presentation.designsystem.RecycleIcon
+import com.recyclens.core.presentation.designsystem.StarIcon
+import com.recyclens.core.presentation.designsystem.TrashIcon
 import com.recyclens.core.presentation.util.ObserveAsEvents
 import com.recyclens.information.components.QuestionsSection
 import kotlinx.coroutines.delay
@@ -97,7 +97,7 @@ fun InformationScreen(
         ) {
             QuestionsSection(
                 title = stringResource(id = R.string.application),
-                icon = Star,
+                icon = StarIcon,
                 questions = listOf(
                     Question.WHAT_IS_RECYCLENS,
                     Question.HOW_THE_APP_WORKS,
@@ -113,7 +113,7 @@ fun InformationScreen(
             )
             QuestionsSection(
                 title = stringResource(id = R.string.recycling),
-                icon = Recycle,
+                icon = RecycleIcon,
                 questions = listOf(
                     Question.WHAT_IS_RECYCLING,
                     Question.WHY_RECYCLE,
@@ -128,7 +128,7 @@ fun InformationScreen(
             )
             QuestionsSection(
                 title = stringResource(id = R.string.bins),
-                icon = Trash,
+                icon = TrashIcon,
                 questions = listOf(
                     Question.PAPER_BIN,
                     Question.PLASTIC_BIN,

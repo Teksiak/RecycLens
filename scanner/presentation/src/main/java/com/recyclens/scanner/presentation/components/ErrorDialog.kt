@@ -36,13 +36,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
-import com.recyclens.core.presentation.designsystem.Close
+import com.recyclens.core.presentation.designsystem.CloseIcon
 import com.recyclens.core.presentation.designsystem.ErrorDark
 import com.recyclens.core.presentation.designsystem.ErrorMain
-import com.recyclens.core.presentation.designsystem.Label
+import com.recyclens.core.presentation.designsystem.LabelColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.TrashError
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.TrashErrorIcon
+import com.recyclens.core.presentation.designsystem.WhiteColor
 import com.recyclens.scanner.presentation.R
 
 @Composable
@@ -73,16 +73,16 @@ fun ErrorDialog(
             ) {
                 Icon(
                     modifier = Modifier.size(108.dp),
-                    imageVector = TrashError,
+                    imageVector = TrashErrorIcon,
                     contentDescription = null,
-                    tint = White
+                    tint = WhiteColor
                 )
             }
             Box(
                 modifier = Modifier
                     .offset(y = (-80).dp)
                     .clip(RoundedCornerShape(24.dp))
-                    .background(White),
+                    .background(WhiteColor),
                 contentAlignment = Alignment.TopEnd
             ) {
                 IconButton(
@@ -106,7 +106,7 @@ fun ErrorDialog(
                                     )
                                 }
                             },
-                        imageVector = Close,
+                        imageVector = CloseIcon,
                         contentDescription = stringResource(id = android.R.string.cancel),
                     )
                 }
@@ -172,7 +172,7 @@ fun ErrorDialog(
                         text = stringResource(id = R.string.error_rationale),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodySmall,
-                        color = Label
+                        color = LabelColor
                     )
                 }
             }

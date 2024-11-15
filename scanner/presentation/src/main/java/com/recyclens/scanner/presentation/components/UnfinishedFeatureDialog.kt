@@ -35,11 +35,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
-import com.recyclens.core.presentation.designsystem.Close
+import com.recyclens.core.presentation.designsystem.CloseIcon
 import com.recyclens.core.presentation.designsystem.ErrorDark
 import com.recyclens.core.presentation.designsystem.ErrorMain
-import com.recyclens.core.presentation.designsystem.Recycle
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.RecycleIcon
+import com.recyclens.core.presentation.designsystem.WhiteColor
 import com.recyclens.scanner.presentation.R
 
 @Composable
@@ -71,16 +71,16 @@ fun UnfinishedFeatureDialog(
             ) {
                 Icon(
                     modifier = Modifier.size(108.dp),
-                    imageVector = Recycle,
+                    imageVector = RecycleIcon,
                     contentDescription = null,
-                    tint = White
+                    tint = WhiteColor
                 )
             }
             Box(
                 modifier = Modifier
                     .offset(y = (-80).dp)
                     .clip(RoundedCornerShape(24.dp))
-                    .background(White),
+                    .background(WhiteColor),
                 contentAlignment = Alignment.TopEnd
             ) {
                 IconButton(
@@ -104,7 +104,7 @@ fun UnfinishedFeatureDialog(
                                     )
                                 }
                             },
-                        imageVector = Close,
+                        imageVector = CloseIcon,
                         contentDescription = stringResource(id = android.R.string.cancel),
                     )
                 }

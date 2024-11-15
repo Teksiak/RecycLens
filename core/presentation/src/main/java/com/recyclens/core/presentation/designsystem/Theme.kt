@@ -13,13 +13,13 @@ import androidx.compose.ui.platform.LocalContext
 private val DarkColorScheme = darkColorScheme()
 
 private val LightColorScheme = lightColorScheme(
-    primary = Primary,
-    secondary = Secondary,
-    background = White,
-    outline = Outline,
-    surfaceContainer = Container,
-    onSurface = Dark,
-    onSurfaceVariant = Label,
+    primary = PrimaryColor,
+    secondary = SecondaryColor,
+    background = WhiteColor,
+    outline = OutlineColor,
+    surfaceContainer = ContainerColor,
+    onSurface = DarkColor,
+    onSurfaceVariant = LabelColor,
 )
 
 @Composable

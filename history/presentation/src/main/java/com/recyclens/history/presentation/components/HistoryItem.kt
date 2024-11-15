@@ -22,17 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.recyclens.core.presentation.designsystem.Label
-import com.recyclens.core.presentation.designsystem.Remove
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.LabelColor
+import com.recyclens.core.presentation.designsystem.RemoveIcon
+import com.recyclens.core.presentation.designsystem.WhiteColor
 import com.recyclens.history.presentation.R
 import com.recyclens.history.presentation.util.HistoryWasteUi
 
@@ -67,9 +64,9 @@ fun HistoryItem(
                 Icon(
                     modifier = Modifier
                         .size(24.dp),
-                    imageVector = Remove,
+                    imageVector = RemoveIcon,
                     contentDescription = stringResource(id = R.string.remove),
-                    tint = White
+                    tint = WhiteColor
                 )
             }
         }
@@ -92,7 +89,7 @@ fun HistoryItem(
             Text(
                 text = wasteUi.time,
                 style = MaterialTheme.typography.bodySmall,
-                color = Label
+                color = LabelColor
             )
         }
     }

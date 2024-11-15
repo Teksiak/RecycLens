@@ -57,19 +57,19 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.components.TitleDialog
-import com.recyclens.core.presentation.designsystem.CheckImage
+import com.recyclens.core.presentation.designsystem.CheckImageIcon
 import com.recyclens.core.presentation.designsystem.CircleInfoIcon
-import com.recyclens.core.presentation.designsystem.Flash
-import com.recyclens.core.presentation.designsystem.FlashOn
-import com.recyclens.core.presentation.designsystem.TrashInfo
-import com.recyclens.core.presentation.designsystem.History
-import com.recyclens.core.presentation.designsystem.Label
+import com.recyclens.core.presentation.designsystem.FlashIcon
+import com.recyclens.core.presentation.designsystem.FlashOnIcon
+import com.recyclens.core.presentation.designsystem.TrashInfoIcon
+import com.recyclens.core.presentation.designsystem.HistoryIcon
+import com.recyclens.core.presentation.designsystem.LabelColor
 import com.recyclens.core.presentation.designsystem.LanguageIcon
-import com.recyclens.core.presentation.designsystem.Menu
-import com.recyclens.core.presentation.designsystem.Outline
-import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.MenuIcon
+import com.recyclens.core.presentation.designsystem.OutlineColor
+import com.recyclens.core.presentation.designsystem.PrimaryColor
 import com.recyclens.core.presentation.designsystem.SettingsIcon
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.WhiteColor
 import com.recyclens.core.presentation.util.getName
 import com.recyclens.core.presentation.util.hasPermission
 import com.recyclens.scanner.presentation.components.CameraOverlay
@@ -183,7 +183,7 @@ private fun ScannerScreen(
                         Text(
                             text = stringResource(id = R.string.grant_access),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = Primary
+                            color = PrimaryColor
                         )
                     }
                 }
@@ -207,7 +207,7 @@ private fun ScannerScreen(
                         Text(
                             text = stringResource(id = R.string.settings),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = Primary
+                            color = PrimaryColor
                         )
                     }
                 }
@@ -384,9 +384,9 @@ private fun ScannerScreen(
                             ) {
                                 Icon(
                                     modifier = Modifier.size(24.dp),
-                                    imageVector = Menu,
+                                    imageVector = MenuIcon,
                                     contentDescription = stringResource(id = R.string.open_drawer),
-                                    tint = White
+                                    tint = OutlineColor
                                 )
                             }
                             Spacer(modifier = Modifier.weight(1f))
@@ -397,9 +397,9 @@ private fun ScannerScreen(
                             ) {
                                 Icon(
                                     modifier = Modifier.size(24.dp),
-                                    imageVector = TrashInfo,
+                                    imageVector = TrashInfoIcon,
                                     contentDescription = stringResource(id = R.string.informations),
-                                    tint = White
+                                    tint = WhiteColor
                                 )
                             }
                         }
@@ -413,7 +413,7 @@ private fun ScannerScreen(
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.ExtraBold
                             ),
-                            color = White
+                            color = WhiteColor
                         )
                         Spacer(modifier = Modifier.size(24.dp))
                         Row(
@@ -427,9 +427,9 @@ private fun ScannerScreen(
                             ) {
                                 Icon(
                                     modifier = Modifier.size(32.dp),
-                                    imageVector = CheckImage,
+                                    imageVector = CheckImageIcon,
                                     contentDescription = stringResource(id = R.string.image_classification),
-                                    tint = Label
+                                    tint = LabelColor
                                 )
                             }
                             PhotoButton(
@@ -449,9 +449,9 @@ private fun ScannerScreen(
                             ) {
                                 Icon(
                                     modifier = Modifier.size(32.dp),
-                                    imageVector = History,
+                                    imageVector = HistoryIcon,
                                     contentDescription = stringResource(id = R.string.history),
-                                    tint = White
+                                    tint = WhiteColor
                                 )
                             }
                         }
@@ -463,9 +463,9 @@ private fun ScannerScreen(
                             }
                         ) {
                             Icon(
-                                imageVector = if(state.isFlashOn) FlashOn else Flash,
+                                imageVector = if(state.isFlashOn) FlashOnIcon else FlashIcon,
                                 contentDescription = if(state.isFlashOn) stringResource(id = R.string.flash_off) else stringResource(id = R.string.flash_on),
-                                tint = White
+                                tint = WhiteColor
                             )
                         }
                     }

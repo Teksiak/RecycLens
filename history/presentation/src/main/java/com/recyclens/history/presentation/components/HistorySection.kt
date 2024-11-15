@@ -38,8 +38,8 @@ import com.recyclens.core.domain.history.HistoryWaste
 import com.recyclens.core.domain.settings.Language
 import com.recyclens.core.domain.settings.SettingsRepository
 import com.recyclens.core.presentation.designsystem.ChevronDown
-import com.recyclens.core.presentation.designsystem.Dark
-import com.recyclens.core.presentation.designsystem.Label
+import com.recyclens.core.presentation.designsystem.DarkColor
+import com.recyclens.core.presentation.designsystem.LabelColor
 import com.recyclens.core.presentation.util.getLocale
 import com.recyclens.core.presentation.util.toWasteAmount
 import com.recyclens.history.presentation.R
@@ -85,7 +85,7 @@ fun HistorySection(
                 imageVector = ChevronDown,
                 contentDescription = if (isExpanded) stringResource(id = R.string.expand_history)
                 else stringResource(id = R.string.collapse_history),
-                tint = Dark,
+                tint = DarkColor,
                 modifier = Modifier.rotate(chevronRotate)
             )
             Text(
@@ -97,7 +97,7 @@ fun HistorySection(
             Text(
                 text = wasteHistory.size.toWasteAmount(),
                 style = MaterialTheme.typography.bodyMedium,
-                color = Label
+                color = LabelColor
             )
         }
         AnimatedVisibility(

@@ -33,20 +33,20 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.recyclens.core.presentation.designsystem.Close
-import com.recyclens.core.presentation.designsystem.Dark
-import com.recyclens.core.presentation.designsystem.Label
-import com.recyclens.core.presentation.designsystem.Outline
+import com.recyclens.core.presentation.designsystem.CloseIcon
+import com.recyclens.core.presentation.designsystem.DarkColor
+import com.recyclens.core.presentation.designsystem.LabelColor
+import com.recyclens.core.presentation.designsystem.OutlineColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.WhiteColor
 
 @Composable
 fun TitleDialog(
     modifier: Modifier = Modifier,
     title: String,
-    titleColor: Color = Dark,
+    titleColor: Color = DarkColor,
     isDismissible: Boolean = true,
-    dismissButtonColor: Color = Label,
+    dismissButtonColor: Color = LabelColor,
     onDismiss: () -> Unit = {},
     contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp, vertical = 16.dp),
     content: @Composable ColumnScope.() -> Unit,
@@ -62,7 +62,7 @@ fun TitleDialog(
         Box(
             modifier = modifier
                 .clip(RoundedCornerShape(16.dp))
-                .background(White)
+                .background(WhiteColor)
                 .padding(
                     bottom = if(buttons != null) 4.dp else contentPadding.calculateBottomPadding(),
                 ),
@@ -77,7 +77,7 @@ fun TitleDialog(
                 ) {
                     Icon(
                         modifier = Modifier.size(24.dp),
-                        imageVector = Close,
+                        imageVector = CloseIcon,
                         contentDescription = stringResource(id = android.R.string.cancel),
                         tint = dismissButtonColor
                     )
@@ -98,7 +98,7 @@ fun TitleDialog(
                         )
                 )
                 HorizontalDivider(
-                    color = Outline
+                    color = OutlineColor
                 )
                 Spacer(modifier = Modifier.size(contentPadding.calculateTopPadding()))
                 Column(
@@ -111,7 +111,7 @@ fun TitleDialog(
                 buttons?.let {
                     Spacer(modifier = Modifier.size(contentPadding.calculateBottomPadding()))
                     HorizontalDivider(
-                        color = Outline
+                        color = OutlineColor
                     )
                     Spacer(modifier = Modifier.size(4.dp))
                     Row(

@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.ErrorMain
-import com.recyclens.core.presentation.designsystem.Label
+import com.recyclens.core.presentation.designsystem.LabelColor
 import com.recyclens.history.presentation.R
 
 @Composable
@@ -58,7 +58,7 @@ fun RemoveDialog(
                 Text(
                     text = stringResource(id = R.string.cancel),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Label
+                    color = LabelColor
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))

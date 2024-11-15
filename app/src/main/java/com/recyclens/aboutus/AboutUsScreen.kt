@@ -28,9 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.recyclens.R
 import com.recyclens.core.presentation.components.NavigationTopBar
-import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.PrimaryColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.Secondary
+import com.recyclens.core.presentation.designsystem.SecondaryColor
 
 @Composable
 fun AboutUsScreenRoot(
@@ -67,7 +67,7 @@ private fun AboutUsScreen(
                     .size(100.dp)
                     .clip(RoundedCornerShape(30.dp))
                     .background(brush = Brush.verticalGradient(
-                        colors = listOf(Secondary, Primary),
+                        colors = listOf(SecondaryColor, PrimaryColor),
                         startY = -50f,
                     )),
                 contentAlignment = Alignment.Center
@@ -84,7 +84,7 @@ private fun AboutUsScreen(
                 text = stringResource(id = R.string.app_name),
                 style = MaterialTheme.typography.titleLarge.copy(
                     brush = Brush.verticalGradient(
-                        colors = listOf(Secondary, Primary),
+                        colors = listOf(SecondaryColor, PrimaryColor),
                         startY = -25f
                     )
                 ),
@@ -111,7 +111,7 @@ private fun AboutUsScreen(
                 style = MaterialTheme.typography.bodyLarge.copy(
                     textDecoration = TextDecoration.Underline
                 ),
-                color = Primary,
+                color = PrimaryColor,
             )
             Spacer(modifier = Modifier.size(16.dp))
             Text(

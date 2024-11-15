@@ -27,8 +27,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.presentation.components.NavigationTopBar
-import com.recyclens.core.presentation.designsystem.Label
-import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.LabelColor
+import com.recyclens.core.presentation.designsystem.PrimaryColor
 import com.recyclens.core.presentation.util.toWasteAmount
 import com.recyclens.history.presentation.components.HistorySection
 import com.recyclens.history.presentation.components.RemoveDialog
@@ -113,7 +113,7 @@ private fun HistoryScreen(
                         ) {
                             withStyle(
                                 style = SpanStyle(
-                                    color = Label
+                                    color = LabelColor
                                 )
                             ) {
                                 append(stringResource(id = R.string.history_disclaimer))
@@ -129,7 +129,7 @@ private fun HistoryScreen(
                             ) {
                                 withStyle(
                                     style = SpanStyle(
-                                        color = Primary,
+                                        color = PrimaryColor,
                                         textDecoration = TextDecoration.Underline
                                     )
                                 ) {

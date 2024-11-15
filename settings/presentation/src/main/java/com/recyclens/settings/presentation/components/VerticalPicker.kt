@@ -25,9 +25,9 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.recyclens.core.presentation.designsystem.Label
-import com.recyclens.core.presentation.designsystem.Primary
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.LabelColor
+import com.recyclens.core.presentation.designsystem.PrimaryColor
+import com.recyclens.core.presentation.designsystem.WhiteColor
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -123,7 +123,7 @@ fun <T> VerticalPicker(
         val boxCornerRadius = 20.dp.toPx()
 
         drawRoundRect(
-            color = Primary,
+            color = PrimaryColor,
             topLeft = Offset(
                 x = 0f,
                 y = boxHeight
@@ -151,14 +151,14 @@ fun <T> VerticalPicker(
                     textMeasurer = textMeasurer,
                     text = items[i].toString(),
                     style = textStyle.copy(
-                        color = White
+                        color = WhiteColor
                     ),
                 )
             }
         }
 
         drawRect(
-            color = Label,
+            color = LabelColor,
             topLeft = Offset(
                 x = 0f,
                 y = 0f
@@ -170,7 +170,7 @@ fun <T> VerticalPicker(
             blendMode = BlendMode.SrcIn
         )
         drawRect(
-            color = Label,
+            color = LabelColor,
             topLeft = Offset(
                 x = 0f,
                 y = 2 * boxHeight

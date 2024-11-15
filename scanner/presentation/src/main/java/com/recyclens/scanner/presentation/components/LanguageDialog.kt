@@ -1,6 +1,5 @@
 package com.recyclens.scanner.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,9 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.recyclens.core.domain.settings.Language
 import com.recyclens.core.presentation.components.TitleDialog
-import com.recyclens.core.presentation.designsystem.Label
-import com.recyclens.core.presentation.designsystem.Outline
-import com.recyclens.core.presentation.designsystem.Primary
+import com.recyclens.core.presentation.designsystem.LabelColor
+import com.recyclens.core.presentation.designsystem.OutlineColor
+import com.recyclens.core.presentation.designsystem.PrimaryColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
 import com.recyclens.core.presentation.util.getName
 import com.recyclens.scanner.presentation.R
@@ -74,10 +73,10 @@ private fun LanguageItem(
             selected = isSelected,
             onClick = onSelect,
             colors = RadioButtonDefaults.colors(
-                selectedColor = Primary,
-                unselectedColor = Label,
-                disabledSelectedColor = Outline,
-                disabledUnselectedColor = Outline,
+                selectedColor = PrimaryColor,
+                unselectedColor = LabelColor,
+                disabledSelectedColor = OutlineColor,
+                disabledUnselectedColor = OutlineColor,
             ),
             enabled = language.isAvailable
         )
@@ -93,7 +92,7 @@ private fun LanguageItem(
                 Text(
                     text = stringResource(id = R.string.under_development),
                     style = MaterialTheme.typography.bodySmall,
-                    color = Label
+                    color = LabelColor
                 )
             }
         }

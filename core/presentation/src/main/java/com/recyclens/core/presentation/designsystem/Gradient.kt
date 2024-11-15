@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Brush
 val PrimaryGradient: Brush
     @Composable
     get() = Brush.verticalGradient(
-        colors = listOf(Primary, Secondary),
+        colors = listOf(PrimaryColor, SecondaryColor),
     )
 
 val PlasticGradient: Brush

@@ -35,13 +35,13 @@ import androidx.compose.ui.unit.dp
 import com.recyclens.R
 import com.recyclens.core.presentation.Question
 import com.recyclens.core.presentation.designsystem.ChevronDown
-import com.recyclens.core.presentation.designsystem.Container
-import com.recyclens.core.presentation.designsystem.Dark
-import com.recyclens.core.presentation.designsystem.Label
-import com.recyclens.core.presentation.designsystem.Outline
+import com.recyclens.core.presentation.designsystem.ContainerColor
+import com.recyclens.core.presentation.designsystem.DarkColor
+import com.recyclens.core.presentation.designsystem.LabelColor
+import com.recyclens.core.presentation.designsystem.OutlineColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
-import com.recyclens.core.presentation.designsystem.Star
-import com.recyclens.core.presentation.designsystem.White
+import com.recyclens.core.presentation.designsystem.StarIcon
+import com.recyclens.core.presentation.designsystem.WhiteColor
 import com.recyclens.information.util.QuestionUi
 import com.recyclens.information.util.toQuestionUi
 
@@ -67,14 +67,14 @@ fun QuestionsSection(
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = Label,
+                    tint = LabelColor,
                     modifier = Modifier.padding(end = 8.dp)
                 )
             }
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleSmall,
-                color = Dark
+                color = DarkColor
             )
         }
         Column(
@@ -82,7 +82,7 @@ fun QuestionsSection(
                 .fillMaxWidth()
                 .border(
                     width = 1.dp,
-                    color = Outline,
+                    color = OutlineColor,
                     shape = RoundedCornerShape(8.dp)
                 )
                 .clip(RoundedCornerShape(8.dp)),
@@ -102,7 +102,7 @@ fun QuestionsSection(
                 if (index < questions.size - 1) {
                     HorizontalDivider(
                         modifier = Modifier.fillMaxWidth(),
-                        color = Outline,
+                        color = OutlineColor,
                         thickness = 1.dp
                     )
                 }
@@ -124,12 +124,12 @@ fun ExpandableQuestion(
         label = ""
     )
     val chevronColor by animateColorAsState(
-        targetValue = if (isExpanded) Dark else Label,
+        targetValue = if (isExpanded) DarkColor else LabelColor,
         animationSpec = tween(300),
         label = ""
     )
     val backgroundColor by animateColorAsState(
-        targetValue = if (isExpanded) White else Container,
+        targetValue = if (isExpanded) WhiteColor else ContainerColor,
         animationSpec = tween(300),
         label = ""
     )
@@ -172,7 +172,7 @@ fun ExpandableQuestion(
                 modifier = Modifier.padding(top = 12.dp),
                 text = question.answer,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Label
+                color = LabelColor
             )
         }
     }
@@ -184,7 +184,7 @@ private fun QuestionsSectionPreview() {
     RecycLensTheme {
         QuestionsSection(
             title = "Aplikacja",
-            icon = Star,
+            icon = StarIcon,
             questions = listOf(
                 Question.WHAT_IS_RECYCLENS,
                 Question.HOW_THE_APP_WORKS
