@@ -92,7 +92,10 @@ class ScannerViewModel @Inject constructor(
             }
             is ScannerAction.NavigateToInformation -> {
                 _state.update {
-                    it.copy(classificationPrediction = null)
+                    it.copy(
+                        classificationPrediction = null,
+                        showUnfinishedFeatureDialog = false
+                    )
                 }
             }
             is ScannerAction.OnImageCaptureError -> {

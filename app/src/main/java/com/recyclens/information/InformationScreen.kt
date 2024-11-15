@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -59,6 +60,9 @@ fun InformationScreen(
     val questionCoordinates = remember { mutableMapOf<Question, Int>() }
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
+    val topPadding = with(LocalDensity.current) {
+        92.dp.toPx().toInt()
+    }
 
     ObserveAsEvents(flow = events) { event ->
         when(event) {
@@ -67,7 +71,7 @@ fun InformationScreen(
                 coroutineScope.launch {
                     delay(300)
                     val y = questionCoordinates[event.question] ?: 0
-                    scrollState.animateScrollTo(y.coerceAtMost(scrollState.maxValue))
+                    scrollState.animateScrollTo((y - topPadding).coerceIn(0, scrollState.maxValue))
                 }
             }
         }
