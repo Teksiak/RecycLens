@@ -46,7 +46,7 @@ fun HistoryScreenRoot(
         state = state,
         onAction = {
             viewModel.onAction(it)
-            when(it) {
+            when (it) {
                 is HistoryAction.NavigateToSettings -> onNavigateToSettings()
                 is HistoryAction.NavigateBack -> onNavigateBack()
                 else -> Unit
@@ -104,41 +104,51 @@ private fun HistoryScreen(
                 )
             }
             item {
-                Spacer(modifier = Modifier.size(24.dp))
+                Spacer(modifier = Modifier.size(if(state.history.isNotEmpty()) 24.dp else 0.dp))
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = buildAnnotatedString {
                         withStyle(
                             style = MaterialTheme.typography.bodySmall.toSpanStyle(),
                         ) {
-                            withStyle(
-                                style = SpanStyle(
-                                    color = LabelColor
-                                )
-                            ) {
-                                append(stringResource(id = R.string.history_disclaimer))
-                                append(state.settingsHistorySize.toWasteAmount() + ". ")
-                            }
-                            withLink(
-                                link = LinkAnnotation.Clickable(
-                                    tag = stringResource(id = R.string.settings),
-                                    linkInteractionListener = {
-                                        onAction(HistoryAction.NavigateToSettings)
-                                    }
-                                )
-                            ) {
+                            if(state.history.isNotEmpty()) {
                                 withStyle(
                                     style = SpanStyle(
-                                        color = PrimaryColor,
-                                        textDecoration = TextDecoration.Underline
+                                        color = LabelColor
                                     )
                                 ) {
-                                    append(stringResource(id = R.string.settings))
+                                    append(stringResource(id = R.string.history_disclaimer))
+                                    append(state.settingsHistorySize.toWasteAmount() + ". ")
+                                }
+                                withLink(
+                                    link = LinkAnnotation.Clickable(
+                                        tag = stringResource(id = R.string.settings),
+                                        linkInteractionListener = {
+                                            onAction(HistoryAction.NavigateToSettings)
+                                        }
+                                    )
+                                ) {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            color = PrimaryColor,
+                                            textDecoration = TextDecoration.Underline
+                                        )
+                                    ) {
+                                        append(stringResource(id = R.string.settings))
+                                    }
+                                }
+                            } else {
+                                withStyle(
+                                    style = SpanStyle(
+                                        color = LabelColor
+                                    )
+                                ) {
+                                    append(stringResource(id = R.string.history_empty))
                                 }
                             }
                         }
                     },
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
         }

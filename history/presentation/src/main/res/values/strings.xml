@@ -9,4 +9,5 @@
     <string name="cancel">Anuluj</string>
     <string name="history_disclaimer">Twoja historia pokazuje ostatnie&#160;</string>
     <string name="settings">Ustawienia</string>
+    <string name="history_empty">Twoja historia jest pusta</string>
 </resources>

@@ -50,8 +50,13 @@ class HistoryViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         history = historyByDate,
-                        expandedDates = if(!it.loadedHistory) {
-                            listOf(historyByDate.keys.first())
+                        expandedDates = if(!it.loadedHistory && historyByDate.isNotEmpty()) {
+                            val firstHistoryItem = historyByDate.keys.first()
+                            if((historyByDate[firstHistoryItem]?.size ?: 0) <= 6) {
+                                listOf(historyByDate.keys.first())
+                            } else {
+                                emptyList()
+                            }
                         } else it.expandedDates,
                         loadedHistory = true
                     )
