@@ -63,7 +63,10 @@ private fun HistoryScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(state.history.keys.toList()) { date ->
+            items(
+                state.history.keys.toList(),
+                key = { date -> date.toString() }
+            ) { date ->
                 HistorySection(
                     date = date,
                     wasteHistory = state.history[date] ?: emptyList(),

@@ -9,25 +9,31 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ContextualFlowRow
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -62,10 +68,11 @@ fun HistorySection(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
                 .clickable(
                     role = Role.Button,
                     interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
+                    indication = ripple(),
                 ) {
                     toggleExpanded()
                 }
@@ -95,17 +102,30 @@ fun HistorySection(
         AnimatedVisibility(
             visible = isExpanded
         ) {
-            FlowRow(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            val maxItemsInEachRow = 3
+            val rowWidth = remember { mutableIntStateOf(0) }
+            val spacingInPx = with(LocalDensity.current) { 16.dp.toPx() }
+            val itemSize = remember(rowWidth.intValue) {
+                (rowWidth.intValue - spacingInPx * (maxItemsInEachRow - 1)) / maxItemsInEachRow
+            }
+            val itemSizeInDp = with(LocalDensity.current) { itemSize.toDp() }
+            ContextualFlowRow(
+                itemCount = wasteHistory.size,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+                    .onSizeChanged {
+                        rowWidth.intValue = it.width
+                    },
+                maxItemsInEachRow = maxItemsInEachRow,
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                wasteHistory.forEach {
-                    HistoryItem(
-                        wasteUi = it.toHistoryWasteUi(),
-                        onRemove = { /*TODO*/ }
-                    )
-                }
+            ) { index ->
+                HistoryItem(
+                    modifier = Modifier.width(itemSizeInDp),
+                    wasteUi = wasteHistory[index].toHistoryWasteUi(),
+                    onRemove = { /*TODO*/ }
+                )
             }
         }
     }

@@ -23,10 +23,12 @@ class HistoryViewModel @Inject constructor(
     init {
         historyRepository.getWasteHistory()
             .onEach { history ->
-                val historyByDate = history.groupBy { it.date.toLocalDate() }
+                val historyByDate = history
+                    .groupBy { it.date.toLocalDate() }
                 _state.update {
                     it.copy(
                         history = historyByDate,
+                        expandedDates = listOf(historyByDate.keys.first()),
                         loadedHistory = true
                     )
                 }

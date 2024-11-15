@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,16 +30,18 @@ import com.recyclens.history.presentation.util.HistoryWasteUi
 
 @Composable
 fun HistoryItem(
+    modifier: Modifier = Modifier,
     wasteUi: HistoryWasteUi,
     onRemove: () -> Unit,
 ) {
     Column(
-        modifier = Modifier.width(120.dp),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Box(
             modifier = Modifier
-                .size(width = 120.dp, height = 160.dp)
+                .fillMaxWidth()
+                .aspectRatio(0.75f)
                 .clip(RoundedCornerShape(8.dp))
         ) {
             Image(
