@@ -99,7 +99,8 @@ private fun HistoryScreen(
                     },
                     toggleExpanded = {
                         onAction(HistoryAction.ToggleExpandDate(date))
-                    }
+                    },
+                    currentLanguage = state.currentLanguage
                 )
             }
             item {

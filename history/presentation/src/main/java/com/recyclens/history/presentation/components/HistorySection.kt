@@ -35,9 +35,12 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.recyclens.core.domain.history.HistoryWaste
+import com.recyclens.core.domain.settings.Language
+import com.recyclens.core.domain.settings.SettingsRepository
 import com.recyclens.core.presentation.designsystem.ChevronDown
 import com.recyclens.core.presentation.designsystem.Dark
 import com.recyclens.core.presentation.designsystem.Label
+import com.recyclens.core.presentation.util.getLocale
 import com.recyclens.core.presentation.util.toWasteAmount
 import com.recyclens.history.presentation.R
 import com.recyclens.history.presentation.util.formatToHistoryDate
@@ -51,7 +54,8 @@ fun HistorySection(
     isExpanded: Boolean,
     toggleExpanded: () -> Unit,
     onRemove: (HistoryWaste) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    currentLanguage: Language = SettingsRepository.DEFAULT_LANGUAGE
 ) {
     val chevronRotate by animateFloatAsState(
         targetValue = if (isExpanded) 180f else 0f,
@@ -85,7 +89,7 @@ fun HistorySection(
                 modifier = Modifier.rotate(chevronRotate)
             )
             Text(
-                text = date.formatToHistoryDate(),
+                text = date.formatToHistoryDate(currentLanguage.getLocale()),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.ExtraBold
                 )

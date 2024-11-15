@@ -33,6 +33,16 @@ class HistoryViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
 
+        settingsRepository.language
+            .onEach { language ->
+                _state.update {
+                    it.copy(
+                        currentLanguage = language
+                    )
+                }
+            }
+            .launchIn(viewModelScope)
+
         historyRepository.getWasteHistory()
             .onEach { history ->
                 val historyByDate = history
