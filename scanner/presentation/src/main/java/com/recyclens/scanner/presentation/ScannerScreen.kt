@@ -293,6 +293,9 @@ private fun ScannerScreen(
                 },
                 onLearnMore = {
                     onAction(ScannerAction.NavigateToInformation(prediction.wasteClass.toQuestion()))
+                },
+                onWrongSuggestion = {
+                    onAction(ScannerAction.ShowWrongSuggestionsDialog)
                 }
             )
         }
@@ -301,6 +304,33 @@ private fun ScannerScreen(
             ErrorDialog(
                 onDismiss = {
                     onAction(ScannerAction.DismissErrorDialog)
+                }
+            )
+        }
+
+        if(state.showWrongSuggestionDialog) {
+            TitleDialog(
+                title = stringResource(id = R.string.wrong_suggestion),
+                content = {
+                    Text(
+                        text = stringResource(id = R.string.wrong_suggestions_description),
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                        color = LabelColor
+                    )
+                },
+                buttons = {
+                    TextButton(
+                        onClick = {
+                            onAction(ScannerAction.DismissWrongSuggestionsDialog)
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.understand),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = PrimaryColor
+                        )
+                    }
                 }
             )
         }

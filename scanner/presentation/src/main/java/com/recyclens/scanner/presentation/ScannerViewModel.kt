@@ -98,6 +98,16 @@ class ScannerViewModel @Inject constructor(
                     )
                 }
             }
+            is ScannerAction.ShowWrongSuggestionsDialog -> {
+                _state.update {
+                    it.copy(showWrongSuggestionDialog = true)
+                }
+            }
+            is ScannerAction.DismissWrongSuggestionsDialog -> {
+                _state.update {
+                    it.copy(showWrongSuggestionDialog = false)
+                }
+            }
             is ScannerAction.OnImageCaptureError -> {
                 _state.update {
                     it.copy(

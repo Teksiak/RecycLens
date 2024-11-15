@@ -9,6 +9,7 @@ data class ScannerState(
     val isFlashOn: Boolean = false,
     val isLoading: Boolean = false,
     val isError: Boolean = false,
+    val showWrongSuggestionDialog: Boolean = false,
     val showLanguageDialog: Boolean = false,
     val currentLanguage: Language = SettingsRepository.DEFAULT_LANGUAGE,
     val showUnfinishedFeatureDialog: Boolean = false,
