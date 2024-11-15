@@ -42,4 +42,5 @@
     <string name="image_classification">Klasyfikacja zdjęć</string>
     <string name="feature_under_development">jest w trakcie rozwoju</string>
     <string name="feature_under_development_description">Razem z zespołem prężnie pracujemy nad rozwinięciem tej funkcji. Umożliwi ona użytkownikom wkład własny w rozwój modelu klasyfikacji odpadów.</string>
+    <string name="analysing_photo">Analizuję zdjęcię odpadu</string>
 </resources>

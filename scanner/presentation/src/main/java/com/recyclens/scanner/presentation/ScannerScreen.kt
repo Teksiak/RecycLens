@@ -16,6 +16,7 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -51,6 +52,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -81,7 +83,7 @@ import com.recyclens.scanner.presentation.components.ErrorDialog
 import com.recyclens.scanner.presentation.components.LanguageDialog
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
-import com.recyclens.scanner.presentation.components.RecognisingAnimation
+import com.recyclens.scanner.presentation.components.AnalysingAnimation
 import com.recyclens.scanner.presentation.components.UnfinishedFeatureDialog
 import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
@@ -365,7 +367,7 @@ private fun ScannerScreen(
                     )
 
                     if(previewBitmap.value != null) {
-                        RecognisingAnimation(
+                        AnalysingAnimation(
                             amount = 15,
                             minSize = 12.dp,
                             maxSize = 28.dp
@@ -423,10 +425,13 @@ private fun ScannerScreen(
                                 .clip(CircleShape)
                                 .background(Color.Black.copy(alpha = 0.7f))
                                 .padding(vertical = 4.dp, horizontal = 12.dp),
-                            text = stringResource(id = R.string.take_a_photo),
+                            text = if(previewBitmap.value == null) {
+                                stringResource(id = R.string.take_a_photo)
+                            } else stringResource(id = R.string.analysing_photo),
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.ExtraBold
                             ),
+                            textAlign = TextAlign.Center,
                             color = WhiteColor
                         )
                         Spacer(modifier = Modifier.size(24.dp))

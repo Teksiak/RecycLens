@@ -1,6 +1,5 @@
 package com.recyclens.scanner.presentation.components
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 
 import androidx.compose.animation.core.*
@@ -10,24 +9,20 @@ import androidx.compose.foundation.background
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.recyclens.core.presentation.designsystem.TertiaryColor
 import com.recyclens.core.presentation.designsystem.WhiteColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.sqrt
 
 @Composable
-fun RecognisingAnimation(
+fun AnalysingAnimation(
     amount: Int,
     minSize: Dp,
     maxSize: Dp,
