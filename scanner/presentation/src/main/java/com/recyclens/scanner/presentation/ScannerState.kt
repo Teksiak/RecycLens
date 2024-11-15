@@ -11,6 +11,7 @@ data class ScannerState(
     val isError: Boolean = false,
     val showLanguageDialog: Boolean = false,
     val currentLanguage: Language = SettingsRepository.DEFAULT_LANGUAGE,
+    val showUnfinishedFeatureDialog: Boolean = false,
     val requestedCameraPermission: Boolean = false,
     val acceptedCameraPermission: Boolean = false,
     val showCameraPermissionRationale: Boolean = false,

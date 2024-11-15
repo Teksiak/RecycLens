@@ -39,4 +39,7 @@
     <string name="take_a_photo">Zrób zdjęcie odpadu do wyrzucenia</string>
     <string name="choose_language">Wybierz język</string>
     <string name="under_development">Under development</string>
+    <string name="image_classification">Klasyfikacja zdjęć</string>
+    <string name="feature_under_development">jest w trakcie rozwoju</string>
+    <string name="feature_under_development_description">Razem z zespołem prężnie pracujemy nad rozwinięciem tej funkcji. Umożliwi ona użytkownikom wkład własny w rozwój modelu klasyfikacji odpadów.</string>
 </resources>

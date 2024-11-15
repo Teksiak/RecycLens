@@ -123,6 +123,16 @@ class ScannerViewModel @Inject constructor(
                     it.copy(showLanguageDialog = false)
                 }
             }
+            is ScannerAction.ShowUnfinishedFeatureDialog -> {
+                _state.update {
+                    it.copy(showUnfinishedFeatureDialog = true)
+                }
+            }
+            is ScannerAction.DismissUnfinishedFeatureDialog -> {
+                _state.update {
+                    it.copy(showUnfinishedFeatureDialog = false)
+                }
+            }
             is ScannerAction.ToggleFlash -> {
                 _state.update { state ->
                     state.copy(isFlashOn = !state.isFlashOn)

@@ -23,11 +23,15 @@ interface ScannerAction {
     data object DismissErrorDialog: ScannerAction
 
     data object ShowLanguageDialog: ScannerAction
+
     data class SetLanguage(
         val language: Language
     ): ScannerAction
+
     data object HideLanguageDialog: ScannerAction
 
+    data object ShowUnfinishedFeatureDialog: ScannerAction
+    data object DismissUnfinishedFeatureDialog: ScannerAction
 
     data object NavigateToHistory: ScannerAction
 

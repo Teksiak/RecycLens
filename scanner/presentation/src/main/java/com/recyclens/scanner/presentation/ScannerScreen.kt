@@ -63,8 +63,10 @@ import com.recyclens.core.presentation.designsystem.Flash
 import com.recyclens.core.presentation.designsystem.FlashOn
 import com.recyclens.core.presentation.designsystem.TrashInfo
 import com.recyclens.core.presentation.designsystem.History
+import com.recyclens.core.presentation.designsystem.Label
 import com.recyclens.core.presentation.designsystem.LanguageIcon
 import com.recyclens.core.presentation.designsystem.Menu
+import com.recyclens.core.presentation.designsystem.Outline
 import com.recyclens.core.presentation.designsystem.Primary
 import com.recyclens.core.presentation.designsystem.SettingsIcon
 import com.recyclens.core.presentation.designsystem.White
@@ -78,6 +80,7 @@ import com.recyclens.scanner.presentation.components.ErrorDialog
 import com.recyclens.scanner.presentation.components.LanguageDialog
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
+import com.recyclens.scanner.presentation.components.UnfinishedFeatureDialog
 import com.recyclens.scanner.presentation.util.toQuestion
 import com.recyclens.scanner.presentation.util.toPredictionUi
 import kotlinx.coroutines.Dispatchers
@@ -294,6 +297,17 @@ private fun ScannerScreen(
             )
         }
 
+        if(state.showUnfinishedFeatureDialog) {
+            UnfinishedFeatureDialog(
+                onDismiss = {
+                    onAction(ScannerAction.DismissUnfinishedFeatureDialog)
+                },
+                onLearnMore = {
+                    onAction(ScannerAction.NavigateToInformation(Question.HOW_THE_APP_WORKS))
+                }
+            )
+        }
+
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val coroutineScope = rememberCoroutineScope()
 
@@ -408,14 +422,14 @@ private fun ScannerScreen(
                         ) {
                             IconButton(
                                 onClick = {
-                                    // TODO: Display dialog about unfinished feature
+                                    onAction(ScannerAction.ShowUnfinishedFeatureDialog)
                                 }
                             ) {
                                 Icon(
                                     modifier = Modifier.size(32.dp),
                                     imageVector = CheckImage,
-                                    contentDescription = stringResource(id = R.string.image_check),
-                                    tint = White
+                                    contentDescription = stringResource(id = R.string.image_classification),
+                                    tint = Label
                                 )
                             }
                             PhotoButton(
