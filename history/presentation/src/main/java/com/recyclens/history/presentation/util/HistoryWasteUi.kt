@@ -20,6 +20,6 @@ fun HistoryWaste.toHistoryWasteUi(): HistoryWasteUi {
         classificationGradient = this.wasteClass.getGradient(),
         classificationName = this.wasteClass.getName(),
         image = this.image.toBitmap(),
-        time = "${this.date.hour}:${this.date.minute}",
+        time = "${this.date.hour}:${if(this.date.minute < 10) "0" else ""}${this.date.minute}",
     )
 }

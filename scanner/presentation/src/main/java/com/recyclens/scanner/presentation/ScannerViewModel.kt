@@ -51,8 +51,8 @@ class ScannerViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.IO) {
                     val imageByteArray = withContext(Dispatchers.Default) {
                         action.image
-                            .resize(1024, 1024)
-                            .compressImageToTargetSize(1024)
+                            .resize(640, 640)
+                            .compressImageToTargetSize(512)
                     }
                     when(val result = classificationRepository.getPrediction(imageByteArray)) {
                         is Result.Success -> {
