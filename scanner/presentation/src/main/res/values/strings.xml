@@ -43,4 +43,7 @@
     <string name="feature_under_development">jest w trakcie rozwoju</string>
     <string name="feature_under_development_description">Razem z zespołem prężnie pracujemy nad rozwinięciem tej funkcji. Umożliwi ona użytkownikom wkład własny w rozwój modelu klasyfikacji odpadów.</string>
     <string name="analysing_photo">Analizuję zdjęcie odpadu</string>
+    <string name="wrong_suggestion">Niepoprawna sugestia</string>
+    <string name="wrong_suggestions_description">Bardzo przepraszamy, jeżeli ta sugestia była niepoprawna. Pracujemy nad możliwością oceny zdjęć przez użytkowników, aby nasz model klasyfikacji odpadów był dokładniejszy.</string>
+    <string name="understand">Rozumiem</string>
 </resources>

@@ -22,6 +22,10 @@ interface ScannerAction {
     ): ScannerAction
     data object DismissErrorDialog: ScannerAction
 
+    data object ShowWrongSuggestionsDialog: ScannerAction
+
+    data object DismissWrongSuggestionsDialog: ScannerAction
+
     data object ShowLanguageDialog: ScannerAction
 
     data class SetLanguage(
@@ -31,6 +35,7 @@ interface ScannerAction {
     data object HideLanguageDialog: ScannerAction
 
     data object ShowUnfinishedFeatureDialog: ScannerAction
+
     data object DismissUnfinishedFeatureDialog: ScannerAction
 
     data object NavigateToHistory: ScannerAction
