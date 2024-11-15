@@ -3,6 +3,7 @@ package com.recyclens.history.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.recyclens.core.domain.history.HistoryRepository
+import com.recyclens.core.domain.settings.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,13 +15,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val historyRepository: HistoryRepository
+    private val historyRepository: HistoryRepository,
+    private val settingsRepository: SettingsRepository
 ): ViewModel() {
 
     private val _state = MutableStateFlow(HistoryState())
     val state = _state.asStateFlow()
 
     init {
+        settingsRepository.historySize
+            .onEach { historySize ->
+                _state.update {
+                    it.copy(
+                        settingsHistorySize = historySize
+                    )
+                }
+            }
+            .launchIn(viewModelScope)
+
         historyRepository.getWasteHistory()
             .onEach { history ->
                 val historyByDate = history
