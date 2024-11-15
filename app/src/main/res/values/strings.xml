@@ -9,12 +9,8 @@
     <string name="watchword">Recykling - szybki i prosty</string>
     <string name="about_us_description">Pamiętaj, że każdy drobny krok w stronę świadomego recyklingu to ważny wkład w ochronę środowiska i przyszłość naszej planety!</string>
     <string name="contact_question">Masz pytania, sugestie lub napotkałeś problemy z aplikacją? Skontaktuj się z nami:</string>
-    <string name="contact_email">support@recyclens.com</string>
-    <string name="adress">Jeden dom i siedem ulic, Pitulice, Polska</string>
-
-
-
-
+    <string name="wojtek_email">bednarowski.wojciech@gmail.com</string>
+    <string name="tomek_email">tomeekwilk@icloud.com</string>
     <string name="how_the_app_works_title">Jak działa aplikacja?</string>
     <string name="how_the_app_works_answer">1. Zrób zdjęcie przedmiotu, który chcesz wyrzucić.\n2. Dzięki Roboflow i modelowi MobileNet V2 Classification, sztuczna inteligencja w RecycLens rozpozna odpad i wskaże odpowiedni pojemnik.\n3. Otrzymasz krótką informację o tym, co można wrzucać do danego pojemnika i czego unikać, aby proces recyklingu był jak najskuteczniejszy.
 </string>
@@ -43,4 +39,5 @@
     <string name="application">Aplikacja</string>
     <string name="recycling">Segregacja odpadów</string>
     <string name="bins">Pojemniki na odpady</string>
+    <string name="recyclens">RecycLens</string>
 </resources>

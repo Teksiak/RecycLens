@@ -1,5 +1,8 @@
 package com.recyclens.aboutus
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,11 +18,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -45,6 +50,11 @@ fun AboutUsScreenRoot(
 private fun AboutUsScreen(
     onNavigateBack: () -> Unit
 ) {
+    val context = LocalContext.current
+    val wojtekEmail = stringResource(id = R.string.wojtek_email)
+    val tomekEmail = stringResource(id = R.string.tomek_email)
+    val emailTitle = stringResource(id = R.string.recyclens)
+
     Scaffold(
         topBar = {
             NavigationTopBar(
@@ -106,19 +116,53 @@ private fun AboutUsScreen(
                 textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = stringResource(id = R.string.contact_email),
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    textDecoration = TextDecoration.Underline
-                ),
-                color = PrimaryColor,
-            )
-            Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = stringResource(id = R.string.adress),
-                style = MaterialTheme.typography.bodyLarge,
-            )
+            TextButton(
+                onClick = {
+                    context.sendMail(
+                        receiver = wojtekEmail,
+                        subject = emailTitle,
+                    )
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = wojtekEmail,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        textDecoration = TextDecoration.Underline
+                    ),
+                    color = PrimaryColor,
+                )
+            }
+            TextButton(
+                onClick = {
+                    context.sendMail(
+                        receiver = tomekEmail,
+                        subject = emailTitle,
+                    )
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = tomekEmail,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        textDecoration = TextDecoration.Underline
+                    ),
+                    color = PrimaryColor,
+                )
+            }
         }
+    }
+}
+
+private fun Context.sendMail(receiver: String, subject: String) {
+    try {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "vnd.android.cursor.item/email"
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(receiver))
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        startActivity(intent)
+    } catch (e: Error) {
+        // TODO: Handle this
     }
 }
 
