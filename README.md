@@ -10,14 +10,12 @@ RecycLens jest innowacyjną aplikacją stworzoną do pomagania użytkownikowi w 
 
 ## Widoki aplikacji
 
-![iPhone16Pro](https://github.com/user-attachments/assets/09fdaf5a-0551-4a13-96d3-8f109ac62fa9)
 ![iPhone16](https://github.com/user-attachments/assets/4655cb34-6fcb-4097-aa81-270e65884434)
-
+![iPhone16Pro](https://github.com/user-attachments/assets/09fdaf5a-0551-4a13-96d3-8f109ac62fa9)
 
 ## Recycling-Classification-ajsxm
 Nasze obrazy są przetwarzane przez stworzony przez nas model sztucznej inteligencji.
-Dzięki [Roboflow](https://roboflow.com/) mogliśmy przygotować model oparty na ponad 3 tysiącach przykładowych zdjęć 
-model, który posiada ponad 96% precyzji rozpoznania obiektu.
+Dzięki [Roboflow](https://roboflow.com/) mogliśmy przygotować model oparty na ponad 3 tysiącach przykładowych zdjęć, który posiada ponad 96% precyzji klasyfikacji zdjęć.
 
 ## Todo
 Aplikacja wciąż się rozwija, planujemy prace nad nowymi funkcjonalnościami tj.: 
