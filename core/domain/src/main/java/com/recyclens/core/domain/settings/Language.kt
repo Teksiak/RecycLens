@@ -6,8 +6,8 @@ enum class Language(
     val tag: String,
     val isAvailable: Boolean
 ) {
-    POLISH("pl", true),
-    ENGLISH("en", true);
+    ENGLISH("en", true),
+    POLISH("pl", true);
 
     companion object {
         fun fromLocale(locale: Locale): Language? {
