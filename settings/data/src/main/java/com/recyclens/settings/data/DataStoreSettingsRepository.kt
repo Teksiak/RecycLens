@@ -51,7 +51,9 @@ class DataStoreSettingsRepository @Inject constructor(
                     val locales = Resources.getSystem().configuration.locales
                     (0 until locales.size()).firstNotNullOfOrNull { index ->
                         Language.fromLocale(locales[index])
-                    } ?: DEFAULT_LANGUAGE
+                    } ?: DEFAULT_LANGUAGE.also {
+                        setLanguage(it)
+                    }
                 }
             }
 
