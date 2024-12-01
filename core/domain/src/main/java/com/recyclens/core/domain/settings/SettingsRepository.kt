@@ -17,7 +17,7 @@ interface SettingsRepository {
         const val HISTORY_SIZE = "history_size"
 
         const val DEFAULT_HISTORY_SIZE = 30
-        val DEFAULT_LANGUAGE = Language.POLISH
+        val DEFAULT_LANGUAGE = Language.ENGLISH
 
         val HISTORY_SIZES = (10..50).toList()
     }
