@@ -2,6 +2,7 @@ package com.recyclens.core.domain.settings
 
 import java.util.Locale
 
+// TODO: Remove isAvailable
 enum class Language(
     val tag: String,
     val isAvailable: Boolean
@@ -11,10 +12,12 @@ enum class Language(
 
     companion object {
         fun fromLocale(locale: Locale): Language? {
-            return when(locale.language) {
-                "US", "GB" -> ENGLISH
-                "PL" -> POLISH
-                else -> null
+            return with(locale.language) {
+                when {
+                    startsWith("en") -> ENGLISH
+                    startsWith("pl") -> POLISH
+                    else -> null
+                }
             }
         }
     }
