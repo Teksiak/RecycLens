@@ -80,7 +80,7 @@ fun InformationScreen(
     Scaffold(
         topBar = {
             NavigationTopBar(
-                title = stringResource(id = R.string.informations),
+                title = stringResource(id = R.string.information),
                 onNavigateBack = {
                     onAction(InformationAction.NavigateBack)
                 }
