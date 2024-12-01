@@ -6,6 +6,7 @@
     <application
         android:allowBackup="true"
         android:name=".RecycLensApp"
+        android:localeConfig="@xml/locale_config"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RecycLens.Splash"
-        tools:targetApi="31">
+        tools:targetApi="35">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -25,5 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
     </application>
 </manifest>

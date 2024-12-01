@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Back</string>
+    <string name="polish">Polski</string>
+    <string name="english">English</string>
+    <string name="plastic">Plastic</string>
+    <string name="glass">Glass</string>
+    <string name="mixed">Mixed</string>
+    <string name="bio">Bio</string>
+    <string name="electronics">Electronics</string>
+    <string name="paper">Paper</string>
+    <string name="single_waste">"waste "</string>
+    <string name="few_waste">wastes</string>
+    <string name="many_waste">wastes</string>
+</resources>

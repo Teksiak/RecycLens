@@ -17,6 +17,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
+        resourceConfigurations += setOf("pl", "en")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,7 +48,7 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(platform(libs.androidx.compose.bom))

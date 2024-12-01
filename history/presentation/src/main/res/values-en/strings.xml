@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history">History</string>
+    <string name="expand_history">Expand history</string>
+    <string name="collapse_history">Collapse history</string>
+    <string name="remove">Remove</string>
+    <string name="remove_from_history">Remove from History</string>
+    <string name="remove_from_history_message">Are you sure you want to remove this item from history?</string>
+    <string name="cancel">Cancel</string>
+    <string name="history_disclaimer">Your history shows the last&#160;</string>
+    <string name="settings">Settings</string>
+    <string name="history_empty">Your history is empty</string>
+</resources>

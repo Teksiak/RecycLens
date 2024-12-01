@@ -1,6 +1,12 @@
 package com.recyclens.settings.data
 
+import android.app.LocaleManager
 import android.content.Context
+import android.content.res.Resources
+import android.os.Build
+import android.os.LocaleList
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
 import androidx.datastore.preferences.core.Preferences
@@ -41,7 +47,12 @@ class DataStoreSettingsRepository @Inject constructor(
                 }
             }
             .map { preferences ->
-                preferences[LANGUAGE_KEY]?.let { Language.valueOf(it) } ?: DEFAULT_LANGUAGE
+                preferences[LANGUAGE_KEY]?.let { Language.valueOf(it) } ?: run {
+                    val locales = Resources.getSystem().configuration.locales
+                    (0 until locales.size()).firstNotNullOfOrNull { index ->
+                        Language.fromLocale(locales[index])
+                    } ?: DEFAULT_LANGUAGE
+                }
             }
 
 
@@ -63,6 +74,7 @@ class DataStoreSettingsRepository @Inject constructor(
             applicationContext.settingsDataStore.edit { preferences ->
                 preferences[LANGUAGE_KEY] = language.name
             }
+            changeApplicationLanguage(language)
         }
     }
 
@@ -80,6 +92,17 @@ class DataStoreSettingsRepository @Inject constructor(
             Result.Success(Unit)
         } catch (e: IOException) {
             Result.Error(DataError.Local.UNKNOWN_ERROR)
+        }
+    }
+
+    private fun changeApplicationLanguage(language: Language) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            applicationContext.getSystemService(LocaleManager::class.java).applicationLocales =
+                LocaleList.forLanguageTags(language.tag)
+        } else {
+            AppCompatDelegate.setApplicationLocales(
+                LocaleListCompat.forLanguageTags(language.tag)
+            )
         }
     }
 

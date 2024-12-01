@@ -18,7 +18,6 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -459,7 +458,7 @@ private fun ScannerScreen(
                                     Icon(
                                         modifier = Modifier.size(24.dp),
                                         imageVector = TrashInfoIcon,
-                                        contentDescription = stringResource(id = R.string.informations),
+                                        contentDescription = stringResource(id = R.string.information),
                                         tint = WhiteColor
                                     )
                                 }
