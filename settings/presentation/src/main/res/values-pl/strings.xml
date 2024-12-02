@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Ustawienia</string>
+    <string name="history_size">Rozmiar historii</string>
+    <string name="history_size_description">Liczba opadów, które będą przechowywane w twojej historii. Większy rozmiar historii zajmie większą ilość miejsca w pamięci.</string>
+</resources>

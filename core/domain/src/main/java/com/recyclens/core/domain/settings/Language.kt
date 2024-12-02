@@ -11,6 +11,9 @@ enum class Language(
     POLISH("pl", true);
 
     companion object {
+        fun fromTag(tag: String): Language? {
+            return entries.firstOrNull { it.tag == tag }
+        }
         fun fromLocale(locale: Locale): Language? {
             return with(locale.language) {
                 when {

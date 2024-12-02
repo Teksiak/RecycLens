@@ -1,44 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">RecycLens</string>
-    <string name="expand_question">Pokaż odpowiedź</string>
-    <string name="collapse_question">Ukryj odpowiedź</string>
-    <string name="what_is_recyclens_title">Czym jest RecycLens?</string>
-    <string name="what_is_recyclens_answer">RecycLens to rozwiązanie, ułatwiające i usprawniające codzienną segregację śmieci. Przy pomocy sztucznej inteligencji aplikacja analizuje zdjęcie odpadu wykonane przez użytkownika i wskazuje pojemnik, do którego należy go wyrzucić.</string>
-    <string name="about_us">O nas</string>
-    <string name="information">Informacje</string>
-    <string name="watchword">Recykling - szybki i prosty</string>
-    <string name="about_us_description">Pamiętaj, że każdy drobny krok w stronę świadomego recyklingu to ważny wkład w ochronę środowiska i przyszłość naszej planety!</string>
-    <string name="contact_question">Masz pytania, sugestie lub napotkałeś problemy z aplikacją? Skontaktuj się z nami:</string>
+    <string name="expand_question">Show Answer</string>
+    <string name="collapse_question">Hide Answer</string>
+    <string name="what_is_recyclens_title">What is RecycLens?</string>
+    <string name="what_is_recyclens_answer">RecycLens is a solution that simplifies and enhances everyday waste segregation. Using artificial intelligence, the app analyzes a photo of waste taken by the user and indicates the correct bin for disposal.</string>
+    <string name="about_us">About Us</string>
+    <string name="information">Information</string>
+    <string name="watchword">Recycling - Quick and Easy</string>
+    <string name="about_us_description">Remember, every small step toward conscious recycling is a significant contribution to protecting the environment and the future of our planet!</string>
+    <string name="contact_question">Have questions, suggestions, or encountered issues with the app? Contact us:</string>
     <string name="wojtek_email">bednarowski.wojciech@gmail.com</string>
     <string name="tomek_email">tomeekwilk@icloud.com</string>
-    <string name="how_the_app_works_title">Jak działa aplikacja?</string>
-    <string name="how_the_app_works_answer">1. Zrób zdjęcie przedmiotu, który chcesz wyrzucić.\n2. Dzięki Roboflow i modelowi MobileNet V2 Classification, sztuczna inteligencja w RecycLens rozpozna odpad i wskaże odpowiedni pojemnik.\n3. Otrzymasz krótką informację o tym, co można wrzucać do danego pojemnika i czego unikać, aby proces recyklingu był jak najskuteczniejszy.
-</string>
-
-    <string name="why_use_recyclens_title">Dlaczego warto korzystać z RecycLens?</string>
-    <string name="why_use_recyclens_answer">•&#160;&#160;Oszczędność czasu: Dzięki szybkiej analizie obrazu szybko dowiesz się, gdzie powinien trafić każdy odpad.\n\n•&#160;&#160;Wsparcie ekologiczne: Pomożesz w zachowaniu porządku i zmniejszeniu ilości odpadów na wysypiskach.\n\n•&#160;&#160;Edukacja ekologiczna: Nauczysz się, co wrzucać do poszczególnych pojemników i jak efektywnie segregować odpady.\n\n•&#160;&#160;Precyzja: Nasz model MobileNet V2 Classification posiada precyzję ponad 96% w określeniu w jakim koszu powinien wylądować odpad.
-    </string>
-    <string name="what_is_recycling_title">Czym jest segregacja śmieci?</string>
-    <string name="what_is_recycling_answer">Segregacja odpadów to proces, w którym odpady są dzielone na poszczególne kategorie, takie jak: szkło, papier, plastik, metal, bioodpady. Dzięki temu możliwe jest ich ponowne wykorzystanie, co przyczynia się do ochrony środowiska i zmniejszenia ilości odpadów na wysypiskach.</string>
-    <string name="why_recycle_title">Dlaczego segregacja jest istotna?</string>
-    <string name="why_recycle_answer">Segregacja jest istotna, ponieważ pomaga chronić środowisko oraz oszczędzać zasoby naturalne. Dzięki segregacji możliwe jest oddzielanie odpadów, które nadają się do ponownego przetworzenia, od tych, które wymagają specjalistycznej utylizacji. W ten sposób zmniejszamy ilość śmieci trafiających na wysypiska, co pomaga ograniczyć zanieczyszczenie gleby, wody i powietrza.</string>>
-
-
-    <string name="paper_bin_title">Co należy wyrzucać do niebieskiego pojemnika (papier)?</string>
-    <string name="paper_bin_answer">W tym pojemniku powinny znajdować się odpady papierowe jak gazety, kartony, zeszyty, kartki i papierowe torby. Unikaj wrzucania tłustych lub zabrudzonych resztek papieru, np. ręczników papierowych z jedzeniem. Pamiętaj, aby usunąć wszelkie zszywki i elementy z plastiku.</string>
-    <string name="plastic_bin_title">Co należy wyrzucać do żółtego pojemnika (plastik)?</string>
-    <string name="plastic_bin_answer">W tym pojemniku powinny znajdować się wszystkie opakowania plastikowe, takie jak butelki, kubki po jogurtach, opakowania po jedzeniu oraz folie. Upewnij się, że przed wrzuceniem są czyste i opróżnione. Pamiętaj, że ten kosz jest też na opakowania metalowe, jak puszki i aluminiowe pokrywki.</string>
-    <string name="glass_bin_title">Co należy wyrzucać do zielonego pojemnika (szkło)?</string>
-    <string name="glass_bin_answer">W tym pojemniku powinny znajdować się szklane odpady jak butelki, słoiki, flakoniki i szklane opakowania. Nie wrzucaj tłuczonego szkła, ceramiki, luster ani szkła hartowanego, które trzeba zutylizować osobno, wyrzucając je do kosza na odpady zmieszane. Pamiętaj, żeby opróżnić pojemniki przed wyrzuceniem.</string>
-    <string name="mixed_bin_title">Co należy wyrzucać do czarnego pojemnika (zmieszane)?</string>
-    <string name="mixed_bin_answer">W tym pojemniku powinny znajdować się odpady, które nie poddaje się recyklingowi. Są nimi takie rzeczy jak: resztki mięsa, olej po smażeniu, paragony, niedopałki papierosów, rozbite naczynia szklane i porcelanowe oraz ręczniki oraz chusteczki papierowe. Staraj się unikać wrzucania tutaj odpadów, które mogą zostać poddane procesowi ponownego wykorzystania surowców.</string>
-    <string name="bio_bin_title">Co należy wyrzucać do brązowego pojemnika (bioodpady)?</string>
-    <string name="bio_bin_answer">W tym pojemniku powinny znajdować się  odpady biodegradowalne, takie jak: warzywa, owoce, skorupki jaj, fusy po kawie i herbacie, kwiaty i rośliny doniczkowe oraz resztki jedzenia. Unikaj wrzucania tutaj mięsa, nabiału, tłuszczów oraz produktów z drewna lub materiałów syntetycznych. Bioodpady nadają się na kompost, wspomagając naturalne procesy w glebie.</string>
-    <string name="electronics_bin_title">Co należy wyrzucać do czerwonego pojemnika (elektronika)?</string>
-    <string name="electronics_bin_answer">W tym pojemniku powinny znajdować się małe urządzenia elektroniczne, takie jak baterie, ładowarki, telefony, piloty, słuchawki i drobne sprzęty domowe. Nie wkładaj dużych urządzeń AGD – muszą być utylizowane w specjalnych punktach. Pamiętaj, że niewłaściwe usuwanie elektroniki może szkodzić środowisku.</string>
-    <string name="application">Aplikacja</string>
-    <string name="recycling">Segregacja odpadów</string>
-    <string name="bins">Pojemniki na odpady</string>
+    <string name="how_the_app_works_title">How does the app work?</string>
+    <string name="how_the_app_works_answer">1. Take a photo of the item you want to dispose of.\n2. Using Roboflow and the MobileNet V2 Classification model, the artificial intelligence in RecycLens will recognize the waste and indicate the appropriate bin.\n3. You will receive a brief explanation of what can be disposed of in that bin and what to avoid to make recycling as effective as possible.</string>
+    <string name="why_use_recyclens_title">Why use RecycLens?</string>
+    <string name="why_use_recyclens_answer">•&#160;&#160;Time-saving: Quick image analysis lets you know immediately where each waste item belongs.\n\n•&#160;&#160;Environmental support: Helps maintain order and reduces landfill waste.\n\n•&#160;&#160;Environmental education: Learn what to throw into each bin and how to segregate waste effectively.\n\n•&#160;&#160;Accuracy: Our MobileNet V2 Classification model achieves over 96% accuracy in determining the correct bin for waste disposal.</string>
+    <string name="what_is_recycling_title">What is waste segregation?</string>
+    <string name="what_is_recycling_answer">Waste segregation is the process of dividing waste into categories such as glass, paper, plastic, metal, and bio-waste. This enables reuse, contributing to environmental protection and reducing landfill waste.</string>
+    <string name="why_recycle_title">Why is segregation important?</string>
+    <string name="why_recycle_answer">Segregation is important because it helps protect the environment and conserve natural resources. By segregating waste, recyclable materials can be separated from those requiring specialized disposal. This reduces the amount of waste sent to landfills, helping to limit soil, water, and air pollution.</string>
+    <string name="paper_bin_title">What should go into the blue bin (paper)?</string>
+    <string name="paper_bin_answer">This bin should contain paper waste such as newspapers, cardboard, notebooks, sheets, and paper bags. Avoid throwing in greasy or dirty paper remnants, like food-stained paper towels. Make sure to remove staples and plastic components.</string>
+    <string name="plastic_bin_title">What should go into the yellow bin (plastic)?</string>
+    <string name="plastic_bin_answer">This bin should contain all plastic packaging, such as bottles, yogurt cups, food containers, and plastic wraps. Ensure they are clean and empty before disposing of them. This bin is also for metal packaging like cans and aluminum lids.</string>
+    <string name="glass_bin_title">What should go into the green bin (glass)?</string>
+    <string name="glass_bin_answer">This bin should contain glass waste like bottles, jars, perfume bottles, and glass containers. Do not throw in broken glass, ceramics, mirrors, or tempered glass, as they require separate disposal in mixed waste bins. Ensure containers are emptied before disposal.</string>
+    <string name="mixed_bin_title">What should go into the black bin (mixed)?</string>
+    <string name="mixed_bin_answer">This bin should contain non-recyclable waste such as meat scraps, cooking oil, receipts, cigarette butts, broken glassware, and porcelain, as well as used paper towels and tissues. Try to avoid disposing of recyclable waste here.</string>
+    <string name="bio_bin_title">What should go into the brown bin (bio-waste)?</string>
+    <string name="bio_bin_answer">This bin should contain biodegradable waste like vegetables, fruits, eggshells, coffee and tea grounds, flowers, potted plants, and food scraps. Avoid disposing of meat, dairy, fats, or wooden or synthetic materials. Bio-waste is suitable for composting, supporting natural soil processes.</string>
+    <string name="electronics_bin_title">What should go into the red bin (electronics)?</string>
+    <string name="electronics_bin_answer">This bin should contain small electronic devices like batteries, chargers, phones, remote controls, headphones, and small household appliances. Do not dispose of large appliances here; they must be recycled at specialized facilities. Remember, improper disposal of electronics can harm the environment.</string>
+    <string name="application">Application</string>
+    <string name="recycling">Waste Segregation</string>
+    <string name="bins">Waste Bins</string>
     <string name="recyclens">RecycLens</string>
 </resources>
