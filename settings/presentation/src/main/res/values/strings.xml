@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings">Ustawienia</string>
-    <string name="history_size">Rozmiar historii</string>
-    <string name="history_size_description">Liczba opadów, które będą przechowywane w twojej historii. Większy rozmiar historii zajmie większą ilość miejsca w pamięci.</string>
+    <string name="settings">Settings</string>
+    <string name="history_size">History Size</string>
+    <string name="history_size_description">The number of waste items that will be stored in your history. A larger history size will occupy more memory space.</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.datastore.core.DataStore
@@ -24,18 +25,31 @@ import com.recyclens.core.domain.util.DataError
 import com.recyclens.core.domain.util.EmptyResult
 import com.recyclens.core.domain.util.Result
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DataStoreSettingsRepository @Inject constructor(
     @ApplicationContext
-    private val applicationContext: Context
+    private val applicationContext: Context,
+    private val applicationScope: CoroutineScope
 ): SettingsRepository {
+
     private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(
         name = DATASTORE_NAME
     )
+
+    init {
+        applicationScope.launch {
+            if(applicationContext.settingsDataStore.data.first() == emptyPreferences()) {
+                setInitialLanguageSetting()
+            }
+        }
+    }
 
     override val language: Flow<Language>
         get() = applicationContext.settingsDataStore.data
@@ -47,14 +61,7 @@ class DataStoreSettingsRepository @Inject constructor(
                 }
             }
             .map { preferences ->
-                preferences[LANGUAGE_KEY]?.let { Language.valueOf(it) } ?: run {
-                    val locales = Resources.getSystem().configuration.locales
-                    (0 until locales.size()).firstNotNullOfOrNull { index ->
-                        Language.fromLocale(locales[index])
-                    } ?: DEFAULT_LANGUAGE.also {
-                        setLanguage(it)
-                    }
-                }
+                preferences[LANGUAGE_KEY]?.let { Language.fromTag(it) } ?: DEFAULT_LANGUAGE
             }
 
 
@@ -74,9 +81,9 @@ class DataStoreSettingsRepository @Inject constructor(
         return safeSettingsChange {
             if(!language.isAvailable) return@safeSettingsChange
             applicationContext.settingsDataStore.edit { preferences ->
-                preferences[LANGUAGE_KEY] = language.name
+                preferences[LANGUAGE_KEY] = language.tag
             }
-            changeApplicationLanguage(language)
+            changeApplicationLocale(language)
         }
     }
 
@@ -97,7 +104,7 @@ class DataStoreSettingsRepository @Inject constructor(
         }
     }
 
-    private fun changeApplicationLanguage(language: Language) {
+    private fun changeApplicationLocale(language: Language) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             applicationContext.getSystemService(LocaleManager::class.java).applicationLocales =
                 LocaleList.forLanguageTags(language.tag)
@@ -105,6 +112,19 @@ class DataStoreSettingsRepository @Inject constructor(
             AppCompatDelegate.setApplicationLocales(
                 LocaleListCompat.forLanguageTags(language.tag)
             )
+        }
+    }
+
+    private suspend fun setInitialLanguageSetting() {
+        val locales = Resources.getSystem().configuration.locales
+        val systemAvailableLanguage = (0 until locales.size()).firstNotNullOfOrNull { index ->
+            Language.fromLocale(locales[index])
+        }
+        val initialLanguage = systemAvailableLanguage ?: DEFAULT_LANGUAGE
+        safeSettingsChange {
+            applicationContext.settingsDataStore.edit { preferences ->
+                preferences[LANGUAGE_KEY] = initialLanguage.tag
+            }
         }
     }
 
