@@ -1,4 +1,4 @@
-package com.recyclens.scanner.presentation.components
+package com.recyclens.core.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,16 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.recyclens.core.domain.settings.Language
-import com.recyclens.core.presentation.components.TitleDialog
+import com.recyclens.core.presentation.R
 import com.recyclens.core.presentation.designsystem.LabelColor
 import com.recyclens.core.presentation.designsystem.OutlineColor
 import com.recyclens.core.presentation.designsystem.PrimaryColor
 import com.recyclens.core.presentation.designsystem.RecycLensTheme
 import com.recyclens.core.presentation.util.getName
-import com.recyclens.scanner.presentation.R
 
 @Composable
 fun LanguageDialog(
@@ -58,13 +58,13 @@ private fun LanguageItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(
-                enabled = language.isAvailable
+                role = Role.RadioButton
             ) {
                 onSelect()
             }
             .padding(
                 horizontal = 16.dp,
-                vertical = if(language.isAvailable) 4.dp else 8.dp
+                vertical = 4.dp
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -78,7 +78,6 @@ private fun LanguageItem(
                 disabledSelectedColor = OutlineColor,
                 disabledUnselectedColor = OutlineColor,
             ),
-            enabled = language.isAvailable
         )
         Column(
             modifier = Modifier.weight(1f),
@@ -88,13 +87,6 @@ private fun LanguageItem(
                 text = language.getName(),
                 style = MaterialTheme.typography.bodyLarge,
             )
-            if (!language.isAvailable) {
-                Text(
-                    text = stringResource(id = R.string.under_development),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LabelColor
-                )
-            }
         }
     }
 }

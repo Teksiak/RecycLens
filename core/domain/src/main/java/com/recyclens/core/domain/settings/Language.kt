@@ -1,27 +1,14 @@
 package com.recyclens.core.domain.settings
 
-import java.util.Locale
-
-// TODO: Remove isAvailable
 enum class Language(
-    val tag: String,
-    val isAvailable: Boolean
+    val tag: String
 ) {
-    ENGLISH("en", true),
-    POLISH("pl", true);
+    ENGLISH("en"),
+    POLISH("pl");
 
     companion object {
         fun fromTag(tag: String): Language? {
             return entries.firstOrNull { it.tag == tag }
-        }
-        fun fromLocale(locale: Locale): Language? {
-            return with(locale.language) {
-                when {
-                    startsWith("en") -> ENGLISH
-                    startsWith("pl") -> POLISH
-                    else -> null
-                }
-            }
         }
     }
 }

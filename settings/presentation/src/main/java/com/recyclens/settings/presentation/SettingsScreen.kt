@@ -27,12 +27,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.recyclens.core.domain.settings.SettingsRepository
+import com.recyclens.core.presentation.components.LanguageDialog
 import com.recyclens.core.presentation.components.NavigationTopBar
 import com.recyclens.core.presentation.components.TitleDialog
 import com.recyclens.core.presentation.designsystem.OutlineColor
 import com.recyclens.core.presentation.designsystem.PrimaryColor
+import com.recyclens.core.presentation.util.getName
 import com.recyclens.settings.presentation.components.VerticalPicker
 import com.recyclens.core.presentation.util.toWasteAmount
+import com.recyclens.settings.presentation.components.SettingBox
 
 @Composable
 fun SettingsScreenRoot(
@@ -81,6 +84,18 @@ private fun SettingsScreen(
         )
     }
 
+    if(state.showLanguageDialog) {
+        LanguageDialog(
+            selectedLanguage = state.language,
+            onLanguageSelected = { language ->
+                onAction(SettingsAction.SetLanguage(language))
+            },
+            onDismiss = {
+                onAction(SettingsAction.HideLanguageDialog)
+            }
+        )
+    }
+
     Scaffold(
         topBar = {
             NavigationTopBar(
@@ -106,32 +121,42 @@ private fun SettingsScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
+                    text = stringResource(R.string.language),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                SettingBox(
+                    content = {
+                        Text(
+                            text = state.language.getName(),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = PrimaryColor
+                        )
+                    },
+                    onClick = { onAction(SettingsAction.ShowLanguageDialog) }
+                )
+            }
+            Spacer(modifier = Modifier.size(16.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(24.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
                     text = stringResource(R.string.history_size),
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Box(
-                    modifier = Modifier
-                        .height(40.dp)
-                        .clip(RoundedCornerShape(20.dp))
-                        .clickable(
-                            role = Role.Button,
-                            onClick = { onAction(SettingsAction.ShowHistorySizeDialog) }
+                SettingBox(
+                    content = {
+                        Text(
+                            text = state.historySize.toWasteAmount(),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = PrimaryColor
                         )
-                        .border(
-                            width = 1.dp,
-                            color = OutlineColor,
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                        .padding(horizontal = 16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = state.historySize.toWasteAmount(),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = PrimaryColor
-                    )
-                }
+                    },
+                    onClick = { onAction(SettingsAction.ShowHistorySizeDialog) }
+                )
             }
         }
     }

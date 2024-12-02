@@ -82,7 +82,7 @@ import com.recyclens.scanner.presentation.components.CameraPreview
 import com.recyclens.scanner.presentation.components.Drawer
 import com.recyclens.scanner.presentation.components.DrawerItem
 import com.recyclens.scanner.presentation.components.ErrorDialog
-import com.recyclens.scanner.presentation.components.LanguageDialog
+import com.recyclens.core.presentation.components.LanguageDialog
 import com.recyclens.scanner.presentation.components.PhotoButton
 import com.recyclens.scanner.presentation.components.PredictionDialog
 import com.recyclens.scanner.presentation.components.AnalysingAnimation
