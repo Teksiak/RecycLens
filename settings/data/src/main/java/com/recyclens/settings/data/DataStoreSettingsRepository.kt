@@ -79,7 +79,6 @@ class DataStoreSettingsRepository @Inject constructor(
 
     override suspend fun setLanguage(language: Language): EmptyResult<DataError.Local> {
         return safeSettingsChange {
-            if(!language.isAvailable) return@safeSettingsChange
             applicationContext.settingsDataStore.edit { preferences ->
                 preferences[LANGUAGE_KEY] = language.tag
             }
@@ -118,7 +117,7 @@ class DataStoreSettingsRepository @Inject constructor(
     private suspend fun setInitialLanguageSetting() {
         val locales = Resources.getSystem().configuration.locales
         val systemAvailableLanguage = (0 until locales.size()).firstNotNullOfOrNull { index ->
-            Language.fromLocale(locales[index])
+            Language.fromTag(locales[index].toLanguageTag())
         }
         val initialLanguage = systemAvailableLanguage ?: DEFAULT_LANGUAGE
         safeSettingsChange {

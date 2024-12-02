@@ -12,4 +12,5 @@
     <string name="single_waste">"waste "</string>
     <string name="few_waste">wastes</string>
     <string name="many_waste">wastes</string>
+    <string name="choose_language">Choose Language</string>
 </resources>

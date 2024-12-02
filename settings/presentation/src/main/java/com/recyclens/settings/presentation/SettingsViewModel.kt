@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,19 +22,28 @@ class SettingsViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        settingsRepository.historySize
-            .onEach { historySize ->
-                _state.update {
-                    it.copy(
-                        historySize = historySize,
-                        areSettingsLoaded = true
-                    )
-                }
-            }.launchIn(viewModelScope)
+        updateHistorySizeSetting()
+
+        updateLanguageSetting()
     }
 
     fun onAction(action: SettingsAction) {
         when (action) {
+            is SettingsAction.ShowLanguageDialog -> {
+                _state.update {
+                    it.copy(showLanguageDialog = true)
+                }
+            }
+            is SettingsAction.SetLanguage -> {
+                viewModelScope.launch {
+                    settingsRepository.setLanguage(action.language)
+                }
+            }
+            is SettingsAction.HideLanguageDialog -> {
+                _state.update {
+                    it.copy(showLanguageDialog = false)
+                }
+            }
             is SettingsAction.ShowHistorySizeDialog -> {
                 _state.update {
                     it.copy(showHistorySizeDialog = true)
@@ -51,6 +61,30 @@ class SettingsViewModel @Inject constructor(
             }
             else -> Unit
         }
+    }
+
+    private fun updateHistorySizeSetting() {
+        settingsRepository.historySize
+            .onEach { historySize ->
+                _state.update {
+                    it.copy(
+                        historySize = historySize,
+                        areSettingsLoaded = true
+                    )
+                }
+            }.launchIn(viewModelScope)
+    }
+
+    private fun updateLanguageSetting() {
+        settingsRepository.language
+            .onEach { language ->
+                _state.update {
+                    it.copy(
+                        language = language,
+                        areSettingsLoaded = true
+                    )
+                }
+            }.launchIn(viewModelScope)
     }
 
 }
