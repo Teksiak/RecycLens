@@ -302,6 +302,7 @@ private fun ScannerScreen(
         if(state.isError) {
             ErrorDialog(
                 onDismiss = {
+                    previewBitmap.value = null
                     onAction(ScannerAction.DismissErrorDialog)
                 }
             )
@@ -317,6 +318,9 @@ private fun ScannerScreen(
                         textAlign = TextAlign.Center,
                         color = LabelColor
                     )
+                },
+                onDismiss = {
+                    onAction(ScannerAction.DismissWrongSuggestionsDialog)
                 },
                 buttons = {
                     TextButton(
